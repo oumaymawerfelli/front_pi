@@ -1,7 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-const routes: Routes = [];
+import { MarketplaceComponent } from './marketplace/marketplace.component';
+import { FrontComponent } from './component/front/front.component';
+import { BackComponent } from './component/back/back.component';
+
+const routes: Routes = [
+  { path: '', redirectTo: '/marketplace', pathMatch: 'full' },
+  { path: 'marketplace', component: MarketplaceComponent },
+  { path: 'front', component: FrontComponent },
+  { path: 'admin', component: BackComponent }
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
