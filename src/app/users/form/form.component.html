@@ -1,0 +1,31 @@
+<form (ngSubmit)="onSubmit()">
+    <div>
+      <label for="name">Name</label>
+      <input id="name" [(ngModel)]="userForm.name" name="name" required />
+    </div>
+    <div>
+      <label for="email">Email</label>
+      <input id="email" [(ngModel)]="userForm.email" name="email" required />
+    </div>
+    <div>
+      <label for="role">Role</label>
+      <select id="role" [(ngModel)]="userForm.role" name="role">
+        <option value="USER">User</option>
+        <option value="ADMIN">Admin</option>
+      </select>
+    </div>
+    <div>
+      <label for="phone">Phone</label>
+      <input id="phone" [(ngModel)]="userForm.phone" name="phone" />
+    </div>
+    <div>
+      <label for="address">Address</label>
+      <input id="address" [(ngModel)]="userForm.adresse" name="adresse" />
+    </div>
+    <div>
+      <label for="institution">Institution</label>
+      <input id="institution" [(ngModel)]="userForm.institution" name="institution" />
+    </div>
+    <button type="submit">{{ userToEdit ? 'Update User' : 'Add User' }}</button>
+  </form>
+  

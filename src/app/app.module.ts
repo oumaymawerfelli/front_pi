@@ -7,6 +7,9 @@ import { MarketplaceComponent } from './marketplace/marketplace.component';
 import { PanierComponent } from './panier/panier.component';
 import { FrontComponent } from './component/front/front.component';
 import { BackComponent } from './component/back/back.component';
+import { UsersModule } from './users/users.module';
+import { FormsModule } from '@angular/forms';
+
 
 @NgModule({
   declarations: [
@@ -19,7 +22,9 @@ import { BackComponent } from './component/back/back.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgbModule
+    NgbModule,
+    UsersModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

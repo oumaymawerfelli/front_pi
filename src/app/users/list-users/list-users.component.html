@@ -1,0 +1,37 @@
+<div *ngIf="users.length > 0; else noUsers">
+  <table class="user-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Phone</th>
+        <th>Address</th>
+        <th>Actions</th> <!-- New column for actions -->
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users">
+        <td>{{ user.idUser }}</td>
+        <td>{{ user.name }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.role }}</td>
+        <td>{{ user.phone }}</td>
+        <td>{{ user.adresse }}</td>
+        <td>
+          <!-- Edit and Delete Buttons -->
+          <button (click)="editUser(user)">Edit</button>
+          <button (click)="deleteUser(user.idUser)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Form for adding a new user -->
+  <app-form [userToEdit]="selectedUser" (userSubmitted)="handleFormSubmit($event)"></app-form>
+</div>
+
+<ng-template #noUsers>
+  <p>No users found.</p>
+</ng-template>
