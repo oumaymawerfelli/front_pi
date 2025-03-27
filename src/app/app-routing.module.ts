@@ -13,13 +13,19 @@ import { LoginComponent } from './users/login/login.component';
 const routes: Routes = [
   { path: '', redirectTo: '/front', pathMatch: 'full' },
   { path: 'marketplace', component: MarketplaceComponent },
-  { path: 'front', component: FrontComponent },
+  {
+    path: 'front', 
+    component: FrontComponent, 
+    children: [
+      { path: 'login', component: LoginComponent },
+      { path: 'register', component: RegisterComponent }
+    ]
+  },
+  { path: '', redirectTo: '/front', pathMatch: 'full' },
   { path: 'admin', component: BackComponent },
   { path: 'users', component: ListUsersComponent},
   { path: 'users/new', component: FormComponent},
-  { path: 'users/profile', component: ProfileComponent},
-  { path: 'register', component: RegisterComponent},
-  { path: 'login', component: LoginComponent}
+  { path: 'users/profile', component: ProfileComponent}
 ];
 
 @NgModule({
