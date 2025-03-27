@@ -65,6 +65,7 @@
             "development": {
               "browserTarget": "pi_2:build:development",
               "proxyConfig": "src/app/proxy.conf.json"
+
             }
           },
           "defaultConfiguration": "development"

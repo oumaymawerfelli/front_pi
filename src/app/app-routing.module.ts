@@ -11,7 +11,7 @@ import { RegisterComponent } from './users/register/register.component';
 import { LoginComponent } from './users/login/login.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/marketplace', pathMatch: 'full' },
+  { path: '', redirectTo: '/front', pathMatch: 'full' },
   { path: 'marketplace', component: MarketplaceComponent },
   { path: 'front', component: FrontComponent },
   { path: 'admin', component: BackComponent },

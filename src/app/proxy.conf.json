@@ -3,6 +3,13 @@
       "target": "http://localhost:8089",  
       "secure": false,
       "changeOrigin": true
-    }
+    },
+    
+      "/auth": {
+    "target": "http://localhost:8089",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+      }
   }
   
