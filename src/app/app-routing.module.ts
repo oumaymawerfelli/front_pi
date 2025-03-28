@@ -18,14 +18,15 @@ const routes: Routes = [
     component: FrontComponent, 
     children: [
       { path: 'login', component: LoginComponent },
-      { path: 'register', component: RegisterComponent }
+      { path: 'register', component: RegisterComponent },
+      { path: 'profile', component: ProfileComponent}
     ]
   },
   { path: '', redirectTo: '/front', pathMatch: 'full' },
   { path: 'admin', component: BackComponent },
   { path: 'users', component: ListUsersComponent},
   { path: 'users/new', component: FormComponent},
-  { path: 'users/profile', component: ProfileComponent}
+  
 ];
 
 @NgModule({

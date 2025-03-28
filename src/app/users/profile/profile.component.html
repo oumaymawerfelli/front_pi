@@ -1,1 +1,32 @@
 <p>profile works!</p>
+<div *ngIf="user">
+    <h2>Profile</h2>
+    <div>
+      <label>Name:</label>
+      <span>{{ user.name }}</span>
+    </div>
+    <div>
+      <label>Email:</label>
+      <span>{{ user.email }}</span>
+    </div>
+    <div>
+      <label>Phone:</label>
+      <span>{{ user.phone }}</span>
+    </div>
+    <div>
+      <label>Address:</label>
+      <span>{{ user.adresse }}</span>
+    </div>
+    <div>
+      <label>Date of Birth:</label>
+      <span>{{ user.dateOfBirth | date }}</span>
+    </div>
+  
+    <div *ngIf="user.profilePicture">
+      <label>Profile Picture:</label>
+      <img [src]="getProfilePictureUrl(user.profilePicture)" alt="Profile Picture" />
+    </div>
+  </div>
+  
+  <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+  

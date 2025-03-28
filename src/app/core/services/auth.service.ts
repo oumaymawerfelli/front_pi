@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of, tap } from 'rxjs';
 
 interface LoginRequest {
   email: string;
@@ -29,8 +29,13 @@ export class AuthService {
   login(request: LoginRequest): Observable<JwtResponse> {
     return this.http.post<JwtResponse>(`${this.apiUrl}/login`, request, {
       withCredentials: true
-    });
+    }).pipe(
+      tap(response => {
+        localStorage.setItem('token', response.token);  // Store the token here
+      })
+    );
   }
+  
 
   register(request: RegisterRequest): Observable<any> {
     return this.http.post(
@@ -41,6 +46,15 @@ export class AuthService {
             withCredentials: true
         }
     );
+}
+getProfile() {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    return of(null); // Return an observable of null if no token
+  }
+  
+  const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+  return this.http.get<any>('http://localhost:8089/pi/profile/profile', { headers });
 }
 
   logout() {

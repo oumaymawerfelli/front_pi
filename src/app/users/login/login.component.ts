@@ -17,7 +17,7 @@ export class LoginComponent {
     this.authService.login({ email: this.email, password: this.password }).subscribe(
       (response) => {
         localStorage.setItem('token', response.token);
-        this.router.navigate(['/front']); // Redirect to a dashboard or home page
+        this.router.navigate(['/front/profile']); // Redirect to a dashboard or home page
       },
       (error) => {
         this.errorMessage = 'Invalid email or password';
