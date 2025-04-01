@@ -9,6 +9,8 @@ import { ProfileComponent } from './users/profile/profile.component';
 import { FormComponent } from './users/form/form.component';
 import { RegisterComponent } from './users/register/register.component';
 import { LoginComponent } from './users/login/login.component';
+import { AdminGuard } from './guards/admin.guard';
+import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/front', pathMatch: 'full' },
@@ -23,9 +25,11 @@ const routes: Routes = [
     ]
   },
   { path: '', redirectTo: '/front', pathMatch: 'full' },
-  { path: 'admin', component: BackComponent },
-  { path: 'users', component: ListUsersComponent},
-  { path: 'users/new', component: FormComponent},
+  { path: 'admin', component: BackComponent , canActivate: [AdminGuard]},
+  { path: 'users', component: ListUsersComponent , canActivate: [AdminGuard]},
+  { path: 'users/new', component: FormComponent , canActivate: [AdminGuard]},
+  { path: 'unauthorized', component: UnauthorizedComponent }
+  
   
 ];
 

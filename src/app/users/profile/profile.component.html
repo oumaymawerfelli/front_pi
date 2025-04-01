@@ -27,6 +27,9 @@
       <img [src]="getProfilePictureUrl(user.profilePicture)" alt="Profile Picture" />
     </div>
   </div>
+  <a *ngIf="authService.isAdmin()" routerLink="/users">
+    Manage Users (Admin Only)
+  </a>
   
   <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
   

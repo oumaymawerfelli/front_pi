@@ -36,32 +36,48 @@ export class AuthService {
     );
   }
   
-
   register(request: RegisterRequest): Observable<any> {
     return this.http.post(
-        'http://localhost:8089/pi/auth/register', 
+        `${this.apiUrl}/register`, 
         request, 
         { 
             headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
             withCredentials: true
         }
     );
-}
-getProfile() {
-  const token = localStorage.getItem('token');
-  if (!token) {
-    return of(null); // Return an observable of null if no token
   }
-  
-  const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-  return this.http.get<any>('http://localhost:8089/pi/profile/profile', { headers });
-}
 
+  getProfile() {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      return of(null); // Return an observable of null if no token
+    }
+    
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get<any>('http://localhost:8089/pi/profile/profile', { headers });
+  }
   logout() {
     localStorage.removeItem('token');
   }
 
   isAuthenticated(): boolean {
     return !!localStorage.getItem('token');
+  }
+
+  getUserRole(): string | null {
+    const token = localStorage.getItem('token');
+    if (!token) return null;
+  
+    try {
+      const decodedToken = JSON.parse(atob(token.split('.')[1])); // Decode JWT payload
+      return decodedToken.role || null;
+    } catch (error) {
+      console.error('Error decoding token', error);
+      return null;
+    }
+  }
+  
+  isAdmin(): boolean {
+    return this.getUserRole() === 'ROLE_ADMIN';
   }
 }

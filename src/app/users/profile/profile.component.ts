@@ -21,7 +21,7 @@ export class ProfileComponent implements OnInit {
   user: UserProfile = { name: '', email: '' }; // Initialize with default values
   errorMessage: string = '';
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(public authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     const token = localStorage.getItem('token');

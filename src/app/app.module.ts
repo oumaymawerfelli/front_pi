@@ -9,6 +9,9 @@ import { FrontComponent } from './component/front/front.component';
 import { BackComponent } from './component/back/back.component';
 import { UsersModule } from './users/users.module';
 import { FormsModule } from '@angular/forms';
+import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
+import { AuthService } from './core/services/auth.service';
+import { AdminGuard } from './guards/admin.guard';
 
 
 @NgModule({
@@ -17,7 +20,8 @@ import { FormsModule } from '@angular/forms';
     MarketplaceComponent,
     PanierComponent,
     FrontComponent,
-    BackComponent
+    BackComponent,
+    UnauthorizedComponent
   ],
   imports: [
     BrowserModule,
@@ -26,7 +30,7 @@ import { FormsModule } from '@angular/forms';
     UsersModule,
     FormsModule
   ],
-  providers: [],
+  providers: [AuthService, AdminGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
