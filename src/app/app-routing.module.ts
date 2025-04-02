@@ -25,8 +25,11 @@ const routes: Routes = [
     ]
   },
   { path: '', redirectTo: '/front', pathMatch: 'full' },
-  { path: 'admin', component: BackComponent , canActivate: [AdminGuard]},
+  { path: 'admin', component: BackComponent , canActivate: [AdminGuard],
+
+  },
   { path: 'users', component: ListUsersComponent , canActivate: [AdminGuard]},
+  
   { path: 'users/new', component: FormComponent , canActivate: [AdminGuard]},
   { path: 'unauthorized', component: UnauthorizedComponent }
   

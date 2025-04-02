@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { jwtDecode } from 'jwt-decode';
@@ -21,7 +21,7 @@ export class ProfileComponent implements OnInit {
   user: UserProfile = { name: '', email: '' }; // Initialize with default values
   errorMessage: string = '';
 
-  constructor(public authService: AuthService, private router: Router) {}
+  constructor(public authService: AuthService, private router: Router , private cdRef: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     const token = localStorage.getItem('token');
@@ -29,6 +29,7 @@ export class ProfileComponent implements OnInit {
       this.router.navigate(['/login']);
       return;
     }
+    this.cdRef.detectChanges(); 
 
     this.authService.getProfile().subscribe(
       (userData: UserProfile) => {
@@ -43,6 +44,9 @@ export class ProfileComponent implements OnInit {
         console.error(error);
       }
     );
+  }
+  goToUsers() {
+    this.router.navigate(['/users']);
   }
 
   getProfilePictureUrl(profilePicture: any): string {
