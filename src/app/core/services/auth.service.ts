@@ -1,20 +1,21 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of, tap } from 'rxjs';
+import { Router } from '@angular/router';
 
-interface LoginRequest {
+export interface LoginRequest {
   email: string;
   password: string;
 }
 
-interface RegisterRequest {
+export interface RegisterRequest {
   name: string;
   email: string;
   password: string;
   role: string;
 }
 
-interface JwtResponse {
+export interface JwtResponse {
   token: string;
 }
 
@@ -24,39 +25,65 @@ interface JwtResponse {
 export class AuthService {
   private apiUrl = 'http://localhost:8089/pi/auth';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   login(request: LoginRequest): Observable<JwtResponse> {
-    return this.http.post<JwtResponse>(`${this.apiUrl}/login`, request, {
-      withCredentials: true
-    }).pipe(
+    return this.http.post<JwtResponse>(`${this.apiUrl}/login`, request, { withCredentials: true }).pipe(
       tap(response => {
-        localStorage.setItem('token', response.token);  // Store the token here
+        localStorage.setItem('token', response.token);
       })
     );
   }
   
   register(request: RegisterRequest): Observable<any> {
-    return this.http.post(
-        `${this.apiUrl}/register`, 
-        request, 
-        { 
-            headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-            withCredentials: true
-        }
-    );
+    return this.http.post(`${this.apiUrl}/register`, request, {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+      withCredentials: true
+    });
   }
-
+  
+  // Redirects to the backend OAuth2 endpoint
+  loginWithGoogle(): void {
+    localStorage.clear();
+    window.location.href = 'http://localhost:8089/pi/oauth2/authorization/google';
+  }
+  
+  // Handles the redirect from OAuth2 login
+  handleOAuth2Redirect(token: string): void {
+    if (!token) {
+      this.router.navigate(['/front/login'], { queryParams: { error: 'auth_failed' } });
+      return;
+    }
+    
+    localStorage.setItem('token', token);
+    
+    // Decode token to get user role
+    try {
+      const tokenPayload = JSON.parse(atob(token.split('.')[1]));
+      const role = tokenPayload.role;
+      
+      if (role === 'ROLE_ADMIN') {
+        this.router.navigate(['/admin/profile']);
+      } else {
+        this.router.navigate(['/front/profile']);
+      }
+    } catch (error) {
+      console.error('Error decoding token', error);
+      this.router.navigate(['/front/login'], { queryParams: { error: 'invalid_token' } });
+    }
+  }
+  
   getProfile() {
     const token = localStorage.getItem('token');
     if (!token) {
-      return of(null); // Return an observable of null if no token
+      return of(null);
     }
     
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.http.get<any>('http://localhost:8089/pi/profile/profile', { headers });
   }
-  logout() {
+  
+  logout(): void {
     localStorage.removeItem('token');
   }
 
@@ -67,9 +94,8 @@ export class AuthService {
   getUserRole(): string | null {
     const token = localStorage.getItem('token');
     if (!token) return null;
-  
     try {
-      const decodedToken = JSON.parse(atob(token.split('.')[1])); // Decode JWT payload
+      const decodedToken = JSON.parse(atob(token.split('.')[1]));
       return decodedToken.role || null;
     } catch (error) {
       console.error('Error decoding token', error);

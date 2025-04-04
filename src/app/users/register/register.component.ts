@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthService } from 'src/app/core/services/auth.service';
+import { AuthService, RegisterRequest } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -10,13 +10,13 @@ export class RegisterComponent {
   name = '';
   email = '';
   password = '';
-  role = 'USER'; // Default role
+  role = 'ROLE_CUSTOMER'; // Adjust the default role as needed
 
   constructor(private authService: AuthService) {}
 
-  register() {
-    const user = { name: this.name, email: this.email, password: this.password, role: this.role };
-    this.authService.register(user).subscribe({
+  register(): void {
+    const request: RegisterRequest = { name: this.name, email: this.email, password: this.password, role: this.role };
+    this.authService.register(request).subscribe({
       next: (response) => {
         console.log('User registered:', response);
       },

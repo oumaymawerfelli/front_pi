@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/core/services/auth.service';
+import { AuthService, LoginRequest } from 'src/app/core/services/auth.service';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -13,17 +14,28 @@ export class LoginComponent {
 
   constructor(private authService: AuthService, private router: Router) {}
 
-  login() {
-    this.authService.login({ email: this.email, password: this.password }).subscribe(
-      (response) => {
-        localStorage.setItem('token', response.token);
-        this.router.navigate(['/front/profile']); // Redirect to a dashboard or home page
+  login(): void {
+    if (!this.email || !this.password) {
+      this.errorMessage = 'Please enter email and password';
+      return;
+    }
+    const request: LoginRequest = { email: this.email, password: this.password };
+    this.authService.login(request).subscribe({
+      next: (response) => {
+        if (this.authService.isAdmin()) {
+          this.router.navigate(['/admin/profile']);
+        } else {
+          this.router.navigate(['/front/profile']);
+        }
       },
-      (error) => {
+      error: () => {
         this.errorMessage = 'Invalid email or password';
       }
-    );
+    });
+  }
+  
+
+  loginWithGoogle(): void {
+    this.authService.loginWithGoogle();
   }
 }
-
-

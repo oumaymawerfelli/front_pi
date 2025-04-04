@@ -8,6 +8,7 @@ import { LoginComponent } from './login/login.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+import { OAuth2RedirectComponent } from './oauth2-redirect/oauth2-redirect.component';
 
 
 
@@ -18,7 +19,8 @@ import { FormsModule } from '@angular/forms';
     ListUsersComponent,
     ProfileComponent,
     RegisterComponent,
-    LoginComponent
+    LoginComponent,
+    OAuth2RedirectComponent
   ],
   imports: [
     CommonModule,

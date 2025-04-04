@@ -12,8 +12,8 @@
 
     <label for="role">Role:</label>
     <select id="role" [(ngModel)]="role" name="role" required>
-      <option value="FARMER">Farmer</option>
-      <option value="ADMIN">Admin</option>
+      <option value="ROLE_FARMER">Farmer</option>
+      <option value="ROLE_ADMIN">Admin</option>
     </select>
 
     <button type="submit" [disabled]="registerForm.invalid">Register</button>

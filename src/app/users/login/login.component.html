@@ -12,6 +12,8 @@
     <p *ngIf="errorMessage" style="color:red">{{ errorMessage }}</p>
     <p><a routerLink="/register">Don't have an account? Sign up</a></p>
     <p><a href="#">Forgot password?</a></p>
+    <button (click)="loginWithGoogle()">Login with Google</button>
+
   </form>
 </div>
 
