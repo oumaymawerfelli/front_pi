@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>loan application</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+
+ 
+  
+  
+</head>
+
+<body class="contact-page">
+
+
+
+
+
+
+
+
+
+
+
+  <header id="header" class="header d-flex align-items-center position-relative">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+
+      <a href="index.html" class="logo d-flex align-items-center">
+  <img src="assets/img/logo.png" alt="AgriCulture Logo">
+ 
+</a>
+
+
+      </div>
+      </header>
+
+  <main class="main">
+
+  <!-- Page Title Section -->
+<div class="page-title dark-background" data-aos="fade" 
+style="background-image: url(assets/img/page-title-bg.webp);">
+<div class="container position-relative">
+<h1>{{ pageTitle }}</h1>
+
+
+<!-- Breadcrumb Navigation -->
+<nav class="breadcrumbs">
+ <ol>
+  
+   <li><a routerLink="/loan-info">Loan Info /</a></li>
+
+   <li><a routerLink="/loan-management">  Loan Management</a></li>
+ </ol>
+</nav>
+</div>
+</div><!-- End Page Title -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Loan Application Section -->
+<section id="loan-application" class="loan-application section">
+
+  <div class="mb-5">
+    <!-- Google Map Embed -->
+    <iframe 
+      style="width: 100%; height: 400px;" 
+      src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d13917.819393481026!2d9.7982342!3d36.8667472!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x13c3c9919a5ab089%3A0xf8b6cf1e77242071!2zQXJpYW5h!5e0!3m2!1sen!2stn!4v1680708532870" 
+      frameborder="0" 
+      allowfullscreen="">
+    </iframe>
+  </div>        
+
+  <div class="container" data-aos="fade">
+    <div class="row gy-5 gx-lg-5">
+      <div class="col-lg-4">
+        <div class="info">
+          <h3>Loan Application Details</h3>
+          <p>Please fill out all required fields carefully and review your information before submission.</p>
+
+          <!-- Office Information -->
+          <div class="info-item d-flex">
+            <i class="bi bi-geo-alt flex-shrink-0"></i>
+            <div>
+              <h4>Processing Center:</h4>
+              <p>Ariana, Tunisia</p>
+            </div>
+          </div>
+
+          <!-- Support Email -->
+          <div class="info-item d-flex">
+            <i class="bi bi-envelope flex-shrink-0"></i>
+            <div>
+              <h4>Support Email:</h4>
+              <p>loansupportexample.com</p>
+            </div>
+          </div>
+
+          <!-- Helpline -->
+          <div class="info-item d-flex">
+            <i class="bi bi-phone flex-shrink-0"></i>
+            <div>
+              <h4>Helpline:</h4>
+              <p>+216 12 345 678</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-8">
+        <form [formGroup]="applicationForm" (ngSubmit)="submitApplication()" class="loan-form">
+          <!-- Hidden fields -->
+          <input type="hidden" formControlName="equipmentId">
+          <input type="hidden" formControlName="landId">
+          <input type="hidden" formControlName="borrowerId">
+          <input type="hidden" formControlName="statusReq">
+
+          <div class="row">
+            <!-- Borrower Name -->
+            <div class="col-md-6 form-group">
+              <label for="borrowerName">Full Name</label>
+              <input type="text" id="borrowerName" formControlName="borrowerName" class="form-control">
+              <div *ngIf="applicationForm.get('borrowerName')?.invalid && applicationForm.get('borrowerName')?.touched" 
+                   class="error-message">
+                Required field
+              </div>
+            </div>
+
+            <!-- Borrower Email -->
+            <div class="col-md-6 form-group">
+              <label for="borrowerContact">Email</label>
+              <input type="email" id="borrowerContact" formControlName="borrowerContact" class="form-control">
+              <div *ngIf="applicationForm.get('borrowerContact')?.invalid && applicationForm.get('borrowerContact')?.touched" 
+                   class="error-message">
+                <span *ngIf="applicationForm.get('borrowerContact')?.hasError('required')">Required field</span>
+                <span *ngIf="applicationForm.get('borrowerContact')?.hasError('email')">Invalid email format</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Loan Purpose -->
+          <div class="form-group">
+            <label for="loanPurpose">Loan Purpose</label>
+            <select id="loanPurpose" formControlName="loanPurpose" class="form-control">
+              <option value="">Select a purpose</option>
+              <option value="equipment">Agricultural Equipment</option>
+              <option value="land">Land Investment</option>
+              <option value="seeds">Seeds & Fertilizers</option>
+            </select>
+            <div *ngIf="applicationForm.get('loanPurpose')?.invalid && applicationForm.get('loanPurpose')?.touched" 
+                 class="error-message">
+              Required field
+            </div>
+          </div>
+
+          <!-- Loan Details Row -->
+          <div class="row">
+            <div class="col-md-6 form-group">
+              <label for="loanDuration">Loan Duration (months)</label>
+              <input type="number" id="loanDuration" formControlName="loanDuration" 
+                     [max]="maxLoanDuration" [min]="1" class="form-control">
+              <div *ngIf="applicationForm.get('loanDuration')?.invalid && applicationForm.get('loanDuration')?.touched" 
+                   class="error-message">
+                <span *ngIf="applicationForm.get('loanDuration')?.hasError('required')">Required field</span>
+                <span *ngIf="applicationForm.get('loanDuration')?.hasError('min')">Minimum 1 month</span>
+                <span *ngIf="applicationForm.get('loanDuration')?.hasError('max')">Maximum {{maxLoanDuration}} months</span>
+              </div>
+            </div>
+
+            <div class="col-md-6 form-group">
+              <label for="startDate">Preferred Start Date</label>
+              <input type="date" id="startDate" formControlName="startDate" class="form-control">
+              <div *ngIf="applicationForm.get('startDate')?.invalid && applicationForm.get('startDate')?.touched" 
+                   class="error-message">
+                Valid start date required
+              </div>
+            </div>
+          </div>
+
+          <!-- Special Requests -->
+          <div class="form-group">
+            <label for="specialRequest">Special Requests</label>
+            <textarea id="specialRequest" formControlName="specialRequest" 
+                      class="form-control" rows="4" 
+                      placeholder="Any additional requirements or comments..."></textarea>
+          </div>
+
+         
+
+          <!-- Form Actions -->
+          <div class="form-actions mt-4">
+            <button type="submit" class="btn btn-primary" [disabled]="applicationForm.invalid">
+              Submit Application
+            </button>
+            <button type="button" class="btn btn-secondary cancel-button" (click)="cancelApplication()">
+              Cancel
+            </button>
+            <div>
+              <input type="checkbox" formControlName="termsAccepted" id="termsAccepted" />
+              <label for="termsAccepted">
+                I agree to the 
+                <a (click)="navigateToTerms()" style="cursor: pointer; text-decoration: underline; color: rgb(119, 119, 211);">
+                  Terms and Security
+                </a>
+              </label>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer id="footer" class="footer bg-dark text-white py-4">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3 col-md-6">
+        <h3 class="fw-bold">AgriCulture</h3>
+        <p>A108 Adam Street, New York, NY 535022</p>
+        <p><strong>Phone:</strong> +1 5589 55488 55</p>
+        <p><strong>Email:</strong> infoxample.com</p>
+      </div>
+      
+      <div class="col-lg-3 col-md-6">
+        <h4 class="text-uppercase">Useful Links</h4>
+        <ul class="list-unstyled">
+          <li><a href="#" class="text-white">Home</a></li>
+          <li><a href="#" class="text-white">About Us</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center" (click)="scrollToTop()">
+    <i class="bi bi-arrow-up-short"></i>
+  </a>
+
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

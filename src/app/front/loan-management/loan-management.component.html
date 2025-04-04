@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Project PI</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+
+  
+</head>
+
+
+<body class="loan-management">
+
+  <header id="header" class="header d-flex align-items-center position-relative">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+      
+      <!-- Logo navigates to Loan Management -->
+      <a routerLink="/loan-management" class="logo d-flex align-items-center">
+        <img src="assets/img/logo.png" alt="AgriLink">
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a routerLink="/loan-management">Loan Management</a></li>
+        </ul>
+      </nav>
+
+      <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+
+    </div>
+  </header>
+
+  <main class="main">
+
+    <!-- Page Title -->
+    <div class="page-title dark-background" data-aos="fade" style="background-image: url(assets/img/page-title-bg.webp);">
+      <div class="container position-relative">
+        <h1>Loan Management</h1>
+        <p>Tools for Farmers, Land for Progress</p>
+
+        <nav class="breadcrumbs">
+          <ol>
+            <li><a routerLink="/loan-management">Loan Management</a></li>
+            <li><a routerLink="/loan-application">Loan Application</a></li>
+            <li><a routerLink="/loan-info">Loan Info</a></li>
+          </ol>
+        </nav>
+
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+    
+
+    <!-- About Section as a Table -->
+    <section id="about-3" class="about-3 section">
+      <div class="container">
+        <table class="about-table">
+          <tr>
+            <!-- Image / Video Section -->
+            <td class="about-media" data-aos="zoom-out">
+              <div class="media-container">
+                <img src="assets/img/collab.jpg" alt="Image" class="img-fluid" id="media-image">
+                <a href="https://www.youtube.com/watch?v=Y7f98aduVJ8" class="glightbox pulsating-play-btn">
+                  <span class="play"><i class="bi bi-play-fill"></i></span>
+                </a>
+              </div>
+            </td>
+
+            <!-- Text Section -->
+            <td class="about-text" data-aos="fade-up" data-aos-delay="100">
+              <h2 class="content-title mb-4">Connect with Equipment Owners</h2>
+              <p class="mb-4">
+                Looking to rent or lease farming equipment? Get in touch with equipment owners in your area to simplify your farming needs and enhance productivity.  
+              </p>
+              <ul class="list-unstyled list-check">
+                <li>Find available equipment near you</li>
+                <li>Quick and easy communication with owners</li>
+                <li>Support for both farmers and institutions</li>
+              </ul>
+              <p><a href="#" class="btn-cta">Start Connecting</a></p>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    <!-- Loan Services Section -->
+    <section class="loan-services">
+      <h2>Loan Services</h2>
+      <p>Daily Agricultural Equipment Rentals</p>
+      
+      <div class="horizontal-container">
+        <div *ngFor="let service of loanServices" class="service-box">
+          <div class="emoji">{{ service.emoji }}</div>
+          <div class="content">
+            <h3>{{ service.name }}</h3>
+            <p>{{ service.desc }}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer id="footer" class="footer bg-dark text-white py-4">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-3 col-md-6">
+          <h3 class="fw-bold">AgriCulture</h3>
+          <p>A108 Adam Street, New York, NY 535022</p>
+          <p><strong>Phone:</strong> +1 5589 55488 55</p>
+          <p><strong>Email:</strong> infoxample.com</p>
+        </div>
+        
+        <div class="col-lg-3 col-md-6">
+          <h4 class="text-uppercase">Useful Links</h4>
+          <ul class="list-unstyled">
+            <li><a href="#" class="text-white">Home</a></li>
+            <li><a href="#" class="text-white">About Us</a></li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Scroll Top -->
+    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center" (click)="scrollToTop()">
+      <i class="bi bi-arrow-up-short"></i>
+    </a>
+
+  </footer>
+
+</body>
+</html>

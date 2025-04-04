@@ -1,15 +1,21 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { LoanManagementComponent } from './front/loan-management/loan-management.component';
+import { LoanApplicationComponent } from './front/loan-application/loan-application.component';
+import { LoanInfoComponent } from './front/loan-info/loan-info.component';
+import { TermsAcceptanceComponent } from './front/terms-acceptance/terms-acceptance.component';
+import { DashbordComponent } from './back/dashbord/dashbord.component';
 
-import { MarketplaceComponent } from './marketplace/marketplace.component';
-import { FrontComponent } from './component/front/front.component';
-import { BackComponent } from './component/back/back.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/marketplace', pathMatch: 'full' },
-  { path: 'marketplace', component: MarketplaceComponent },
-  { path: 'front', component: FrontComponent },
-  { path: 'admin', component: BackComponent }
+  { path: '', redirectTo: '/loan-management', pathMatch: 'full' }, // Default route
+  { path: 'loan-management', component: LoanManagementComponent },
+  { path: 'loan-application', component: LoanApplicationComponent },
+  { path: 'terms-acceptance', component: TermsAcceptanceComponent },
+  { path: 'loan-info', component: LoanInfoComponent },
+  { path: 'dashboard', component: DashbordComponent} ,
+  { path: '**', redirectTo: '/loan-management' } // Wildcard route
+  
 ];
 
 @NgModule({

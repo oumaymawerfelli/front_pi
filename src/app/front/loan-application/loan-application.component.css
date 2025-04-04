@@ -1,0 +1,196 @@
+/*--------------------------------------------------------------
+# General Styles
+--------------------------------------------------------------*/
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f8f8f8;
+  color: #333;
+}
+
+/*--------------------------------------------------------------
+# Header Section
+--------------------------------------------------------------*/
+
+
+.logo img {
+  height: 50px;
+  width: auto;
+}
+
+.sitename {
+  color: white;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+/*--------------------------------------------------------------
+# Navigation
+--------------------------------------------------------------*/
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+nav li {
+  display: inline;
+}
+
+nav a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+/*--------------------------------------------------------------
+# Page Title
+--------------------------------------------------------------*/
+.page-title {
+  background-size: cover;
+  background-position: center;
+  text-align: center;
+  padding: 50px 0;
+  color: white;
+  font-size: 28px;
+}
+
+.breadcrumbs ol {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  padding: 0;
+}
+
+.breadcrumbs a {
+  color: #f1f1f1;
+  text-decoration: none;
+}
+
+.breadcrumbs a:hover {
+  text-decoration: underline;
+}
+
+/*--------------------------------------------------------------
+# Loan Application Section
+--------------------------------------------------------------*/
+.loan-application {
+  padding: 50px 15px;
+}
+
+.loan-application .info {
+  background-color: white;
+  padding: 30px;
+  box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
+}
+
+.loan-application .info h3 {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.loan-application .info-item {
+  display: flex;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.loan-application .info-item i {
+  font-size: 24px;
+  margin-right: 15px;
+  color: #72ebd7;
+}
+
+/*--------------------------------------------------------------
+# Loan Application Form
+--------------------------------------------------------------*/
+.loan-form {
+  background-color: white;
+  padding: 30px;
+  box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.loan-form label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.loan-form input,
+.loan-form select,
+.loan-form textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.loan-form .error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.loan-form .form-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.loan-form button {
+  padding: 12px 30px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.loan-form .btn-primary {
+  background-color: #0c362f;
+  color: white;
+}
+
+.loan-form .btn-secondary {
+  background-color: #ddd;
+  color: black;
+}
+
+.loan-form .btn-primary:hover {
+  background-color: #00332b;
+}
+
+.loan-form .btn-secondary:hover {
+  background-color: #bbb;
+}
+
+.loan-form a {
+  color: #007bff;
+  text-decoration: underline;
+}
+
+.loan-form a:hover {
+  color: #0056b3;
+}
+
+/*--------------------------------------------------------------
+# Responsive Design
+--------------------------------------------------------------*/
+@media (max-width: 768px) {
+  .loan-application .info,
+  .loan-form {
+    padding: 20px;
+  }
+
+  .form-actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+}

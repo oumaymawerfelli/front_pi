@@ -1,27 +1,37 @@
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { AppRoutingModule } from './app-routing.module';
+import { AppRoutingModule } from './app-routing.module'; // Ensure this is imported
 import { AppComponent } from './app.component';
+import { LoanManagementComponent } from './front/loan-management/loan-management.component';
+import { LoanApplicationComponent } from './front/loan-application/loan-application.component';
+import { LoanInfoComponent } from './front/loan-info/loan-info.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { MarketplaceComponent } from './marketplace/marketplace.component';
-import { PanierComponent } from './panier/panier.component';
-import { FrontComponent } from './component/front/front.component';
-import { BackComponent } from './component/back/back.component';
+import { TermsAcceptanceComponent } from './front/terms-acceptance/terms-acceptance.component';
+import { DashbordComponent } from './back/dashbord/dashbord.component';
+
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    MarketplaceComponent,
-    PanierComponent,
-    FrontComponent,
-    BackComponent
+    LoanManagementComponent,
+    LoanApplicationComponent,
+    LoanInfoComponent,
+    TermsAcceptanceComponent,
+    DashbordComponent,
+  
+   
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
-    NgbModule
+    AppRoutingModule, // Ensure this is included
+    FormsModule,
+    ReactiveFormsModule,
+    NgbModule,
+  
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -24,13 +24,13 @@
               "src/favicon.ico",
               "src/assets"
             ],
-            "styles": [
-             
-              "src/styles.css"
-            ],
-            "scripts": [
-              
-            ]
+          "styles": [
+
+  "src/styles.css"
+],
+"scripts": [
+
+]
           },
           "configurations": {
             "production": {
@@ -90,15 +90,14 @@
               "src/assets"
             ],
             "styles": [
-             " node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "node_modules/bootstrap/dist/css/bootstrap-icons.css",
-              "src/styles.css"
-            ],
-            "scripts": [
-              "node_modules/jquery/dist/jquery.min.js",
-              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+ 
+  "src/styles.css"
+],
+"scripts": [
 
-            ]
+]
+
+          
           }
         }
       }
