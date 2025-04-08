@@ -23,6 +23,9 @@ export interface JwtResponse {
   providedIn: 'root'
 })
 export class AuthService {
+getRole() {
+throw new Error('Method not implemented.');
+}
   private apiUrl = 'http://localhost:8089/pi/auth';
 
   constructor(private http: HttpClient, private router: Router) {}

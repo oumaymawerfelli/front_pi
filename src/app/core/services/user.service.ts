@@ -29,14 +29,44 @@ export class UserService {
   }
 
   addUser(user: User): Observable<User> {
-    return this.http.post<User>(`${this.apiUrl}/add-user`, user, { headers: this.getHeaders() });
+    // Create a new object without idUser
+    const userToAdd = {
+      name: user.name,
+      email: user.email,
+      password: user.password,
+      role: user.role,
+      address: user.address,
+      phone: user.phone,
+      cin: user.cin,
+      enabled: user.enabled,
+      dateOfBirth: user.dateOfBirth,
+      service: user.service,
+      paymentInfo: user.paymentInfo,
+      companyName: user.companyName
+    };
+  
+    return this.http.post<User>(`${this.apiUrl}/add-user`, userToAdd, {
+      headers: this.getHeaders(),
+      withCredentials: true
+    });
   }
+  
 
   updateUser(user: User): Observable<User> {
-    return this.http.put<User>(`${this.apiUrl}/update-user`, user, { headers: this.getHeaders() });
+    return this.http.put<User>(`${this.apiUrl}/update-user/${user.idUser}`, user, {
+      headers: this.getHeaders(),
+      withCredentials: true
+    });
   }
+  updateUserProfile(data: FormData): Observable<any> {
+    return this.http.put(`${this.apiUrl}/users/update`, data); // Ensure correct string interpolation
+  }
+  
+  
 
   deleteUser(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/delete-user/${id}`, { headers: this.getHeaders() });
   }
+
+  
 }

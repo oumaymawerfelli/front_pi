@@ -1,31 +1,48 @@
-<form (ngSubmit)="onSubmit()">
-    <div>
+<div class="form-wrapper">
+  <form (ngSubmit)="onSubmit()">
+    <h3>{{ userToEdit ? 'Edit User' : 'Add New User' }}</h3>
+
+    <div class="form-group">
       <label for="name">Name</label>
       <input id="name" [(ngModel)]="userForm.name" name="name" required />
     </div>
-    <div>
+
+    <div class="form-group">
       <label for="email">Email</label>
       <input id="email" [(ngModel)]="userForm.email" name="email" required />
     </div>
-    <div>
+
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" [(ngModel)]="userForm.password" name="password" required />
+    </div>
+
+    <div class="form-group">
       <label for="role">Role</label>
       <select id="role" [(ngModel)]="userForm.role" name="role">
-        <option value="USER">User</option>
-        <option value="ADMIN">Admin</option>
+        <option value="ROLE_ADMIN">Admin</option>
+        <option value="ROLE_FARMER">Farmer</option>
+        <option value="ROLE_STUDENT">Student</option>
       </select>
     </div>
-    <div>
+
+    <div class="form-group">
       <label for="phone">Phone</label>
       <input id="phone" [(ngModel)]="userForm.phone" name="phone" />
     </div>
-    <div>
+
+    <div class="form-group">
       <label for="address">Address</label>
-      <input id="address" [(ngModel)]="userForm.adresse" name="adresse" />
+      <input id="address" [(ngModel)]="userForm.address" name="adresse" />
     </div>
-    <div>
+
+    <div class="form-group">
       <label for="institution">Institution</label>
       <input id="institution" [(ngModel)]="userForm.institution" name="institution" />
     </div>
-    <button type="submit">{{ userToEdit ? 'Update User' : 'Add User' }}</button>
+
+    <button type="submit" class="submit-btn">
+      {{ userToEdit ? 'Update User' : 'Add User' }}
+    </button>
   </form>
-  
+</div>

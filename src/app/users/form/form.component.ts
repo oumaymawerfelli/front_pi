@@ -7,56 +7,57 @@ import { User } from 'src/app/core/models/user.model';
   styleUrls: ['./form.component.css']
 })
 export class FormComponent {
-  @Input() userToEdit: User | null = null;  // Input property for the user being edited
-  @Output() userSubmitted = new EventEmitter<User>();  // Output event to notify when form is submitted
+  @Input() userToEdit: User | null = null;
+  @Output() userSubmitted = new EventEmitter<User>();
 
-  userForm: User = {
-    idUser: 0,
+  // Initialize form without ID
+  userForm: Omit<User, 'idUser'> & { idUser?: number } = {
     name: '',
     email: '',
     password: '',
-    role: 'USER',  // Default role
+    role: 'USER',
+    address: '',
     phone: '',
-    adresse: '',
     cin: 0,
     enabled: true,
-    profilePicture: null,
     dateOfBirth: new Date(),
     service: '',
     paymentInfo: '',
     companyName: '',
-    institution: null
+    profilePicture: '',
+    institution: ''
   };
 
   ngOnChanges(): void {
     if (this.userToEdit) {
-      // If a user is being edited, populate the form with user data
-      this.userForm = { ...this.userToEdit };  // Clone the user to avoid mutating the input
+      // Clone the user to edit
+      this.userForm = { ...this.userToEdit };
+    } else {
+      // Reset form for new user (without ID)
+      this.resetForm();
     }
   }
 
   onSubmit(): void {
-    this.userSubmitted.emit(this.userForm);  // Emit the submitted user data
-    this.resetForm();  // Optionally reset the form after submission
+    this.userSubmitted.emit(this.userForm as User);
   }
 
   resetForm(): void {
     this.userForm = {
-      idUser: 0,
       name: '',
       email: '',
       password: '',
       role: 'USER',
+      address: '',
       phone: '',
-      adresse: '',
       cin: 0,
       enabled: true,
-      profilePicture: null,
       dateOfBirth: new Date(),
       service: '',
       paymentInfo: '',
       companyName: '',
-      institution: null
+      profilePicture: '',
+      institution: ''
     };
   }
 }
