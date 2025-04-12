@@ -14,7 +14,10 @@ const routes: Routes = [
   { path: 'terms-acceptance', component: TermsAcceptanceComponent },
   { path: 'loan-info', component: LoanInfoComponent },
   { path: 'dashboard', component: DashbordComponent} ,
-  { path: '**', redirectTo: '/loan-management' } // Wildcard route
+  
+  { path: '**', redirectTo: '/loan-management' }
+
+// Add this line to include the signature component
   
 ];
 
