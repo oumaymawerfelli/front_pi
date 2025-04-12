@@ -1,0 +1,75 @@
+<div class="container">
+  <h2>📝 Post Forum</h2>
+
+  <!-- 🎯 Post Form -->
+  <form [formGroup]="postForm" (ngSubmit)="submitPost()" class="form-post">
+    <div class="post-input-area">
+      <textarea formControlName="content" placeholder="Express yourself here..." rows="4"></textarea>
+      
+      <div class="post-actions-input">
+        <!-- Upload button integrated like ChatGPT -->
+        <label class="upload-emoji-button" title="Attach image">
+          📎
+          <input type="file" (change)="onFileSelected($event)" accept="image/*" style="display: none;">
+        </label>
+        
+        <button type="submit" class="submit-post-button">
+          {{ isEditing ? '✏️ Update' : '➤ Post' }}
+        </button>
+      </div>
+      
+      <!-- Image preview -->
+      <div *ngIf="imagePreview" class="image-preview-container">
+        <img [src]="imagePreview" class="img-preview">
+        <button (click)="clearImage()" class="remove-image-btn">×</button>
+      </div>
+    </div>
+    
+    <div *ngIf="isEditing" class="form-buttons">
+      <button type="button" class="cancel-btn" (click)="cancelEdit()">❌ Cancel</button>
+    </div>
+  </form>
+
+
+  <hr />
+  
+  <!-- Single post loop with all features -->
+  <div *ngFor="let post of posts" class="post-card">
+    <div class="post-content">
+      <p>🗨️ {{ post.content }}</p>
+      <!-- Display image if exists -->
+      <img *ngIf="post.imageUrl" [src]="post.imageUrl" class="post-image" style="max-width: 100%; margin-top: 10px;">
+      <small class="post-date">🕒 {{ post.dateCreated | date: 'medium' }}</small>
+    </div>
+
+    <div class="post-actions">
+      <button (click)="editPost(post)">✏️ Edit</button>
+      <button (click)="deletePost(post.id!)">🗑️ Delete</button>
+    </div>
+
+    <!-- 🌟 Section Commentaires -->
+    <div class="comments-section">
+      <h4>💬 Comments ({{ post.comments?.length || 0 }})</h4>
+
+      <div *ngFor="let comment of post.comments" class="comment-box">
+        <p>{{ comment.text }}</p>
+        <small>{{ comment.dateCreated | date: 'short' }}</small>
+        <div class="comment-actions">
+          <span>👍 {{ comment.likeCount || 0 }}</span>
+          <button (click)="likeComment(comment.id!, post)">Like</button>
+
+          <span>👎 {{ comment.dislikeCount || 0 }}</span>
+          <button (click)="dislikeComment(comment.id!, post)">Dislike</button>
+
+          <button (click)="deleteComment(comment.id!, post)">🗑️</button>
+        </div>
+      </div>
+
+      <!-- ➕ Ajouter un commentaire -->
+      <div class="add-comment">
+        <textarea [(ngModel)]="commentTexts[post.id!]" placeholder="Add a comment..." rows="2"></textarea>
+        <button (click)="submitComment(post.id!)">📩 Send</button>
+      </div>
+    </div>
+  </div>
+</div>
