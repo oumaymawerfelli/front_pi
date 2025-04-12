@@ -59,8 +59,18 @@ export class UserService {
     });
   }
   updateUserProfile(data: FormData): Observable<any> {
-    return this.http.put(`${this.apiUrl}/users/update`, data); // Ensure correct string interpolation
+    return this.http.put(`${this.apiUrl}/update-user-profile`, data, {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+        // Do NOT set Content-Type here – Angular sets it automatically for FormData
+      }),
+      withCredentials: true
+    });
   }
+  
+    
+  
+
   
   
 

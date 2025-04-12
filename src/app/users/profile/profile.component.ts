@@ -29,28 +29,36 @@ originalUser: any;
 
   constructor(public authService: AuthService, private router: Router , private cdRef: ChangeDetectorRef,   private userService: UserService ) {}
 
-  ngOnInit(): void {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      this.router.navigate(['/login']);
-      return;
-    }
-    this.cdRef.detectChanges(); 
-
-    this.authService.getProfile().subscribe(
-      (userData: UserProfile) => {
-        if (userData) {
-          this.user = userData;
-        } else {
-          this.errorMessage = 'Profile data not found';
-        }
-      },
-      (error: any) => {
-        this.errorMessage = 'Failed to load profile data';
-        console.error(error);
+    ngOnInit(): void {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        this.router.navigate(['/login']);
+        return;
       }
-    );
-  }
+    
+      const decodedToken: any = jwtDecode(token);
+      const userId = decodedToken?.userId || decodedToken?.idUser;
+    
+      if (!userId) {
+        console.error('User ID not found in token');
+        return;
+      }
+    
+      this.userService.getUser(userId).subscribe(
+        (fullUser: User) => {
+          this.user = { 
+            ...fullUser, 
+            dateOfBirth: fullUser.dateOfBirth ? fullUser.dateOfBirth.toISOString() : undefined 
+          };
+          this.originalUser = JSON.parse(JSON.stringify(fullUser));
+        },
+        (error: any) => {
+          console.error('Failed to load full user', error);
+          this.errorMessage = 'Failed to load profile data';
+        }
+      );
+    }
+    
   goToUsers() {
     this.router.navigate(['/admin/users']);
   }
@@ -122,6 +130,11 @@ saveChanges(): void {
     }
   );
 }
+logout(): void {
+  this.authService.logout();
+  this.router.navigate(['/front']);
+}
+
 
 
 
