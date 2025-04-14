@@ -25,7 +25,8 @@ export class FormComponent {
     paymentInfo: '',
     companyName: '',
     profilePicture: '',
-    institution: ''
+    institution: '',
+    status: ''
   };
 
   ngOnChanges(): void {
@@ -57,7 +58,8 @@ export class FormComponent {
       paymentInfo: '',
       companyName: '',
       profilePicture: '',
-      institution: ''
+      institution: '',
+      status: ''
     };
   }
 }

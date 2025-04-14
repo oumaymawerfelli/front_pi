@@ -95,4 +95,10 @@
 .add-user-button:hover {
   background-color: #218838;
 }
+.pending-users-button {
+  background: red !important; /* Make it very visible */
+  padding: 15px !important;
+  z-index: 9999 !important; /* Bring to front */
+  position: relative !important;
+}
 

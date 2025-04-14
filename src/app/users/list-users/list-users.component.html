@@ -17,6 +17,7 @@
         <th>Role</th>
         <th>Phone</th>
         <th>Address</th>
+        <th>Status</th>
         <th>Actions</th>
       </tr>
     </thead>
@@ -28,14 +29,25 @@
         <td>{{ user.role }}</td>
         <td>{{ user.phone }}</td>
         <td>{{ user.address }}</td>
+        <td>{{ user.status }}</td>
         <td>
           <button class="icon-button" (click)="editUser(user)" title="Edit">
             <i class="fas fa-edit"></i>
           </button>
         </td>
+       
       </tr>
     </tbody>
   </table>
+  <div class="pending-users-link">
+    <!-- Add a click handler to test if the button works at all -->
+    <button class="pending-users-button" (click)="testNavigation()">
+    routerLink="/admin/pending-users"
+    (click)="logClick()">
+<i class="fas fa-hourglass-half"></i> View Pending Users
+</button>
+  </div>
+  
 
   <ng-template #noUsers>
     <p>No users found.</p>

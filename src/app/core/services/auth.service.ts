@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, of, tap } from 'rxjs';
+import { catchError, Observable, of, tap } from 'rxjs';
 import { Router } from '@angular/router';
 
 export interface LoginRequest {
@@ -13,6 +13,7 @@ export interface RegisterRequest {
   email: string;
   password: string;
   role: string;
+  phone: string;
 }
 
 export interface JwtResponse {
@@ -23,6 +24,7 @@ export interface JwtResponse {
   providedIn: 'root'
 })
 export class AuthService {
+  snackbar: any;
 getRole() {
 throw new Error('Method not implemented.');
 }
@@ -34,6 +36,14 @@ throw new Error('Method not implemented.');
     return this.http.post<JwtResponse>(`${this.apiUrl}/login`, request, { withCredentials: true }).pipe(
       tap(response => {
         localStorage.setItem('token', response.token);
+      }),
+      catchError(err => {
+        if (err.error.message === 'Your account is not approved yet.') {
+          this.snackbar.open('Account pending approval by admin.', 'Close', { duration: 3000 });
+        } else {
+          this.snackbar.open('Login failed. Check credentials.', 'Close', { duration: 3000 });
+        }
+        throw err;
       })
     );
   }

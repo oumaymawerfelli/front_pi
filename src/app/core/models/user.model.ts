@@ -13,5 +13,6 @@ export interface User {
     service: string;
     paymentInfo: string;
     companyName: string;
-    institution: any; // Adjust according to your relationships
+    institution: any; 
+    status:string;// Adjust according to your relationships
   }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { catchError, Observable, tap, throwError } from 'rxjs';
 import { User } from '../models/user.model'; 
 
 @Injectable({
@@ -67,6 +67,30 @@ export class UserService {
       withCredentials: true
     });
   }
+
+  
+  
+  approveUser(userId: number): Observable<any> {
+    return this.http.put(`${this.apiUrl}/admin/approve/${userId}`, null, {
+        headers: this.getHeaders(),
+        withCredentials: true
+    });
+}
+  
+getPendingUsers(): Observable<any[]> {
+  console.log('Attempting to fetch pending users...');
+  return this.http.get<any[]>(`${this.apiUrl}/pending-users`, { 
+    headers: this.getHeaders(),
+    withCredentials: true 
+  }).pipe(
+    tap(response => console.log('Received pending users:', response)),
+    catchError(error => {
+      console.error('Error fetching pending users:', error);
+      return throwError(() => new Error('Failed to fetch pending users'));
+    })
+  );
+}
+  
   
     
   

@@ -12,6 +12,7 @@ import { LoginComponent } from './users/login/login.component';
 import { AdminGuard } from './guards/admin.guard';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { OAuth2RedirectComponent } from './users/oauth2-redirect/oauth2-redirect.component';
+import { PendingUsersComponent } from './pending-users/pending-users.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/front', pathMatch: 'full' },
@@ -32,13 +33,15 @@ const routes: Routes = [
     children: [
       { path: 'profile', component: ProfileComponent },
       { path: 'users', component: ListUsersComponent, canActivate: [AdminGuard] },
+      {path:'pending-users', component: PendingUsersComponent, canActivate: [AdminGuard]},
     ]
   },
   { path: 'users', component: ListUsersComponent, canActivate: [AdminGuard] },
   { path: 'oauth2-redirect', component: OAuth2RedirectComponent },
   { path: 'users/new', component: FormComponent, canActivate: [AdminGuard] },
   { path: 'unauthorized', component: UnauthorizedComponent },
-  { path: '**', redirectTo: '/front/login' }
+  { path: '**', redirectTo: '/front/login' },
+  
 ];
 
 @NgModule({
