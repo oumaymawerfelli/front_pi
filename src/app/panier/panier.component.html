@@ -1,59 +1,26 @@
-
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panier d'Achats</title>
-</head>
-<body>
-
-    <!-- Section Panier -->
-    <div class="cart-container">
-        <h2>Votre Panier</h2>
-        
-        <!-- Liste des produits dans le panier -->
-        <table class="cart-table">
-            <thead>
-                <tr>
-                    <th>Produit</th>
-                    <th>Prix</th>
-                    <th>Quantité</th>
-                    <th>Total</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Exemple d'un produit dans le panier -->
-                <tr>
-                    <td>Produit A</td>
-                    <td>25 €</td>
-                    <td>
-                        <input type="number" value="1" min="1" class="quantity-input">
-                    </td>
-                    <td>25 €</td>
-                    <td><button class="remove-btn">Supprimer</button></td>
-                </tr>
-                <tr>
-                    <td>Produit B</td>
-                    <td>15 €</td>
-                    <td>
-                        <input type="number" value="2" min="1" class="quantity-input">
-                    </td>
-                    <td>30 €</td>
-                    <td><button class="remove-btn">Supprimer</button></td>
-                </tr>
-            </tbody>
-        </table>
-
-        <!-- Total -->
-        <div class="cart-summary">
-            <p><strong>Total: </strong><span id="total-price">55 €</span></p>
-            <button class="checkout-btn">Passer à la Caisse</button>
-        </div>
+<div class="container mt-4">
+    <h2>🛒 Contenu du Panier</h2>
+    <table class="table table-bordered table-striped mt-3" *ngIf="lignesPanier.length > 0">
+      <thead class="table-dark">
+        <tr>
+          <th>Produit</th>
+          <th>Prix Unitaire</th>
+          <th>Quantité</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let ligne of lignesPanier">
+          <td>{{ ligne.produit.productName }}</td>
+          <td>{{ ligne.produit.productPrice }} TND</td>
+          <td>{{ ligne.quantite }}</td>
+          <td>{{ ligne.prixTotal }} TND</td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <div *ngIf="lignesPanier.length === 0" class="alert alert-info">
+      Le panier est vide.
     </div>
-
-</body>
-</html>
+  </div>
+  
