@@ -1,6 +1,4 @@
-// import { HttpClient } from '@angular/common/http';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Post } from 'src/model/post';
@@ -19,10 +17,11 @@ export class PostService {
   getPost(id: number): Observable<Post> {
     return this.http.get<Post>(`${this.baseUrl}/${id}`);
   }
-
-  addPost(post: Post): Observable<Post> {
-    return this.http.post<Post>(`${this.baseUrl}/add`, post);
+  addPost(postData: FormData): Observable<Post> {
+    // Ne pas spécifier 'Content-Type', Angular le gère automatiquement
+    return this.http.post<Post>(`${this.baseUrl}/add`, postData);
   }
+
 
   updatePost(id: number, post: Post): Observable<Post> {
     return this.http.put<Post>(`${this.baseUrl}/update/${id}`, post);
@@ -31,11 +30,4 @@ export class PostService {
   deletePost(id: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/delete/${id}`);
   }
-  ////
-  uploadImage(file: File, postId: number): Observable<any> {
-    const formData = new FormData();
-    formData.append('file', file);
-    return this.http.post(`${this.baseUrl}/upload/${postId}`, formData);
-  }
-  ////
 }
