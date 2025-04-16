@@ -12,8 +12,10 @@ import { LoginComponent } from './users/login/login.component';
 import { AdminGuard } from './guards/admin.guard';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 
+import { InstitutionModule } from './university/institution/institution.module';
+
 const routes: Routes = [
-  { path: '', redirectTo: '/front', pathMatch: 'full' },
+  //{ path: '', redirectTo: '/front', pathMatch: 'full' },
   { path: 'marketplace', component: MarketplaceComponent },
   {
     path: 'front', 
@@ -31,7 +33,9 @@ const routes: Routes = [
   { path: 'users', component: ListUsersComponent , canActivate: [AdminGuard]},
   
   { path: 'users/new', component: FormComponent , canActivate: [AdminGuard]},
-  { path: 'unauthorized', component: UnauthorizedComponent }
+  { path: 'unauthorized', component: UnauthorizedComponent },
+  { path: 'institutions', loadChildren: () => import('./university/institution/institution.module').then(m => m.InstitutionModule) },
+  { path: '', redirectTo: '/institutions', pathMatch: 'full' }
   
   
 ];

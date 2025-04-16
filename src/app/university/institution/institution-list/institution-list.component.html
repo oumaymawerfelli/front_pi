@@ -1,0 +1,76 @@
+<!-- Header Section -->
+<header>
+  <h1>AgriCulture</h1>
+  <ul class="navmenu">
+    <li><a routerLink="/">Home</a></li>
+    <li><a routerLink="/about">About Us</a></li>
+    <li><a routerLink="/services">Our Services</a></li>
+    <li><a routerLink="/front/login">Sign In</a></li>
+    <li><a routerLink="/front/register">Sign Up</a></li>
+    <li><a routerLink="/blog">Blog</a></li>
+    <li><a routerLink="/contact">Contact</a></li>
+  </ul>
+</header>
+
+<!-- Main Content Area -->
+<main>
+  <div class="container mt-4">
+    <h2>List of Institutions</h2>
+    <button routerLink="/institutions/add" class="btn btn-primary mb-3">
+      Add Institution
+    </button>
+
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Location</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let inst of institutions">
+          <td>{{ inst.institutionId }}</td>
+          <td>{{ inst.name }}</td>
+          <td>{{ inst.location }}</td>
+          <td>
+            <button [routerLink]="['/institutions/edit', inst.institutionId]" class="btn btn-warning btn-sm">
+              Edit
+            </button>
+            <button (click)="deleteInstitution(inst.institutionId)" class="btn btn-danger btn-sm ms-2">
+              Delete
+            </button>
+         
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</main>
+
+<!-- Footer Section -->
+<footer>
+  <div class="footer-content">
+    <div class="footer-column">
+      <h4>Useful Links</h4>
+      <ul>
+        <li><a routerLink="/">Home</a></li>
+        <li><a routerLink="/about">About Us</a></li>
+        <li><a routerLink="/services">Services</a></li>
+        <li><a routerLink="/terms">Terms of Service</a></li>
+        <li><a routerLink="/privacy">Privacy Policy</a></li>
+      </ul>
+    </div>
+    <div class="footer-column">
+      <h4>Our Services</h4>
+      <ul>
+        <li><a href="#">Web Design</a></li>
+        <li><a href="#">Web Development</a></li>
+        <li><a href="#">Product Management</a></li>
+        <li><a href="#">Marketing</a></li>
+        <li><a href="#">Graphic Design</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
