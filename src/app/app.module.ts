@@ -12,6 +12,8 @@ import { FormsModule } from '@angular/forms';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { AuthService } from './core/services/auth.service';
 import { AdminGuard } from './guards/admin.guard';
+import { ResearchRoutingModule } from './university/research/research-routing.module';
+import { ResearchModule } from './university/research/research.module';
 
 
 @NgModule({
@@ -21,14 +23,17 @@ import { AdminGuard } from './guards/admin.guard';
     PanierComponent,
     FrontComponent,
     BackComponent,
-    UnauthorizedComponent
+    UnauthorizedComponent,
+  
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
     UsersModule,
-    FormsModule
+    FormsModule,
+    ResearchRoutingModule,
+    ResearchModule
   ],
   providers: [AuthService, AdminGuard],
   bootstrap: [AppComponent]

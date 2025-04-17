@@ -1,0 +1,81 @@
+<!-- Header Section -->
+<header>
+    <h1>AgriCulture</h1>
+    <ul class="navmenu">
+      <li><a routerLink="/">Home</a></li>
+      <li><a routerLink="/about">About Us</a></li>
+      <li><a routerLink="/services">Our Services</a></li>
+      <li><a routerLink="/front/login">Sign In</a></li>
+      <li><a routerLink="/front/register">Sign Up</a></li>
+      <li><a routerLink="/blog">Blog</a></li>
+      <li><a routerLink="/contact">Contact</a></li>
+    </ul>
+  </header>
+  
+  <!-- Main Content Area -->
+  <main>
+    <div class="container mt-4">
+      <h2>List of Research Projects</h2>
+      <button routerLink="/research/add" class="btn btn-primary mb-3">
+        Add Research Project
+      </button>
+  
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Title</th>
+            <th>Research Focus</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let project of researchProjects">
+            <td>{{ project.projectId }}</td>
+            <td>{{ project.title }}</td>
+            <td>{{ project.researchFocus }}</td>
+            <td>{{ project.status }}</td>
+            <td>{{ project.fundingSource }}</td> 
+            <td>
+              <button [routerLink]="['/research/edit', project.projectId]" class="btn btn-warning btn-sm">
+                Edit
+              </button>
+              <button (click)="deleteProject(project.projectId)" class="btn btn-danger btn-sm">
+                Delete
+              </button>
+              <button (click)="viewDetails(project.projectId)">Voir les détails</button>
+
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+  
+  <!-- Footer Section -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-column">
+        <h4>Useful Links</h4>
+        <ul>
+          <li><a routerLink="/">Home</a></li>
+          <li><a routerLink="/about">About Us</a></li>
+          <li><a routerLink="/services">Services</a></li>
+          <li><a routerLink="/terms">Terms of Service</a></li>
+          <li><a routerLink="/privacy">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Our Services</h4>
+        <ul>
+          <li><a href="#">Web Design</a></li>
+          <li><a href="#">Web Development</a></li>
+          <li><a href="#">Product Management</a></li>
+          <li><a href="#">Marketing</a></li>
+          <li><a href="#">Graphic Design</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+  

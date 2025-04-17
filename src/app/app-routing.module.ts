@@ -35,7 +35,9 @@ const routes: Routes = [
   { path: 'users/new', component: FormComponent , canActivate: [AdminGuard]},
   { path: 'unauthorized', component: UnauthorizedComponent },
   { path: 'institutions', loadChildren: () => import('./university/institution/institution.module').then(m => m.InstitutionModule) },
-  { path: '', redirectTo: '/institutions', pathMatch: 'full' }
+  { path: '', redirectTo: '/institutions', pathMatch: 'full' },
+  { path: 'research', loadChildren: () => import('./university/research/research.module').then(m => m.ResearchModule) },
+
   
   
 ];

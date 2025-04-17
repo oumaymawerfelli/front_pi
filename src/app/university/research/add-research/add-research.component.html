@@ -1,0 +1,191 @@
+<div class="container">
+    <h2>Add New Research Project</h2>
+  
+    <form (ngSubmit)="onSubmit()" #researchForm="ngForm">
+      <!-- Title Field -->
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input
+          type="text"
+          id="title"
+          class="form-control"
+          [(ngModel)]="newProject.title"
+          name="title"
+          maxlength="100"
+          required
+        />
+        <div *ngIf="!researchForm.form.controls['title']?.valid && researchForm.form.controls['title']?.touched" class="text-danger">
+          Title is required.
+        </div>
+      </div>
+  
+      <!-- Description Field -->
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea
+          id="description"
+          class="form-control"
+          [(ngModel)]="newProject.description"
+          name="description"
+          maxlength="500"
+          required
+        ></textarea>
+        <div *ngIf="!researchForm.form.controls['description']?.valid && researchForm.form.controls['description']?.touched" class="text-danger">
+          Description is required.
+        </div>
+      </div>
+  
+      <!-- Research Focus Field -->
+      <div class="form-group">
+        <label for="researchFocus">Research Focus</label>
+        <input
+          type="text"
+          id="researchFocus"
+          class="form-control"
+          [(ngModel)]="newProject.researchFocus"
+          name="researchFocus"
+          required
+        />
+        <div *ngIf="!researchForm.form.controls['researchFocus']?.valid && researchForm.form.controls['researchFocus']?.touched" class="text-danger">
+          Research focus is required.
+        </div>
+      </div>
+  
+      <!-- Status Field -->
+      <div class="form-group">
+        <label for="status">Status</label>
+        <select
+          id="status"
+          class="form-control"
+          [(ngModel)]="newProject.status"
+          name="status"
+          required
+        >
+          <option value="Active">Active</option>
+          <option value="Completed">Completed</option>
+          <option value="On Hold">On Hold</option>
+          <option value="Pending">Pending</option>
+          <option value="Archived">Archived</option>
+        </select>
+        <div *ngIf="!researchForm.form.controls['status']?.valid && researchForm.form.controls['status']?.touched" class="text-danger">
+          Status is required.
+        </div>
+      </div>
+  
+      <!-- Soil Type Field -->
+      <div class="form-group">
+        <label for="soilType">Soil Type</label>
+        <select
+          id="soilType"
+          class="form-control"
+          [(ngModel)]="newProject.soilType"
+          name="soilType"
+          required
+        >
+          <option value="Clay">Clay</option>
+          <option value="Loamy">Loamy</option>
+          <option value="Sandy">Sandy</option>
+          <option value="Other">Other</option>
+        </select>
+        <div *ngIf="!researchForm.form.controls['soilType']?.valid && researchForm.form.controls['soilType']?.touched" class="text-danger">
+          Soil type is required.
+        </div>
+      </div>
+  
+      <!-- Water Requirement Field -->
+      <div class="form-group">
+        <label for="waterRequirement">Water Requirement</label>
+        <select
+          id="waterRequirement"
+          class="form-control"
+          [(ngModel)]="newProject.waterRequirement"
+          name="waterRequirement"
+          required
+        >
+          <option value="Low">Low</option>
+          <option value="Medium">Medium</option>
+          <option value="High">High</option>
+        </select>
+        <div *ngIf="!researchForm.form.controls['waterRequirement']?.valid && researchForm.form.controls['waterRequirement']?.touched" class="text-danger">
+          Water requirement is required.
+        </div>
+      </div>
+  
+      <!-- Climate Conditions Field -->
+      <div class="form-group">
+        <label for="climateConditions">Climate Conditions</label>
+        <select
+          id="climateConditions"
+          class="form-control"
+          [(ngModel)]="newProject.climateConditions"
+          name="climateConditions"
+        >
+          <option value="Tropical">Tropical</option>
+          <option value="Temperate">Temperate</option>
+          <option value="Arid">Arid</option>
+          <option value="Subarctic">Subarctic</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+  
+      <!-- Requested Funding Field -->
+      <div class="form-group">
+        <label for="fundingSource">Requested Funding</label>
+        <input
+          type="text"
+          id="fundingSource"
+          class="form-control"
+          [(ngModel)]="newProject.fundingSource"
+          name="fundingSource"
+          required
+          pattern="^[0-9]+(\.[0-9]{1,2})?$"
+          placeholder="Enter amount (e.g., 1000, 5000.75)"
+        />
+        <div *ngIf="!researchForm.form.controls['fundingSource']?.valid && researchForm.form.controls['fundingSource']?.touched" class="text-danger">
+          Please enter a valid amount (e.g., 1000, 5000.75).
+        </div>
+      </div>
+  
+      <!-- Start Date Field -->
+      <div class="form-group">
+        <label for="startDate">Start Date</label>
+        <input
+          type="date"
+          id="startDate"
+          class="form-control"
+          [(ngModel)]="newProject.startDate"
+          name="startDate"
+          [min]="minDate"
+          required
+        />
+        <div *ngIf="!researchForm.form.controls['startDate']?.valid && researchForm.form.controls['startDate']?.touched" class="text-danger">
+          Start date is required.
+        </div>
+      </div>
+  
+      <!-- Estimated Duration Field -->
+      <div class="form-group">
+        <label for="estimatedDuration">Estimated Duration (in months)</label>
+        <input
+          type="number"
+          id="estimatedDuration"
+          class="form-control"
+          [(ngModel)]="newProject.estimatedDuration"
+          name="estimatedDuration"
+          min="1"
+          required
+        />
+        <div *ngIf="!researchForm.form.controls['estimatedDuration']?.valid && researchForm.form.controls['estimatedDuration']?.touched" class="text-danger">
+          Estimated duration is required and must be at least 1 month.
+        </div>
+      </div>
+  
+      <!-- Submit Button -->
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary" [disabled]="!researchForm.form.valid">
+          Add Project
+        </button>
+      </div>
+    </form>
+  </div>
+  
