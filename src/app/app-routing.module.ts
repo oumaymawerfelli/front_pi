@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
+import { ContactComponent } from './contact/contact.component';
 import { MarketplaceComponent } from './marketplace/marketplace.component';
 import { FrontComponent } from './component/front/front.component';
 import { BackComponent } from './component/back/back.component';
@@ -13,7 +13,9 @@ import { AdminGuard } from './guards/admin.guard';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { OAuth2RedirectComponent } from './users/oauth2-redirect/oauth2-redirect.component';
 import { PendingUsersComponent } from './pending-users/pending-users.component';
-
+import { LoanManagementComponent } from './loans/loan-management/loan-management.component';
+import { LoanInfoComponent } from './loans/loan-info/loan-info.component';
+import { LoanApplicationComponent } from './loans/loan-application/loan-application.component';
 const routes: Routes = [
   { path: '', redirectTo: '/front', pathMatch: 'full' },
   { path: 'marketplace', component: MarketplaceComponent },
@@ -26,6 +28,21 @@ const routes: Routes = [
       { path: 'profile', component: ProfileComponent }
     ]
   },
+  {
+    path: 'loans', 
+    component: FrontComponent, 
+    children: [
+      { path: 'loan-management', component: LoanManagementComponent },
+      { path: 'loan-application', component: LoanApplicationComponent },
+      { path: 'loan-info', component: LoanInfoComponent },
+
+ 
+    ]
+  },
+  { path: 'contact', component: ContactComponent },
+
+
+
   { 
     path: 'admin', 
     component: BackComponent, 

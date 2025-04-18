@@ -13,7 +13,12 @@ import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { AuthService } from './core/services/auth.service';
 import { AdminGuard } from './guards/admin.guard';
 import { PendingUsersComponent } from './pending-users/pending-users.component';
-
+import { LoanManagementComponent } from './loans/loan-management/loan-management.component';
+import { LoanApplicationComponent } from './loans/loan-application/loan-application.component';
+import { LoanInfoComponent } from './loans/loan-info/loan-info.component';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ContactComponent } from './contact/contact.component';
 
 @NgModule({
   declarations: [
@@ -23,14 +28,19 @@ import { PendingUsersComponent } from './pending-users/pending-users.component';
     FrontComponent,
     BackComponent,
     UnauthorizedComponent,
-    PendingUsersComponent
+    PendingUsersComponent,
+    LoanManagementComponent,
+    LoanApplicationComponent,
+    LoanInfoComponent,
+    ContactComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
     UsersModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [AuthService, AdminGuard],
   bootstrap: [AppComponent]
