@@ -9,6 +9,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { OAuth2RedirectComponent } from './oauth2-redirect/oauth2-redirect.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { ReactiveFormsModule } from '@angular/forms';
+
 
 
 
@@ -20,13 +24,16 @@ import { OAuth2RedirectComponent } from './oauth2-redirect/oauth2-redirect.compo
     ProfileComponent,
     RegisterComponent,
     LoginComponent,
-    OAuth2RedirectComponent
+    OAuth2RedirectComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent
   ],
   imports: [
     CommonModule,
     BrowserModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
     
     
   ],

@@ -8,11 +8,13 @@ import { PanierComponent } from './panier/panier.component';
 import { FrontComponent } from './component/front/front.component';
 import { BackComponent } from './component/back/back.component';
 import { UsersModule } from './users/users.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { AuthService } from './core/services/auth.service';
 import { AdminGuard } from './guards/admin.guard';
 import { PendingUsersComponent } from './pending-users/pending-users.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 @NgModule({
@@ -30,7 +32,10 @@ import { PendingUsersComponent } from './pending-users/pending-users.component';
     AppRoutingModule,
     NgbModule,
     UsersModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule,
+    ReactiveFormsModule,
+    MatSnackBarModule
   ],
   providers: [AuthService, AdminGuard],
   bootstrap: [AppComponent]

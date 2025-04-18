@@ -119,4 +119,21 @@ throw new Error('Method not implemented.');
   isAdmin(): boolean {
     return this.getUserRole() === 'ROLE_ADMIN';
   }
+
+  forgotPassword(email: string): Observable<any> {
+    const url = `${this.apiUrl}/forgot-password`;
+    return this.http.post(url, { email }, {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+      withCredentials: true
+    });
+  }
+
+  resetPassword(token: string, newPassword: string): Observable<any> {
+    const url = `${this.apiUrl}/reset-password`;
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  
+    return this.http.post(url, { token, newPassword }, { headers });
+  }
+  
+  
 }

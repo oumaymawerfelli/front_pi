@@ -25,6 +25,7 @@
               "src/assets"
             ],
             "styles": [
+              "@angular/material/prebuilt-themes/deeppurple-amber.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -89,13 +90,14 @@
               "src/assets"
             ],
             "styles": [
+              "@angular/material/prebuilt-themes/deeppurple-amber.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/bootstrap/dist/css/bootstrap-icons.css",
               "src/styles.css",
               "src/assets/back/css/bootstrap.min.css",
-  "src/assets/back/css/plugins.min.css",
-  "src/assets/back/css/kaiadmin.min.css",
-  "src/assets/back/css/demo.css"
+              "src/assets/back/css/plugins.min.css",
+              "src/assets/back/css/kaiadmin.min.css",
+              "src/assets/back/css/demo.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
