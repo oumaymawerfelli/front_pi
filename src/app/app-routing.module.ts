@@ -13,6 +13,11 @@ import { AdminGuard } from './guards/admin.guard';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { OAuth2RedirectComponent } from './users/oauth2-redirect/oauth2-redirect.component';
 import { PendingUsersComponent } from './pending-users/pending-users.component';
+import { ForgotPasswordComponent } from './users/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './users/reset-password/reset-password.component';
+import { LoanApplicationComponent } from './loans/loan-application/loan-application.component';
+import { LoanInfoComponent } from './loans/loan-info/loan-info.component';
+import { LoanManagementComponent } from './loans/loan-management/loan-management.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/front', pathMatch: 'full' },

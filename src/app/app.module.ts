@@ -13,6 +13,10 @@ import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { AuthService } from './core/services/auth.service';
 import { AdminGuard } from './guards/admin.guard';
 import { PendingUsersComponent } from './pending-users/pending-users.component';
+import { ContactComponent } from './contact/contact.component';
+import { LoanApplicationComponent } from './loans/loan-application/loan-application.component';
+import { LoanInfoComponent } from './loans/loan-info/loan-info.component';
+import { LoanManagementComponent } from './loans/loan-management/loan-management.component';
 
 
 @NgModule({
@@ -34,7 +38,8 @@ import { PendingUsersComponent } from './pending-users/pending-users.component';
     AppRoutingModule,
     NgbModule,
     UsersModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [AuthService, AdminGuard],
   bootstrap: [AppComponent]
