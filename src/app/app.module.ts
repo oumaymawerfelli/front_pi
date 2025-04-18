@@ -13,8 +13,6 @@ import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { AuthService } from './core/services/auth.service';
 import { AdminGuard } from './guards/admin.guard';
 import { PendingUsersComponent } from './pending-users/pending-users.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 @NgModule({
@@ -25,17 +23,18 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     FrontComponent,
     BackComponent,
     UnauthorizedComponent,
-    PendingUsersComponent
+    PendingUsersComponent,
+    LoanManagementComponent,
+    LoanApplicationComponent,
+    LoanInfoComponent,
+    ContactComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
     UsersModule,
-    FormsModule,
-    BrowserAnimationsModule,
-    ReactiveFormsModule,
-    MatSnackBarModule
+    FormsModule
   ],
   providers: [AuthService, AdminGuard],
   bootstrap: [AppComponent]
