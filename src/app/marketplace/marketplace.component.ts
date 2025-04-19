@@ -10,19 +10,20 @@ import { Router } from '@angular/router';
   styleUrls: ['./marketplace.component.css']
 })
 export class MarketplaceComponent implements OnInit {
-  
+  chatbotVisible = false;
   produits: Product[] = [];
+  quantities: { [key: number]: number } = {};  // Dictionnaire pour stocker les quantités de chaque produit
 
   constructor(
     private productService: ProductService,
-    private lignePanierService: LignePanierService, // Injection du service LignePanierService
+    private lignePanierService: LignePanierService,
     private router: Router
   ) {}
 
   ngOnInit() {
     this.productService.getAll().subscribe({
       next: (data) => {
-        this.produits = data; // Récupération des produits et affectation à la variable
+        this.produits = data;
       },
       error: (err) => {
         console.error('Erreur lors de la récupération des produits:', err);
@@ -30,9 +31,9 @@ export class MarketplaceComponent implements OnInit {
     });
   }
 
+  // Fonction pour ajouter un produit au panier
   addToCart(produit: Product) {
-    const quantiteStr = prompt('Entrez la quantité :');
-    const quantite = Number(quantiteStr);
+    const quantite = this.quantities[produit.productId];  // Récupérer la quantité pour ce produit
   
     if (!quantite || quantite <= 0 || isNaN(quantite)) {
       alert('Quantité invalide.');
@@ -41,14 +42,14 @@ export class MarketplaceComponent implements OnInit {
   
     const prixTotal = produit.productPrice * quantite;
   
-    const ligne: LignePanier = { 
+    const ligne: LignePanier = {
       produit: produit,
       quantite: quantite,
       prixTotal: prixTotal,
-      panier: null ,
+      panier: null,
     };
   
-    const panierId = 38;
+    const panierId = 38;  // ID du panier, vous pouvez le changer dynamiquement
   
     this.lignePanierService.addLigneToPanier(panierId, ligne).subscribe({
       next: () => alert('Produit ajouté au panier.'),
@@ -58,7 +59,8 @@ export class MarketplaceComponent implements OnInit {
       }
     });
   }
+
+  // Redirige vers le panier
   goToPanier() {
-    this.router.navigate(['/panier']); // Redirige vers le composant panier
-  }
-}
+    this.router.navigate(['/Panier']);
+  }}

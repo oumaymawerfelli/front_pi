@@ -1,17 +1,30 @@
 <div class="product-list">
   <div *ngFor="let produit of produits" class="product-item">
+    <div class="product-image">
+      <img [src]="produit.productImage" alt="{{ produit.productName }}">
+    </div>
+
     <div class="product-details">
       <h3>{{ produit.productName }}</h3>
-    
-      <p><strong>Prix:</strong> {{ produit.productPrice }} TND</p>
-      <button class="btn btn-primary" (click)="addToCart(produit)">
+      <p><strong>Prix :</strong> {{ produit.productPrice }} TND</p>
+
+      <!-- Champ de saisie pour la quantité -->
+      <input type="number" [(ngModel)]="quantities[produit.productId]" min="1" placeholder="Quantité" class="quantity-input">
+
+      <!-- Bouton d'ajout au panier -->
+      <button class="btn" (click)="addToCart(produit)">
         Ajouter au panier
       </button>
-      
     </div>
   </div>
-  <button class="btn btn-primary" (click)="goToPanier()">
+
+  <!-- Bouton pour consulter le panier -->
+  <button class="btn-consulter-panier" (click)="goToPanier()">
     🛒 Consulter Panier
   </button>
+  <button class="chatbot-button" (click)="chatbotVisible = !chatbotVisible">
+    💬 Chat avec nous
+  </button>
+  <app-chatbot *ngIf="chatbotVisible" [visible]="chatbotVisible"></app-chatbot>
   
 </div>

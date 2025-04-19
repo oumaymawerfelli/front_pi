@@ -4,5 +4,5 @@ import { LignePanier } from './LignePanier'; // Assurez-vous que le modèle `Lig
 export class Panier {
   id!: number;  
   utilisateur!: User; 
-  lignePanier!: LignePanier[];  // Liste des lignes de panier
+  lignePanier!: LignePanier[];  
 }

@@ -13,6 +13,6 @@ export class PanierService {
   constructor(private http: HttpClient) {}
 
   getLignesByPanierId(panierId: number): Observable<LignePanier[]> {
-    return this.http.get<LignePanier[]>(`${this.baseUrl}/${panierId}/lignes`);
+    return this.http.get<any[]>(`${this.baseUrl}/${panierId}/lignes`);
   }
 }

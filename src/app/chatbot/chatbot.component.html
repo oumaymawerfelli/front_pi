@@ -1,0 +1,17 @@
+<div class="chatbot-container" *ngIf="visible">
+  <div class="chatbot-header">
+    <span>🤖 ChatBot</span>
+    <button (click)="close()">✖</button>
+  </div>
+  <div class="chatbot-messages">
+    <div *ngFor="let msg of messages" [ngClass]="msg.role">
+      <strong *ngIf="msg.role === 'user'">Vous:</strong>
+      <strong *ngIf="msg.role === 'assistant'">Bot:</strong>
+      {{ msg.content }}
+    </div>
+  </div>
+  <div class="chatbot-input">
+    <input [(ngModel)]="userInput" (keyup.enter)="handleSend()" placeholder="Écrivez un message..." />
+    <button (click)="handleSend()">Envoyer</button>
+  </div>
+</div>

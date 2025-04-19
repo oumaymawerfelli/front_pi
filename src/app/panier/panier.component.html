@@ -1,26 +1,51 @@
 <div class="container mt-4">
-    <h2>🛒 Contenu du Panier</h2>
-    <table class="table table-bordered table-striped mt-3" *ngIf="lignesPanier.length > 0">
-      <thead class="table-dark">
-        <tr>
+  <h2 class="text-center mb-4">🛒 Mon Panier</h2>
+
+  <div *ngIf="lignesPanier.length > 0; else panierVide">
+    <table class="table table-hover shadow-sm rounded">
+      <thead class="table-primary">
+        <tr class="text-center">
           <th>Produit</th>
           <th>Prix Unitaire</th>
           <th>Quantité</th>
           <th>Total</th>
+          <th>Action</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let ligne of lignesPanier">
+        <tr *ngFor="let ligne of lignesPanier" class="text-center align-middle">
           <td>{{ ligne.produit.productName }}</td>
-          <td>{{ ligne.produit.productPrice }} TND</td>
-          <td>{{ ligne.quantite }}</td>
-          <td>{{ ligne.prixTotal }} TND</td>
+          <td>{{ ligne.produit.productPrice | currency:'TND' }}</td>
+          <td>
+            <div class="d-flex justify-content-center align-items-center gap-2">
+              <button class="btn btn-sm btn-outline-secondary" 
+                      (click)="changerQuantite(ligne, -1)" 
+                      [disabled]="ligne.quantite <= 1">−</button>
+              <span>{{ ligne.quantite }}</span>
+              <button class="btn btn-sm btn-outline-secondary" 
+                      (click)="changerQuantite(ligne, +1)">+</button>
+            </div>
+          </td>
+          <td>{{ ligne.produit.productPrice * ligne.quantite | currency:'TND' }}</td>
+          <td>
+            <button class="btn btn-sm btn-danger" 
+                    (click)="supprimerLigne(ligne.id)" 
+                    *ngIf="ligne.id !== undefined && ligne.id !== null">🗑 Supprimer</button>
+          </td>
         </tr>
       </tbody>
+      <tfoot class="table-light">
+        <tr>
+          <td colspan="3" class="text-end"><strong>Total :</strong></td>
+          <td colspan="2" class="text-start"><strong>{{ getTotal() | currency:'TND' }}</strong></td>
+        </tr>
+      </tfoot>
     </table>
-  
-    <div *ngIf="lignesPanier.length === 0" class="alert alert-info">
-      Le panier est vide.
-    </div>
   </div>
-  
+
+  <ng-template #panierVide>
+    <div class="alert alert-info text-center mt-4">
+      Votre panier est vide 🛒
+    </div>
+  </ng-template>
+</div>

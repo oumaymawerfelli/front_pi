@@ -11,7 +11,7 @@ const routes: Routes = [
   { path: 'marketplace', component: MarketplaceComponent },
   { path: 'front', component: FrontComponent },
   { path: 'admin', component: BackComponent },
-  {path: 'panier', component: PanierComponent}
+  {path: 'Panier', component: PanierComponent}
 
 ];
 

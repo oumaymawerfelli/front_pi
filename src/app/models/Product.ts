@@ -4,5 +4,6 @@ export class Product {
   productName!: string;     // Remplace 'nom' par 'productName'
   productPrice!: number;    // Remplace 'prix' par 'productPrice'
   productStock!: number;    // Remplace 'quantite' par 'productStock'
-  lignesPanier!: any[];     // Si tu veux utiliser 'lignesPanier', garde cette propriété
+  lignesPanier?: any[];     // Si tu veux utiliser 'lignesPanier', garde cette propriété
+  productImage?: string;
 }

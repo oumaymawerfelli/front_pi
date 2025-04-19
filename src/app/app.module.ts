@@ -8,6 +8,8 @@ import { PanierComponent } from './panier/panier.component';
 import { FrontComponent } from './component/front/front.component';
 import { BackComponent } from './component/back/back.component';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { ChatbotComponent } from './chatbot/chatbot.component';
 
 @NgModule({
   declarations: [
@@ -15,13 +17,15 @@ import { HttpClientModule } from '@angular/common/http';
     MarketplaceComponent,
     PanierComponent,
     FrontComponent,
-    BackComponent
+    BackComponent,
+    ChatbotComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    NgbModule
+    NgbModule,
+    FormsModule 
   ],
   providers: [],
   bootstrap: [AppComponent]
