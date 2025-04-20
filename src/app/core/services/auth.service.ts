@@ -139,6 +139,12 @@ throw new Error('Method not implemented.');
   getLoggedInUser(): Observable<User> {
     return this.http.get<User>('http://localhost:8080/profile/profile');
   }
+
+  loginWithFacebook(): void {
+    localStorage.clear();
+    window.location.href = 'http://localhost:8089/pi/oauth2/authorization/facebook';
+  }
+  
   
   
   
