@@ -11,7 +11,7 @@ interface UserProfile {
   phone?: string;
   adresse?: string;
   dateOfBirth?: string;
-  profilePicture?: string; 
+  profilePictureBase64?: string;
   role?: string;// Optiona
   institution? : string;// il, adjust based on your implementation
 }
@@ -43,33 +43,40 @@ originalUser: any;
         console.error('User ID not found in token');
         return;
       }
-    
-      this.userService.getUser(userId).subscribe(
-        (fullUser: User) => {
-          this.user = { 
-            ...fullUser, 
-            dateOfBirth: fullUser.dateOfBirth ? fullUser.dateOfBirth.toISOString() : undefined 
+      this.userService.getProfile().subscribe(
+        (profile: UserProfile) => {
+          this.user = {
+            ...profile,
+            dateOfBirth: profile.dateOfBirth ? new Date(profile.dateOfBirth).toISOString().split('T')[0] : undefined
           };
-          this.originalUser = JSON.parse(JSON.stringify(fullUser));
+          this.originalUser = JSON.parse(JSON.stringify(this.user));
+          console.log("Received profile:", profile);
+
         },
-        (error: any) => {
-          console.error('Failed to load full user', error);
+        error => {
+          console.error('Failed to load profile', error);
           this.errorMessage = 'Failed to load profile data';
         }
       );
-    }
+    }      
     
   goToUsers() {
     this.router.navigate(['/admin/users']);
   }
 
+  
   getProfilePictureUrl(filePath: string): string {
-    return filePath ? `/uploads/${filePath}` : '/assets/default-profile.png';
+    // If the filePath is a Base64 image string, return it directly
+    if (filePath && filePath.startsWith('data:image')) {
+      return filePath; // Return the Base64 string directly
+    }
+    return filePath ? `/uploads/${filePath}` : '/assets/default-profile.png'; // Fallback
   }
+  
   
 
   updateUser(): void {
-    // Assuming your `user` object has an `idUser` field available
+   
     if (!(this.user as any).idUser) {
       console.error('User ID is missing');
       return;
@@ -100,7 +107,7 @@ onFileSelected(event: Event): void {
     // Preview the selected image
     const reader = new FileReader();
     reader.onload = (e: any) => {
-      this.user.profilePicture = e.target.result; // Preview
+      this.user.profilePictureBase64 = e.target.result; // Preview
     };
     reader.readAsDataURL(this.selectedFile);
   }
@@ -123,7 +130,7 @@ saveChanges(): void {
     response => {
       console.log('Profile updated successfully', response);
       this.isEditing = false;
-      // Optionally update the user object with the response
+   
     },
     error => {
       console.error('Error updating profile:', error);
@@ -139,7 +146,7 @@ logout(): void {
 
 
   editProfilePicture() {
-    // Trigger file input or navigate to edit picture modal
+
     console.log('Edit profile picture clicked');
   }
   

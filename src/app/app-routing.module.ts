@@ -56,7 +56,7 @@ const routes: Routes = [
     children: [
       { path: 'profile', component: ProfileComponent },
       { path: 'users', component: ListUsersComponent, canActivate: [AdminGuard] },
-      {path:'pending-users', component: PendingUsersComponent, canActivate: [AdminGuard]},
+      { path: 'pending-users', component: PendingUsersComponent, canActivate: [AdminGuard]},
     ]
   },
   { path: 'users', component: ListUsersComponent, canActivate: [AdminGuard] },

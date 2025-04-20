@@ -3,6 +3,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, Observable, tap, throwError } from 'rxjs';
 import { User } from '../models/user.model'; 
 
+import { UserProfile } from '../models/userProfile.model'; // Adjust the import based on your structure
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -49,6 +52,15 @@ export class UserService {
       headers: this.getHeaders(),
       withCredentials: true
     });
+  }
+  getLoggedInUser(): Observable<User> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+  
+    return this.http.get<User>(`${this.apiUrl}/profile/profile`, { headers });
+
   }
   
 
@@ -101,6 +113,13 @@ getPendingUsers(): Observable<any[]> {
   deleteUser(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/delete-user/${id}`, { headers: this.getHeaders() });
   }
+
+  getProfile(): Observable<UserProfile> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get<UserProfile>('http://localhost:8089/pi/profile/profile', { headers });
+  }
+  
 
   
 }

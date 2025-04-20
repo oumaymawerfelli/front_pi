@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, Observable, of, tap } from 'rxjs';
 import { Router } from '@angular/router';
+import { User } from '../models/user.model';
 
 export interface LoginRequest {
   email: string;
@@ -134,6 +135,11 @@ throw new Error('Method not implemented.');
   
     return this.http.post(url, { token, newPassword }, { headers });
   }
+
+  getLoggedInUser(): Observable<User> {
+    return this.http.get<User>('http://localhost:8080/profile/profile');
+  }
+  
   
   
 }

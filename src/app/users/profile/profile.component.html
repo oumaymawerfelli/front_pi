@@ -1,7 +1,11 @@
 <div class="profile-container">
   <div class="profile-sidebar">
     <div class="profile-picture">
-      <img [src]="getProfilePictureUrl(user.profilePicture || 'assets/default-profile.png')" alt="Profile Picture">
+      <img [src]="user.profilePictureBase64 || '/assets/default-profile.png'" alt="Profile Picture" />
+
+
+
+
       <div class="edit-overlay" (click)="fileInput.click()">
         <i class="fas fa-camera"></i> Edit
         <input type="file" #fileInput style="display: none" (change)="onFileSelected($event)">
