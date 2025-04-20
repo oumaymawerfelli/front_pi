@@ -42,5 +42,10 @@ export class LoginComponent {
   loginWithFacebook(): void {
     this.authService.loginWithFacebook();
   }
+
+  loginWithGitHub(): void {
+    this.authService.loginWithGitHub();
+  }
+  
   
 }

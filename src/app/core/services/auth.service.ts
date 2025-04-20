@@ -144,6 +144,12 @@ throw new Error('Method not implemented.');
     localStorage.clear();
     window.location.href = 'http://localhost:8089/pi/oauth2/authorization/facebook';
   }
+
+  loginWithGitHub(): void {
+    localStorage.clear();
+    window.location.href = 'http://localhost:8089/pi/oauth2/authorization/github';
+  }
+  
   
   
   
