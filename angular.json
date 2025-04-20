@@ -32,7 +32,8 @@
   "src/assets/vendor/glightbox/css/glightbox.min.css",
   "src/assets/vendor/swiper/swiper-bundle.min.css",
   "src/assets/css/main.css",
-  "src/styles.css"
+   "src/assets/asset-L/css/styles.css",
+    "src/styles.css"
 
 ],
 "scripts": [
@@ -41,6 +42,7 @@
   "src/assets/vendor/aos/aos.js",
   "src/assets/vendor/glightbox/js/glightbox.min.js",
   "src/assets/vendor/swiper/swiper-bundle.min.js",
+ "src/assets/asset-L/js/scripts.js",
   "src/assets/js/main.js"
 ]
           },
