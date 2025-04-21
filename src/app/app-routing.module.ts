@@ -1,14 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { LandingComponent } from './landing/landing.component';
+import { HomeComponent } from './home/home.component';
 import { PostComponent } from './post/post.component';
 
 const routes: Routes = [
+  { path: '', component: HomeComponent },          // Default route
+  { path: 'login', component: LandingComponent },// /landing route
   { path: 'post', component: PostComponent },
-  { path: '', redirectTo: 'post', pathMatch: 'full' },
+
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule] // ✅ Important ici, pas dans app.module.ts
+  exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

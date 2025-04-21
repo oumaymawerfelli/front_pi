@@ -18,13 +18,11 @@ export class PostService {
     return this.http.get<Post>(`${this.baseUrl}/${id}`);
   }
   addPost(postData: FormData): Observable<Post> {
-    // Ne pas spécifier 'Content-Type', Angular le gère automatiquement
     return this.http.post<Post>(`${this.baseUrl}/add`, postData);
   }
 
-
-  updatePost(id: number, post: Post): Observable<Post> {
-    return this.http.put<Post>(`${this.baseUrl}/update/${id}`, post);
+  updatePost(id: number, postData: FormData): Observable<Post> {
+    return this.http.put<Post>(`${this.baseUrl}/update/${id}`, postData);
   }
 
   deletePost(id: number): Observable<void> {

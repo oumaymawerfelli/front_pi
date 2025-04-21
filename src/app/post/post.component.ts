@@ -1,28 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Commentaire } from "src/model/commentaire";
 import { Post } from "src/model/post";
 import { CommentService } from "src/services/comment.service";
 import { PostService } from "src/services/post.service";
 
-
 @Component({
   selector: 'app-post',
   templateUrl: './post.component.html',
   styleUrls: ['./post.component.css']
 })
+
+
 export class PostComponent implements OnInit {
-
-
-
   posts: Post[] = [];
   postForm: FormGroup;
   isEditing = false;
   editingPostId: number | null = null;
-  previewUrl: string | ArrayBuffer | null = null; // Variable pour stocker l'aperçu
-
+  previewUrl: string | ArrayBuffer | null = null;
   commentTexts: { [postId: number]: string } = {};
+  selectedFile: File | null = null;
 
   constructor(
     private postService: PostService,
@@ -31,15 +28,13 @@ export class PostComponent implements OnInit {
   ) {
     this.postForm = this.fb.group({
       content: [''],
-      img: [null, Validators.required]
+      img: [null]
     });
   }
-
   ngOnInit(): void {
     this.getAllPosts();
   }
 
-  // 🔁 Posts
   getAllPosts(): void {
     this.postService.getAllPosts().subscribe(data => {
       this.posts = data;
@@ -47,36 +42,50 @@ export class PostComponent implements OnInit {
     });
   }
 
+  
+
   submitPost(): void {
     if (this.postForm.invalid) return;
 
     const formData = new FormData();
     formData.append('content', this.postForm.get('content')?.value);
-    const imageFile = this.postForm.get('img')?.value;
-    if (imageFile) {
-      formData.append('image', imageFile);
+
+    // Handle image for both new and updated posts
+    if (this.selectedFile) {
+      formData.append('image', this.selectedFile);
     }
 
-    // Appel du service et mise à jour de la liste sans perte d'information
-    this.postService.addPost(formData).subscribe((newPost: Post) => {
-      // Pour que l'image reste affichée, on affecte la preview obtenue
-
-      // Ajout en tête de la liste pour que le nouveau post apparaisse immédiatement
-      this.posts.unshift(newPost);
-
-      // Réinitialisation du formulaire et de l'aperçu
-      this.postForm.reset();
-      this.previewUrl = null;
-    });
+    if (this.isEditing && this.editingPostId) {
+      // Update existing post
+      this.postService.updatePost(this.editingPostId, formData).subscribe({
+        next: (updatedPost) => {
+          const index = this.posts.findIndex(p => p.id === updatedPost.id);
+          if (index !== -1) {
+            this.posts[index] = updatedPost;
+          }
+          this.resetForm();
+        },
+        error: (err) => console.error('Update error:', err)
+      });
+    } else {
+      // Create new post
+      this.postService.addPost(formData).subscribe({
+        next: (newPost) => {
+          this.posts.unshift(newPost);
+          this.resetForm();
+        },
+        error: (err) => console.error('Create error:', err)
+      });
+    }
   }
 
   onFileChange(event: any) {
     const file = event.target.files[0];
     if (file) {
-      // Affecte le fichier au formulaire
+      this.selectedFile = file;
       this.postForm.patchValue({ img: file });
-
-      // Crée une prévisualisation de l'image avec FileReader
+      
+      // Show preview for BOTH new posts AND when editing
       const reader = new FileReader();
       reader.onload = () => {
         this.previewUrl = reader.result;
@@ -84,18 +93,53 @@ export class PostComponent implements OnInit {
       reader.readAsDataURL(file);
     }
   }
+  resetForm(): void {
+    this.postForm.reset();
+    this.isEditing = false;
+    this.editingPostId = null;
+    this.previewUrl = null;
+    this.selectedFile = null;
+    // Reset file input
+    const fileInput = document.getElementById('fileInput') as HTMLInputElement;
+    if (fileInput) fileInput.value = '';
+  }
+ 
 
-  // Méthodes de modification / suppression et commentaires
   editPost(post: Post): void {
-    this.postForm.patchValue(post);
     this.isEditing = true;
     this.editingPostId = post.id ?? null;
+    
+    this.postForm.patchValue({
+      content: post.content,
+      img: post.img || null
+    });
+
+
+    // Show existing image as preview when editing
+    if (post.img) {
+      this.previewUrl = `assets/img/posts${post.img}`;
+    } else {
+      this.previewUrl = null;
+    }
   }
+  removeImagePreview(): void {
+    this.previewUrl = null;
+    this.selectedFile = null;
+    this.postForm.patchValue({ img: null });
+    // Clear file input
+    const fileInput = document.getElementById('fileInput') as HTMLInputElement;
+    if (fileInput) fileInput.value = '';
+  }
+
+  
+existingImage: string | null = null;
+
 
   cancelEdit(): void {
     this.postForm.reset();
     this.isEditing = false;
     this.editingPostId = null;
+    this.previewUrl = null;
   }
 
   deletePost(id: number): void {

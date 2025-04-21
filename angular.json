@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "pi_2": {
+    "last": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/pi_2",
+            "outputPath": "dist/last",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -24,13 +24,27 @@
               "src/favicon.ico",
               "src/assets"
             ],
-            "styles": [
-             
-              "src/styles.css"
-            ],
-            "scripts": [
-              
-            ]
+           "styles": [
+
+  "src/assets/vendor/bootstrap/css/bootstrap.min.css",
+  "src/assets/vendor/bootstrap-icons/bootstrap-icons.css",
+  "src/assets/vendor/aos/aos.css",
+  "src/assets/vendor/glightbox/css/glightbox.min.css",
+  "src/assets/vendor/swiper/swiper-bundle.min.css",
+  "src/assets/css/main.css",
+   "src/assets/asset-L/css/styles.css",
+    "src/styles.css"
+
+],
+"scripts": [
+  "src/assets/vendor/php-email-form/validate.js",
+  "src/assets/vendor/bootstrap/js/bootstrap.bundle.min.js",
+  "src/assets/vendor/aos/aos.js",
+  "src/assets/vendor/glightbox/js/glightbox.min.js",
+  "src/assets/vendor/swiper/swiper-bundle.min.js",
+ "src/assets/asset-L/js/scripts.js",
+  "src/assets/js/main.js"
+]
           },
           "configurations": {
             "production": {
@@ -63,10 +77,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "pi_2:build:production"
+              "browserTarget": "last:build:production"
             },
             "development": {
-              "browserTarget": "pi_2:build:development"
+              "browserTarget": "last:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -74,7 +88,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "pi_2:build"
+            "browserTarget": "last:build"
           }
         },
         "test": {
@@ -90,21 +104,15 @@
               "src/assets"
             ],
             "styles": [
-             " node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "node_modules/bootstrap/dist/css/bootstrap-icons.css",
               "src/styles.css"
             ],
-            "scripts": [
-              "node_modules/jquery/dist/jquery.min.js",
-              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
-
-            ]
+            "scripts": []
           }
         }
       }
     }
   },
   "cli": {
-    "analytics": "ca625d5a-dfaa-4d49-af0d-1ad562b0ade1"
+    "analytics": "905d0c04-8a31-4f41-b522-a66a0a493051"
   }
 }
