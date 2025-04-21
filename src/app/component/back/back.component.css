@@ -65,6 +65,26 @@
     color: var(--default-color);
     background-color: var(--background-color);
     font-family: var(--default-font);
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+  }
+  .main-header {
+    padding-top: 0;
+    margin-top: 0;
+  }
+  
+  .wrapper {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .main-panel {
+    padding-top: 0;
+  }
+  .logo-header {
+    padding-top: 0;
+    margin-top: 0;
   }
   
   a {

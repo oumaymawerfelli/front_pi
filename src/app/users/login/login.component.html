@@ -10,12 +10,25 @@
     <button type="submit">Login</button>
 
     <p *ngIf="errorMessage" style="color:red">{{ errorMessage }}</p>
-    <p><a routerLink="/register">Don't have an account? Sign up</a></p>
-    <p><a routerLink="/home/forgot-password">Forgot password?</a></p>
+    <p><a routerLink="['/landing', 'register']">Don't have an account? Sign up</a></p>
+    <p><a [routerLink]="['/landing', 'forgot-password']">Forgot password?</a>
 
-    <button (click)="loginWithGoogle()">Login with Google</button>
-    <button (click)="loginWithFacebook()">Login with Facebook</button>
-    <button (click)="loginWithGitHub()">Login with GitHub</button>
+    </p>
+
+    <!-- Google Login Button -->
+    <div class="social-icons">
+      <button (click)="loginWithGoogle()" class="social-btn google-btn" title="Login with Google">
+        <i class="fab fa-google"></i>
+      </button>
+    
+      <button (click)="loginWithFacebook()" class="social-btn facebook-btn" title="Login with Facebook">
+        <i class="fab fa-facebook-f"></i>
+      </button>
+    
+      <button (click)="loginWithGitHub()" class="social-btn github-btn" title="Login with GitHub">
+        <i class="fab fa-github"></i>
+      </button>
+    </div>
     <div style="margin-top: 15px;">
       <re-captcha 
         (resolved)="onCaptchaResolved($event)" 
@@ -30,6 +43,48 @@
 </div>
 
 <style>
+ 
+
+.social-btn:hover {
+  background-color: #ddd;
+}
+
+.google-btn {
+  background-color: #db4437;
+  color: white;
+}
+
+.google-btn:hover {
+  background-color: #c23321;
+}
+
+.facebook-btn {
+  background-color: #3b5998;
+  color: white;
+}
+
+.facebook-btn:hover {
+  background-color: #2d4373;
+}
+
+.social-btn:hover {
+  transform: scale(1.1);
+}
+
+
+.github-btn {
+  background-color: #24292e;
+  color: white;
+}
+
+.github-btn:hover {
+  background-color: #1b1f23;
+}
+
+.social-btn i {
+  font-size: 18px;
+}
+
   /* Style for the form container */
 .form-container {
   width: 100%;
@@ -109,5 +164,25 @@
   color: red;
   font-size: 14px;
 }
+/* Layout social icons horizontally */
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+/* Resize the buttons to small circles with just icons */
+.social-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  padding: 0;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 
 </style>

@@ -29,7 +29,7 @@ export class ResetPasswordComponent implements OnInit {
         this.token = token;
       } else {
         this.snackbar.open('Invalid password reset link.', 'Close', { duration: 3000 });
-        this.router.navigate(['/front/login']);
+        this.router.navigate(['/landing/login']);
       }
     });
   
@@ -51,7 +51,7 @@ export class ResetPasswordComponent implements OnInit {
     this.authService.resetPassword(this.token, this.resetForm.value.password).subscribe({
       next: () => {
         this.snackbar.open('Password successfully reset.', 'Close', { duration: 3000 });
-        this.router.navigate(['/front/login']);
+        this.router.navigate(['/landing/login']);
       },
       error: () => {
         this.snackbar.open('Failed to reset password. Try again.', 'Close', { duration: 3000 });

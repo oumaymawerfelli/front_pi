@@ -10,6 +10,8 @@ import { PendingUsersComponent } from './pending-users/pending-users.component';
 import { ListUsersComponent } from './users/list-users/list-users.component';
 import { ProfileComponent } from './users/profile/profile.component';
 import { OAuth2RedirectComponent } from './users/oauth2-redirect/oauth2-redirect.component';
+import { ForgotPasswordComponent } from './users/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './users/reset-password/reset-password.component';
 
 const routes: Routes = [
        // Default route
@@ -17,6 +19,8 @@ const routes: Routes = [
     children: [
     {path: 'register', component: RegisterComponent},
     {path: 'login', component: LoginComponent},
+    {path: 'forgot-password', component: ForgotPasswordComponent},
+    {path: 'reset-password/:token', component: ResetPasswordComponent},
   ]
 } ,// /landing route
 
