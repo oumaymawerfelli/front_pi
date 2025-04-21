@@ -12,6 +12,7 @@ export class ChatbotComponent {
   messages: { role: string, content: string }[] = [];
 
   constructor(private chatbotService: ChatbotService) {}
+  
 
   handleSend() {
     if (!this.userInput.trim()) return;
