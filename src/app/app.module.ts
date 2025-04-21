@@ -29,6 +29,8 @@ import { LoanApplicationComponent } from './loans/loan-application/loan-applicat
 import { LoanInfoComponent } from './loans/loan-info/loan-info.component';
 import { LoanManagementComponent } from './loans/loan-management/loan-management.component';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
+import { RecaptchaModule } from 'ng-recaptcha'; // Import RecaptchaModule
+
 
 
 @NgModule({
@@ -59,7 +61,8 @@ import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
     NgbModule,
     UsersModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RecaptchaModule
   ],
   providers: [AuthService, AdminGuard],
 

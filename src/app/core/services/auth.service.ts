@@ -7,6 +7,7 @@ import { User } from '../models/user.model';
 export interface LoginRequest {
   email: string;
   password: string;
+  captchaToken: string;
 }
 
 export interface RegisterRequest {

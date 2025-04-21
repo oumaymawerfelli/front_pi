@@ -16,6 +16,13 @@
     <button (click)="loginWithGoogle()">Login with Google</button>
     <button (click)="loginWithFacebook()">Login with Facebook</button>
     <button (click)="loginWithGitHub()">Login with GitHub</button>
+    <div style="margin-top: 15px;">
+      <re-captcha 
+        (resolved)="onCaptchaResolved($event)" 
+        siteKey="6Ld-mh8rAAAAAKEsGwYAhz_2p-AQpA1-N_XseZyV">
+      </re-captcha>
+    </div>
+
 
 
 

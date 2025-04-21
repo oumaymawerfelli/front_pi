@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService, LoginRequest } from 'src/app/core/services/auth.service';
 
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -11,6 +12,12 @@ export class LoginComponent {
   email = '';
   password = '';
   errorMessage = '';
+  captchaToken: string = '';
+
+onCaptchaResolved(token: string) {
+  this.captchaToken = token;
+}
+
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -19,7 +26,7 @@ export class LoginComponent {
       this.errorMessage = 'Please enter email and password';
       return;
     }
-    const request: LoginRequest = { email: this.email, password: this.password };
+    const request: LoginRequest = { email: this.email, password: this.password , captchaToken: this.captchaToken};
     this.authService.login(request).subscribe({
       next: (response) => {
         if (this.authService.isAdmin()) {
