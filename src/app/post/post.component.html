@@ -47,17 +47,13 @@
     <h2>📝 Posts Forum</h2>
   
     <form [formGroup]="postForm" (ngSubmit)="submitPost()" class="form-post" enctype="multipart/form-data">
-      <textarea formControlName="content" placeholder="Express yourself here..." rows="4"></textarea>
+      <textarea formControlName="content" placeholder="Express yourself here..." rows="4" maxlength="5000"></textarea>
       
       <div>
         <input id="fileInput" type="file" (change)="onFileChange($event)" accept="image/*" />
       </div>
   
-      <!-- Preview only for new posts -->
-      <!-- <div *ngIf="previewUrl && !isEditing" class="preview-container">
-        <img [src]="previewUrl" alt="Image preview" style="max-width: 200px; border-radius: 8px; margin-top: 8px;" />
-      </div>
-   -->
+
    <div *ngIf="previewUrl" class="preview-container">
     <img [src]="previewUrl" alt="Selected image preview" 
          style="max-width: 200px; border-radius: 8px; margin-top: 8px;" />

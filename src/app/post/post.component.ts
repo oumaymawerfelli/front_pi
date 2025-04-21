@@ -27,7 +27,7 @@ export class PostComponent implements OnInit {
     private fb: FormBuilder
   ) {
     this.postForm = this.fb.group({
-      content: [''],
+      content: ['', [Validators.required, Validators.maxLength(5000)]],
       img: [null]
     });
   }
