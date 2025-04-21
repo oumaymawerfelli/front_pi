@@ -25,7 +25,7 @@ export class LoginComponent {
         if (this.authService.isAdmin()) {
           this.router.navigate(['/admin/profile']);
         } else {
-          this.router.navigate(['/front/profile']);
+          this.router.navigate(['/home/profile']);
         }
       },
       error: () => {

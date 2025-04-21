@@ -65,7 +65,7 @@ throw new Error('Method not implemented.');
   // Handles the redirect from OAuth2 login
   handleOAuth2Redirect(token: string): void {
     if (!token) {
-      this.router.navigate(['/front/login'], { queryParams: { error: 'auth_failed' } });
+      this.router.navigate(['/home/login'], { queryParams: { error: 'auth_failed' } });
       return;
     }
     
@@ -79,11 +79,11 @@ throw new Error('Method not implemented.');
       if (role === 'ROLE_ADMIN') {
         this.router.navigate(['/admin/profile']);
       } else {
-        this.router.navigate(['/front/profile']);
+        this.router.navigate(['/home/profile']);
       }
     } catch (error) {
       console.error('Error decoding token', error);
-      this.router.navigate(['/front/login'], { queryParams: { error: 'invalid_token' } });
+      this.router.navigate(['/home/login'], { queryParams: { error: 'invalid_token' } });
     }
   }
   

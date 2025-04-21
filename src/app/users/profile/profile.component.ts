@@ -139,7 +139,7 @@ saveChanges(): void {
 }
 logout(): void {
   this.authService.logout();
-  this.router.navigate(['/front']);
+  this.router.navigate(['/landing']);
 }
 
 
