@@ -1,0 +1,61 @@
+<div class="terms-container">
+    <input type="checkbox" id="acceptTerms" [checked]="isChecked" (change)="toggleAcceptance()" />
+    <label for="acceptTerms">
+      I agree to the <a href="/terms" target="_blank">Terms & Conditions</a>
+    </label>
+  </div>
+
+  <div class="terms-wrapper">
+    <div class="terms-container">
+      <h2 class="terms-title">Loan Terms & Security Agreement</h2>
+      
+      <div class="terms-content">
+        <section class="terms-section">
+          <h3 class="section-title">1. Equipment Usage Terms</h3>
+          <ul class="terms-list">
+            <li>Maximum loan duration: 24 months</li>
+            <li>Mandatory insurance coverage required</li>
+            <li>Monthly maintenance reports mandatory</li>
+          </ul>
+        </section>
+  
+        <section class="terms-section">
+          <h3 class="section-title">2. Land Usage Conditions</h3>
+          <ul class="terms-list">
+            <li>Minimum 5-year cultivation commitment</li>
+            <li>Soil conservation practices required</li>
+            <li>Annual environmental impact assessment</li>
+          </ul>
+        </section>
+  
+        <section class="terms-section">
+          <h3 class="section-title">3. Security Requirements</h3>
+          <ol class="security-list">
+            <li>20% collateral deposit for equipment</li>
+            <li>Land title deed as security</li>
+            <li>Two guarantors with agricultural licenses</li>
+          </ol>
+        </section>
+  
+        <div class="compliance-notice">
+          <p>By accepting, you agree to:</p>
+          <ul class="compliance-list">
+            <li>Regular equipment inspections</li>
+            <li>GPS tracking of loaned assets</li>
+            <li>Yield data sharing with institution</li>
+          </ul>
+        </div>
+      </div>
+  
+      <div class="acceptance-section">
+        <div class="checkbox-group">
+          <input type="checkbox" id="acceptTerms" required>
+          <label for="acceptTerms" class="terms-label">
+            I accept the <a href="#full-terms" class="terms-link">Full Terms & Conditions</a> 
+            and <a href="#security" class="terms-link">Security Agreement</a>
+          </label>
+        </div>
+        <div class="error-message" id="termsError"></div>
+      </div>
+    </div>
+  </div>

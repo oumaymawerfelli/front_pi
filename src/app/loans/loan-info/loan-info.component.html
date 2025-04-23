@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>loan application</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+
+ 
+ 
+  
+</head>
+
+<body class="contact-page">
+
+  <h1>{{ messageFromBackend }}</h1>
+
+
+
+
+
+
+
+
+
+
+  <header id="header" class="header d-flex align-items-center position-relative">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+
+      <a href="index.html" class="logo d-flex align-items-center">
+  <img src="assets/front/logo.png" alt="AgriCulture Logo">
+ 
+</a>
+
+
+      </div>
+      </header>
+
+  <main class="main">
+
+  <!-- Page Title Section -->
+<div class="page-title dark-background" data-aos="fade" 
+style="background-image: url(assets/front/img/page-title-bg.webp);">
+<div class="container position-relative">
+<h1>{{ pageTitle }}</h1>
+
+
+<!-- Breadcrumb Navigation -->
+<nav class="breadcrumbs">
+ <ol>
+  
+   <li><a routerLink="/loan-info">Loan Info /</a></li>
+
+   <li><a routerLink="/loan-management">  Loan Management</a></li>
+ </ol>
+</nav>
+</div>
+</div><!-- End Page Title -->
+
+
+
+
+
+<div class="loan-section">
+  <h2 class="section-title">Available Equipment for Loan</h2>
+
+  <div class="equipment-card" *ngFor="let equipment of equipmentItems; let i = index">
+    <div class="image-slider">
+      <img
+        [src]="equipment.images[selectedImageIndex[i]]"
+        alt="{{ equipment.nameEquipment }}"
+        class="equipment-image"
+      />
+      <div class="slider-controls">
+        <button (click)="previousImage(i)">‹</button>
+        <button (click)="nextImage(i)">›</button>
+      </div>
+    </div>
+
+    <div class="equipment-info">
+      <h3>{{ equipment.nameEquipment }}</h3>
+      <p class="description">{{ equipment.descriptionEquipment }}</p>
+      <p class="availability">
+        <strong>Status:</strong>
+        <span [ngClass]="{ available: equipment.availabilityEquipment, unavailable: !equipment.availabilityEquipment }">
+          {{ equipment.availabilityEquipment ? 'Available' : 'Not Available' }}
+        </span>
+      </p>
+      <button class="loan-button" (click)="redirectToLoanApplication(equipment)">Request Loan</button>
+    </div>
+  </div>
+</div>
