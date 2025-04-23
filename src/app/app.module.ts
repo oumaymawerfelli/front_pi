@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -14,6 +14,32 @@ import { EquipmentComponent } from './loans/equipment/equipment.component';
 import { AddEquipmentComponent } from './loans/add-equipment/add-equipment.component';
 import { AddLandComponent } from './loans/add-land/add-land.component';
 import { TermsAcceptanceComponent } from './loans/terms-acceptance/terms-acceptance.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LoginComponent } from './users/login/login.component';
+import { RegisterComponent } from './users/register/register.component';
+import { ResetPasswordComponent } from './users/reset-password/reset-password.component';
+import { ForgotPasswordComponent } from './users/forgot-password/forgot-password.component';
+import { ListUsersComponent } from './users/list-users/list-users.component';
+import { FormComponent } from './users/form/form.component';
+import { OAuth2RedirectComponent } from './users/oauth2-redirect/oauth2-redirect.component';
+import { ProfileComponent } from './users/profile/profile.component';
+import { PendingUsersComponent } from './pending-users/pending-users.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { UsersModule } from './users/users.module';
+import { AuthService } from './core/services/auth.service';
+import { AdminGuard } from './guards/admin.guard';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MarketplaceComponent } from './marketplace/marketplace.component';
+import { PanierComponent } from './panier/panier.component';
+import { FrontComponent } from './component/front/front.component';
+import { BackComponent } from './component/back/back.component';
+
+import { ContactComponent } from './contact/contact.component';
+
+
+import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
+import { RecaptchaModule } from 'ng-recaptcha'; // Import RecaptchaModule
+
 
 
 @NgModule({
@@ -27,16 +53,38 @@ import { TermsAcceptanceComponent } from './loans/terms-acceptance/terms-accepta
     EquipmentComponent,
     AddEquipmentComponent,
     AddLandComponent,
-    TermsAcceptanceComponent
+    TermsAcceptanceComponent,
+    PendingUsersComponent, // only components that aren't in UsersModule
+    MarketplaceComponent,
+    PanierComponent,
+    FrontComponent,
+    BackComponent,
+    UnauthorizedComponent,
+    PendingUsersComponent,
+    LoanManagementComponent,
+    LoanApplicationComponent,
+    LoanInfoComponent,
+    ContactComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    UsersModule,
+    FormsModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    AppRoutingModule,
+    NgbModule,
+    UsersModule,
+    FormsModule,
+    ReactiveFormsModule,
+    RecaptchaModule
   ],
-  providers: [],
+  providers: [AuthService, AdminGuard],
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }

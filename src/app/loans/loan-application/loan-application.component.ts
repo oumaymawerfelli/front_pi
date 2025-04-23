@@ -4,7 +4,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ApiService } from 'src/app/services-loans/api.service';
 import SignaturePad from 'signature_pad';
 
-
 @Component({
   selector: 'app-loan-application',
   templateUrl: './loan-application.component.html',

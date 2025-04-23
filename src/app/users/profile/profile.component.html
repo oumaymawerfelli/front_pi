@@ -1,0 +1,179 @@
+<div class="profile-container">
+  <div class="profile-sidebar">
+    <div class="sidebar-overlay"></div>
+    
+    <div class="profile-picture-container">
+      <div class="profile-picture">
+        <img [src]="user.profilePictureBase64 || '/assets/default-profile.png'" alt="Profile Picture" />
+        <div class="edit-overlay" (click)="fileInput.click()">
+          <i class="fas fa-camera"></i>
+          <span>Edit Photo</span>
+        </div>
+        <input type="file" #fileInput style="display: none" (change)="onFileSelected($event)">
+      </div>
+      <div class="profile-badge"></div>
+    </div>
+
+    <div class="user-info">
+      <h2 class="user-name">{{ user.name }}</h2>
+      <p class="user-role">{{ user.role }}</p>
+      <div class="user-contact">
+        <p class="email">
+          <i class="fas fa-envelope"></i> {{ user.email }}
+        </p>
+        <p class="phone" *ngIf="user.phone">
+          <i class="fas fa-phone"></i> {{ user.phone }}
+        </p>
+      </div>
+    </div>
+
+    <div class="sidebar-stats">
+     
+    </div>
+  </div>
+
+  <div class="profile-content">
+    <div class="content-header">
+      <h3><i class="fas fa-user-circle"></i> Personal Information</h3>
+      <div class="header-actions">
+        <button *ngIf="!isEditing" class="edit-button" (click)="isEditing = true">
+          <i class="fas fa-edit"></i> Edit Profile
+        </button>
+        <button class="logout-button" (click)="logout()">
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+      </div>
+    </div>
+
+    <div class="content-card">
+      <!-- VIEW MODE -->
+      <div *ngIf="!isEditing" class="view-mode">
+        <div class="info-grid">
+          <div class="info-group">
+            <label><i class="fas fa-user-tag"></i> Full Name</label>
+            <span>{{ user.name }}</span>
+          </div>
+          <div class="info-group">
+            <label><i class="fas fa-envelope"></i> Email</label>
+            <span>{{ user.email }}</span>
+          </div>
+          <div class="info-group">
+            <label><i class="fas fa-phone"></i> Phone</label>
+            <span>{{ user.phone || 'Not provided' }}</span>
+          </div>
+          <div class="info-group">
+            <label><i class="fas fa-map-marker-alt"></i> Address</label>
+            <span>{{ user.adresse || 'Not provided' }}</span>
+          </div>
+          <div class="info-group">
+            <label><i class="fas fa-birthday-cake"></i> Date of Birth</label>
+            <span>{{ user.dateOfBirth ? (user.dateOfBirth | date) : 'Not provided' }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- EDIT MODE -->
+      <form *ngIf="isEditing" class="edit-mode">
+        <div class="info-grid">
+          <div class="info-group">
+            <label for="name"><i class="fas fa-user-tag"></i> Full Name</label>
+            <input id="name" type="text" [(ngModel)]="user.name" name="name">
+          </div>
+          <div class="info-group">
+            <label for="email"><i class="fas fa-envelope"></i> Email</label>
+            <input id="email" type="email" [(ngModel)]="user.email" name="email">
+          </div>
+          <div class="info-group">
+            <label for="phone"><i class="fas fa-phone"></i> Phone</label>
+            <input id="phone" type="text" [(ngModel)]="user.phone" name="phone">
+          </div>
+          <div class="info-group">
+            <label for="address"><i class="fas fa-map-marker-alt"></i> Address</label>
+            <input id="address" type="text" [(ngModel)]="user.adresse" name="address">
+          </div>
+          <div class="info-group">
+            <label for="dob"><i class="fas fa-birthday-cake"></i> Date of Birth</label>
+            <input id="dob" type="date" [(ngModel)]="user.dateOfBirth" name="dob">
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="cancel-button" (click)="cancelEdit()">
+            <i class="fas fa-times"></i> Cancel
+          </button>
+          <button type="button" class="save-button" (click)="saveChanges()">
+            <i class="fas fa-save"></i> Save Changes
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Role Specific Sections -->
+    <div class="role-section" *ngIf="user.role === 'STUDENT'">
+      <div class="section-header">
+        <h4><i class="fas fa-project-diagram"></i> Academic Projects</h4>
+        <button class="section-action">View All</button>
+      </div>
+      <div class="projects-grid">
+        <div class="project-card">
+          <div class="project-icon">
+            <i class="fas fa-seedling"></i>
+          </div>
+          <div class="project-info">
+            <h5>Agricultural Innovation</h5>
+            <p>Research on sustainable farming techniques</p>
+          </div>
+        </div>
+        <div class="project-card">
+          <div class="project-icon">
+            <i class="fas fa-tractor"></i>
+          </div>
+          <div class="project-info">
+            <h5>Farm Automation</h5>
+            <p>Developing automated irrigation system</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="role-section" *ngIf="user.role === 'FARMER'">
+      <div class="section-header">
+        <h4><i class="fas fa-tractor"></i> My Farmlands</h4>
+        <button class="section-action">Manage Lands</button>
+      </div>
+      <div class="lands-grid">
+        <div class="land-card">
+          <div class="land-image" style="background-image: url('/assets/farm1.jpg');"></div>
+          <div class="land-info">
+            <h5>Green Valley Farm</h5>
+            <p>50 acres • Wheat & Corn</p>
+          </div>
+        </div>
+        <div class="land-card">
+          <div class="land-image" style="background-image: url('/assets/farm2.jpg');"></div>
+          <div class="land-info">
+            <h5>Sunny Acres</h5>
+            <p>30 acres • Organic Vegetables</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="authService.isAdmin()" class="admin-section">
+      <div class="section-header">
+        <h4><i class="fas fa-users-cog"></i> Admin Tools</h4>
+      </div>
+      <div class="admin-actions">
+        <button class="admin-button" (click)="goToUsers()">
+          <i class="fas fa-users"></i> Manage Users
+        </button>
+        <button class="admin-button">
+          <i class="fas fa-chart-line"></i> View Analytics
+        </button>
+        <button class="admin-button">
+          <i class="fas fa-cog"></i> System Settings
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
