@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>add equipment</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+
+ 
+ 
+  
+</head>
+
+<body class="contact-page">
+
+  <h1>{{ messageFromBackend }}</h1>
+
+
+
+
+
+
+
+
+
+
+  <header id="header" class="header d-flex align-items-center position-relative">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+
+      <a href="index.html" class="logo d-flex align-items-center">
+  <img src="assets/img/logo.png" alt="AgriCulture Logo">
+ 
+</a>
+
+
+      </div>
+      </header>
+
+  <main class="main">
+
+  <!-- Page Title Section -->
+<div class="page-title dark-background" data-aos="fade" 
+style="background-image: url(assets/img/page-title-bg.webp);">
+<div class="container position-relative">
+<h1>{{ pageTitle }}</h1>
+
+
+<!-- Breadcrumb Navigation -->
+<nav class="breadcrumbs">
+ <ol>
+  
+   <li><a routerLink="/loan-info">Loan Info /</a></li>
+
+   <li><a routerLink="/loan-management">  Loan Management</a></li>
+ </ol>
+</nav>
+</div>
+</div><!-- End Page Title -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Loan Application Section -->
+<section id="loan-application" class="loan-application section">
+
+  <div class="mb-5">
+    <!-- Google Map Embed -->
+    <iframe 
+      style="width: 100%; height: 400px;" 
+      src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d13917.819393481026!2d9.7982342!3d36.8667472!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x13c3c9919a5ab089%3A0xf8b6cf1e77242071!2zQXJpYW5h!5e0!3m2!1sen!2stn!4v1680708532870" 
+      frameborder="0" 
+      allowfullscreen="">
+    </iframe>
+  </div>        
+
+  <div class="container" data-aos="fade">
+    <div class="row gy-5 gx-lg-5">
+      <div class="col-lg-4">
+        <div class="info">
+          <h3>Loan Application Details</h3>
+          <p>Please fill out all required fields carefully and review your information before submission.</p>
+
+          <!-- Office Information -->
+          <div class="info-item d-flex">
+            <i class="bi bi-geo-alt flex-shrink-0"></i>
+            <div>
+              <h4>Processing Center:</h4>
+              <p>Ariana, Tunisia</p>
+            </div>
+          </div>
+
+          <!-- Support Email -->
+          <div class="info-item d-flex">
+            <i class="bi bi-envelope flex-shrink-0"></i>
+            <div>
+              <h4>Support Email:</h4>
+              <p>loansupportexample.com</p>
+            </div>
+          </div>
+
+          <!-- Helpline -->
+          <div class="info-item d-flex">
+            <i class="bi bi-phone flex-shrink-0"></i>
+            <div>
+              <h4>Helpline:</h4>
+              <p>+216 12 345 678</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+
+
+<form [formGroup]="equipmentForm" (ngSubmit)="submitEquipment()" class="equipment-form">
+  <div class="form-group">
+    <label for="name">Name:</label>
+    <input id="name" formControlName="nameEquipment" />
+    <div *ngIf="equipmentForm.get('nameEquipment')?.invalid && equipmentForm.get('nameEquipment')?.touched" 
+         class="error-message">
+      Required field
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="description">Description:</label>
+    <textarea id="description" formControlName="descriptionEquipment" rows="4"></textarea>
+    <div *ngIf="equipmentForm.get('descriptionEquipment')?.invalid && equipmentForm.get('descriptionEquipment')?.touched" 
+         class="error-message">
+      Required field
+    </div>
+  </div>
+
+  <div class="checkbox-group">
+    <input type="checkbox" id="availability" formControlName="availabilityEquipment" />
+    <label for="availability">Available</label>
+  </div>
+
+  <div class="form-group">
+    <label for="images">Image URLs (comma-separated):</label>
+    <input id="images" formControlName="images" />
+  </div>
+
+  <div class="form-actions">
+    <button type="submit" [disabled]="equipmentForm.invalid" class="btn-primary">
+      Add Equipment
+    </button>
+  </div>
+</form>

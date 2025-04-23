@@ -1,0 +1,156 @@
+/*--------------------------------------------------------------
+# General Styles
+--------------------------------------------------------------*/
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f8f8;
+    color: #333;
+  }
+  
+  /*--------------------------------------------------------------
+  # Header Section
+  --------------------------------------------------------------*/
+  
+  
+  .logo img {
+    height: 50px;
+    width: auto;
+  }
+  
+  .sitename {
+    color: white;
+    font-size: 22px;
+    font-weight: bold;
+  }
+  
+  /*--------------------------------------------------------------
+  # Navigation
+  --------------------------------------------------------------*/
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+  }
+  
+  nav li {
+    display: inline;
+  }
+  
+  nav a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+  }
+  
+  nav a:hover {
+    text-decoration: underline;
+  }
+  
+  /*--------------------------------------------------------------
+  # Page Title
+  --------------------------------------------------------------*/
+  .page-title {
+    background-size: cover;
+    background-position: center;
+    text-align: center;
+    padding: 50px 0;
+    color: white;
+    font-size: 28px;
+  }
+  
+  .breadcrumbs ol {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 0;
+  }
+  
+  .breadcrumbs a {
+    color: #f1f1f1;
+    text-decoration: none;
+  }
+  
+  .breadcrumbs a:hover {
+    text-decoration: underline;
+  }
+/*--------------------------------------------------------------
+# Equipment Form
+--------------------------------------------------------------*/
+.equipment-form {
+    background-color: white;
+    padding: 30px;
+    box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    max-width: 600px;
+    margin: 20px auto;
+  }
+  
+  .equipment-form label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+  }
+  
+  .equipment-form input,
+  .equipment-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 15px;
+  }
+  
+  .equipment-form .error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: -10px;
+    margin-bottom: 15px;
+  }
+  
+  .equipment-form button[type="submit"] {
+    background-color: #0c362f;
+    color: white;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  
+  .equipment-form button[type="submit"]:hover {
+    background-color: #00332b;
+  }
+  
+  .equipment-form button[type="submit"]:disabled {
+    background-color: #ddd;
+    cursor: not-allowed;
+  }
+  
+  .checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 15px 0;
+  }
+  
+  .checkbox-group label {
+    margin-bottom: 0;
+  }
+  
+  /*--------------------------------------------------------------
+  # Responsive Design
+  --------------------------------------------------------------*/
+  @media (max-width: 768px) {
+    .equipment-form {
+      padding: 20px;
+    }
+    
+    .form-actions {
+      flex-direction: column;
+      gap: 10px;
+    }
+  }
