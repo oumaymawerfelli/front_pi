@@ -1,0 +1,70 @@
+<!-- index.html -->
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+/>
+<div class="container">
+  <div class="header">
+    <h2>User Management</h2>
+  </div>
+
+  <table class="user-table" *ngIf="users.length > 0; else noUsers">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Phone</th>
+        <th>Address</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users">
+        <td>{{ user.idUser }}</td>
+        <td>{{ user.name }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.role }}</td>
+        <td>{{ user.phone }}</td>
+        <td>{{ user.address }}</td>
+        <td>{{ user.status }}</td>
+        <td>
+          <button class="icon-button" (click)="editUser(user)" title="Edit">
+            <i class="fas fa-edit"></i>
+          </button>
+        </td>
+       
+      </tr>
+    </tbody>
+  </table>
+  <div class="pending-users-link">
+    <!-- Add a click handler to test if the button works at all -->
+    <button class="pending-users-button" (click)="testNavigation()">
+   
+<i class="fas fa-hourglass-half"></i> View Pending Users
+</button>
+  </div>
+  
+
+  <ng-template #noUsers>
+    <p>No users found.</p>
+  </ng-template>
+
+  <!-- Add User Button Below Table -->
+  <div class="add-user-container">
+    <button class="add-user-button" (click)="addNewUser()" title="Add User">
+      <i class="fas fa-user-plus"></i> Add User
+    </button>
+  </div>
+
+  <!-- Conditionally rendered form -->
+  <div *ngIf="showForm" class="form-container">
+    <app-form
+      [userToEdit]="selectedUser"
+      (userSubmitted)="handleFormSubmit($event)">
+    </app-form>
+    <button class="cancel-button" (click)="cancelForm()">Cancel</button>
+  </div>
+</div>

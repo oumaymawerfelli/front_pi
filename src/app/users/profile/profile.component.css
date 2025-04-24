@@ -1,0 +1,234 @@
+:root {
+  --primary-light: #7bc67b;
+  --primary-dark: #388e3c;
+  --text-light: #ffffff;
+  --text-dark: #2e2e2e;
+  --bg-light: #f9f9f9;
+  --bg-white: #ffffff;
+  --border-color: #e0e0e0;
+}
+
+body {
+  font-family: "Segoe UI", sans-serif;
+  color: var(--text-dark);
+  background-color: var(--bg-light);
+}
+
+.profile-container {
+  display: flex;
+  flex-wrap: wrap;
+  min-height: 100vh;
+  background-color: var(--bg-light);
+}
+
+.profile-sidebar {
+  width: 320px;
+  background: linear-gradient(to bottom right, var(--primary-dark), var(--primary-light));
+  color: var(--text-light);
+  padding: 3rem 2rem;
+  text-align: center;
+  box-shadow: 3px 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.profile-picture {
+  position: relative;
+  width: 170px;
+  height: 170px;
+  margin: 0 auto 1.5rem;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+.profile-picture img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.profile-picture:hover img {
+  transform: scale(1.05);
+}
+
+.edit-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  font-weight: 500;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  cursor: pointer;
+}
+
+.profile-picture:hover .edit-overlay {
+  opacity: 1;
+}
+
+.user-name {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-top: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+.user-role {
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 0.35rem 1rem;
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.2);
+  margin-bottom: 0.75rem;
+}
+
+.email {
+  font-size: 0.95rem;
+  opacity: 0.9;
+  word-break: break-word;
+}
+
+.profile-details {
+  flex: 1;
+  background-color: var(--bg-white);
+  padding: 3rem 4rem;
+  border-left: 1px solid var(--border-color);
+}
+
+.details-header h3 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: var(--primary-dark);
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.info-group label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #666;
+  margin-bottom: 0.3rem;
+  display: block;
+}
+
+.info-group span,
+.info-group input {
+  width: 100%;
+  font-size: 0.95rem;
+  padding: 0.75rem 1rem;
+  background-color: #fdfdfd;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  transition: box-shadow 0.2s ease;
+}
+
+.info-group input:focus {
+  border-color: var(--primary-light);
+  box-shadow: 0 0 0 3px rgba(139, 195, 74, 0.2);
+  outline: none;
+}
+
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.edit-button,
+.save-button,
+.cancel-button,
+.admin-button {
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 0.65rem 1.5rem;
+  transition: background 0.3s ease, color 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.edit-button {
+  background-color: #ffa726;
+  color: white;
+}
+
+.edit-button:hover {
+  background-color: #fb8c00;
+}
+
+.save-button {
+  background-color: var(--primary-dark);
+  color: white;
+}
+
+.save-button:hover {
+  background-color: #2e7d32;
+}
+
+.cancel-button {
+  background-color: #eeeeee;
+  color: #555;
+}
+
+.cancel-button:hover {
+  background-color: #d6d6d6;
+}
+
+.admin-button {
+  margin-top: 2rem;
+  background: transparent;
+  border: 2px solid var(--primary-dark);
+  color: var(--primary-dark);
+}
+
+.admin-button:hover {
+  background: var(--primary-dark);
+  color: white;
+}
+
+.role-section {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px dashed #ccc;
+}
+
+.role-section h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-top: 1rem;
+  color: var(--primary-dark);
+}
+
+.role-content {
+  font-size: 0.95rem;
+  color: #444;
+  margin-top: 0.3rem;
+}
+
+.logout-button {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  margin-top: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.logout-button:hover {
+  background-color: #c0392b;
+}
+

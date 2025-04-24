@@ -1,0 +1,120 @@
+<div class="profile-container">
+  <div class="profile-sidebar">
+    <div class="profile-picture">
+      <img [src]="user.profilePictureBase64 || '/assets/default-profile.png'" alt="Profile Picture" />
+
+
+
+
+      <div class="edit-overlay" (click)="fileInput.click()">
+        <i class="fas fa-camera"></i> Edit
+        <input type="file" #fileInput style="display: none" (change)="onFileSelected($event)">
+      </div>
+      
+    </div>
+    <h2 class="user-name">{{ user.name }}</h2>
+    <p class="user-role">{{ user.role }}</p>
+    <p class="email">{{ user.email }}</p>
+    <div class="sidebar-decoration"></div>
+  </div>
+  
+  
+
+  <div class="profile-details">
+    <div class="details-header">
+      <h3>Personal Information</h3>
+      <div class="header-decoration"></div>
+    </div>
+
+    <!-- VIEW MODE -->
+    <div *ngIf="!isEditing" class="view-mode">
+      <div class="info-grid">
+        <div class="info-group">
+          <label>Name</label>
+          <span>{{ user.name }}</span>
+        </div>
+        <div class="info-group">
+          <label>Email</label>
+          <span>{{ user.email }}</span>
+        </div>
+        <div class="info-group">
+          <label>Phone</label>
+          <span>{{ user.phone || 'Not provided' }}</span>
+        </div>
+        <div class="info-group">
+          <label>Address</label>
+          <span>{{ user.adresse || 'Not provided' }}</span>
+        </div>
+        <div class="info-group">
+          <label>Date of Birth</label>
+          <span>{{ user.dateOfBirth ? (user.dateOfBirth | date) : 'Not provided' }}</span>
+        </div>
+      </div>
+
+      <button type="button" class="edit-button" (click)="isEditing = true">
+        <i class="fas fa-edit"></i> Edit Profile
+      </button>
+    </div>
+
+    <!-- EDIT MODE -->
+    <form *ngIf="isEditing" class="edit-mode">
+      <div class="info-grid">
+        <div class="info-group">
+          <label for="name">Name</label>
+          <input id="name" type="text" [(ngModel)]="user.name" name="name">
+        </div>
+        <div class="info-group">
+          <label for="email">Email</label>
+          <input id="email" type="email" [(ngModel)]="user.email" name="email">
+        </div>
+        <div class="info-group">
+          <label for="phone">Phone</label>
+          <input id="phone" type="text" [(ngModel)]="user.phone" name="phone">
+        </div>
+        <div class="info-group">
+          <label for="address">Address</label>
+          <input id="address" type="text" [(ngModel)]="user.adresse" name="address">
+        </div>
+        <div class="info-group">
+          <label for="dob">Date of Birth</label>
+          <input id="dob" type="date" [(ngModel)]="user.dateOfBirth" name="dob">
+        </div>
+      </div>
+      
+      
+      <div class="button-group">
+        <button type="button" class="save-button" (click)="saveChanges()">
+          <i class="fas fa-save"></i> Save Changes
+        </button>
+        <button type="button" class="cancel-button" (click)="cancelEdit()">
+          <i class="fas fa-times"></i> Cancel
+        </button>
+      </div>
+    </form>
+    <button class="logout-button" (click)="logout()">
+      <i class="fas fa-sign-out-alt"></i> Logout
+    </button>
+
+    <div *ngIf="user.role === 'STUDENT'" class="role-section">
+      <h4><i class="fas fa-project-diagram"></i> Projects</h4>
+      <p class="role-content">Show student's projects...</p>
+      <h4><i class="fas fa-university"></i> Institutions</h4>
+      <p class="role-content">{{ user.institution || 'Not provided' }}</p>
+      <h4><i class="fas fa-chalkboard-teacher"></i> Workshops</h4>
+      <p class="role-content">Show enrolled workshops...</p>
+    </div>
+
+    <div *ngIf="user.role === 'FARMER'" class="role-section">
+      <h4><i class="fas fa-tractor"></i> Lands</h4>
+      <p class="role-content">Show owned lands...</p>
+      <h4><i class="fas fa-hand-holding-usd"></i> Loan Requests</h4>
+      <p class="role-content">Show loan requests...</p>
+    </div>
+
+    <div *ngIf="authService.isAdmin()" class="admin-section">
+      <button class="admin-button" (click)="goToUsers()">
+        <i class="fas fa-users-cog"></i> Manage Users
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,78 +1,44 @@
-
-<header id="header" class="header d-flex align-items-center position-relative">
-  <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
-
-    <a href="index.html" class="logo d-flex align-items-center">
-      <!-- Uncomment the line below if you also wish to use an image logo -->
-      <img src="assets/img/logo.png" alt="AgriCulture">
-      <!-- <h1 class="sitename">AgriCulture</h1>  -->
-    </a>
-
-    <nav id="navmenu" class="navmenu">
-      <ul>
-        <li><a href="index.html" class="active">Home</a></li>
-        <li><a href="about.html">About Us</a></li>
-        <li><a href="services.html">Our Services</a></li>
-        <li><a href="testimonials.html">Testimonials</a></li>
-        <!-- <li><a routerLink="/post">Forum</a></li> -->
-        <li><a href="/post" >Forum</a></li>       
-
-        <li><a href="blog.html">Blog</a></li>
-        <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-          <ul>
-            <li><a href="#">Dropdown 1</a></li>
-            <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-              <ul>
-                <li><a href="#">Deep Dropdown 1</a></li>
-                <li><a href="#">Deep Dropdown 2</a></li>
-                <li><a href="#">Deep Dropdown 3</a></li>
-                <li><a href="#">Deep Dropdown 4</a></li>
-                <li><a href="#">Deep Dropdown 5</a></li>
-              </ul>
-            </li>
-            <li><a href="#">Dropdown 2</a></li>
-            <li><a href="#">Dropdown 3</a></li>
-            <li><a href="#">Dropdown 4</a></li>
-          </ul>
-        </li>
-        <li><a href="contact.html">Contact</a></li>
-      </ul>
-      <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-    </nav>
-
-  </div>
-</header>
-
-<div class="container">
+  <div class="container">
     <h2>📝 Posts Forum</h2>
   
     <form [formGroup]="postForm" (ngSubmit)="submitPost()" class="form-post" enctype="multipart/form-data">
-      <textarea formControlName="content" placeholder="Express yourself here..." rows="4" maxlength="5000"></textarea>
+      <!-- <textarea formControlName="content" placeholder="Express yourself here..." rows="4" maxlength="5000"></textarea> -->
+
       
-      <div>
+      <textarea #postTextarea formControlName="content" placeholder="Express yourself here..." rows="4" maxlength="5000"></textarea>
+      <!-- <div>
         <input id="fileInput" type="file" (change)="onFileChange($event)" accept="image/*" />
       </div>
+   -->
+   <div class="file-upload-section">
+    <label for="fileInput" class="file-upload-label">
+      <span class="file-upload-button">📁 Choose File</span>
+      <span class="file-name" *ngIf="selectedFile">{{ selectedFile.name }}</span>
+      <span class="no-file" *ngIf="!selectedFile && !isEditing">No file chosen</span>
+      <span class="no-file" *ngIf="!selectedFile && isEditing && !postForm.value.img">No file chosen</span>
+      <span class="current-file" *ngIf="!selectedFile && isEditing && postForm.value.img">
+        Current file: {{ postForm.value.img }}
+      </span>
+    </label>
+    <input id="fileInput" type="file" (change)="onFileChange($event)" accept="image/*" style="display: none;" />
+  </div>
+
+      <div *ngIf="previewUrl" class="preview-container">
+        <img [src]="previewUrl" alt="Selected image preview" 
+             style="max-width: 200px; border-radius: 8px; margin-top: 8px;" />
+        <button type="button" class="btn btn-sm btn-danger mt-2"
+                (click)="removeImagePreview()">
+          Remove Image
+        </button>
+      </div>
   
-
-   <div *ngIf="previewUrl" class="preview-container">
-    <img [src]="previewUrl" alt="Selected image preview" 
-         style="max-width: 200px; border-radius: 8px; margin-top: 8px;" />
-    <button *ngIf="isEditing" type="button" class="btn btn-sm btn-danger mt-2"
-            (click)="removeImagePreview()">
-      Remove Image
-    </button>
-
-    
-  </div>
-  <div *ngIf="isEditing && !previewUrl && postForm.value.img" class="current-image-container">
-    <p>Current image:</p>
-    <img [src]="'assets/img/posts' + postForm.value.img" 
-         alt="Current post image"
-         style="max-width: 200px; border-radius: 8px; margin-top: 8px;" />
-  </div>
-
-
-
+      <div *ngIf="isEditing && !previewUrl && postForm.value.img" class="current-image-container">
+        <p>Current image:</p>
+        <img [src]="'assets/img/posts/' + postForm.value.img" 
+             alt="Current post image"
+             style="max-width: 200px; border-radius: 8px; margin-top: 8px;" />
+      </div>
+  
       <div class="form-buttons">
         <button type="submit">
           {{ isEditing ? '✏️ Update post' : '➕ Publish post' }}
@@ -83,20 +49,18 @@
       </div>
     </form>
   
-  
     <hr />
   
     <!-- Posts list -->
     <div *ngFor="let post of posts" class="post-card">
       <div class="post-content">
         <p>🗨️ {{ post.content }}</p>
-        <small class="post-date">🕒 {{ post.dateCreated | date: 'medium'
-          }}</small>
+        <small class="post-date">🕒 {{ post.dateCreated | date: 'medium' }}</small>
       </div>
   
       <!-- Display post image -->
       <img *ngIf="post.img"
-        [src]="'assets/img/posts' + post.img"
+        [src]="'assets/img/posts/' + post.img"
         alt="Post image"
         style="max-width:100%; height:auto;" />
   
@@ -130,4 +94,3 @@
       </div>
     </div>
   </div>
- 

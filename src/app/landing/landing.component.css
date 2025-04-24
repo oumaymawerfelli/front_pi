@@ -1,13 +1,88 @@
+/* Ensures a fixed height for the header */
 header.masthead {
-  position: relative;
+  height: 100vh;
+  min-height: 600px;
   overflow: hidden;
-  padding-top: calc(7rem + 72px);
-  padding-bottom: 7rem;
-  background: linear-gradient(0deg, #2c5f2d 0%, #97bc62 100%);
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-attachment: scroll;
-  background-size: cover;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+/* Auth forms styling */
+.auth-forms-container {
+  position: relative;
+  margin: 2rem auto 4rem; /* Add more bottom margin */
+  z-index: 10;
+  max-width: 500px;
+}
+.auth-forms-inline {
+  position: relative;
+  z-index: 3;
+  max-width: 500px;
+  margin: 0 auto;
+  animation: fadeSlideUp 0.4s ease-out;
+}
+.auth-wrapper {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 1rem;
+  padding: 2rem;
+  width: 100%;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Animation for form appearance */
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+section {
+  position: relative;
+  z-index: 2;
+}
+
+/* Keep masthead fixed height */
+header.masthead {
+  height: 100vh;
+  min-height: 600px;
+  overflow: hidden; /* Prevent background from expanding */
+  position: relative;
+}
+
+.auth-section-inside-header {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem; /* Adjust for mobile if necessary */
+}
+
+@media (max-width: 768px) {
+  .auth-section-inside-header {
+    margin-top: 1rem;
+  }
+}
+
+@media (min-width: 992px) {
+  header.masthead {
+    padding-top: calc(7rem + 72px);
+    padding-bottom: 7rem;
+  }
+}
+
+.auth-section {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 1rem;
+  padding: 2rem;
+  max-width: 600px;
+  margin: 0 auto;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
 }
 
 header.masthead .masthead-content {
@@ -114,7 +189,7 @@ header.masthead .bg-circle-4 {
 
 /* ✅ Fixed: Pattern background image */
 header.masthead::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -123,4 +198,57 @@ header.masthead::after {
   background-image: url("/assets/asset-L/assets/img/nature-pattern.jpg");
   opacity: 0.1;
   pointer-events: none;
+}
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1040;
+}
+
+.modal-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  z-index: 1050;
+  width: 90%;
+  max-width: 500px;
+  animation: fadeInUp 0.3s ease-out;
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -40%);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.masthead-content {
+  width: 100%;
+  padding: 2rem 0; /* Add some padding */
+  position: relative;
+  z-index: 1;
 }
