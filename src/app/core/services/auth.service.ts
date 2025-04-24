@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, Observable, of, tap } from 'rxjs';
+import { catchError, Observable, of, tap, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { User } from '../models/user.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 export interface LoginRequest {
   email: string;
@@ -26,29 +27,28 @@ export interface JwtResponse {
   providedIn: 'root'
 })
 export class AuthService {
-  snackbar: any;
+
 getRole() {
 throw new Error('Method not implemented.');
 }
   private apiUrl = 'http://localhost:8089/pi/auth';
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router, private snackbar: MatSnackBar) {}
+ 
 
   login(request: LoginRequest): Observable<JwtResponse> {
     return this.http.post<JwtResponse>(`${this.apiUrl}/login`, request, { withCredentials: true }).pipe(
       tap(response => {
         localStorage.setItem('token', response.token);
       }),
-      catchError(err => {
-        if (err.error.message === 'Your account is not approved yet.') {
-          this.snackbar.open('Account pending approval by admin.', 'Close', { duration: 3000 });
-        } else {
-          this.snackbar.open('Login failed. Check credentials.', 'Close', { duration: 3000 });
-        }
-        throw err;
-      })
+      catchError(err => throwError(() => err))
     );
-  }
+    }
+
+      
+    
+  
+  
   
   register(request: RegisterRequest): Observable<any> {
     return this.http.post(`${this.apiUrl}/register`, request, {
@@ -80,7 +80,7 @@ throw new Error('Method not implemented.');
       if (role === 'ROLE_ADMIN') {
         this.router.navigate(['/admin/profile']);
       } else {
-        this.router.navigate(['/home/profile']);
+        this.router.navigate(['/home']);
       }
     } catch (error) {
       console.error('Error decoding token', error);

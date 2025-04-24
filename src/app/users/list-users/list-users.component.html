@@ -35,7 +35,9 @@
     <div class="user-card" *ngFor="let user of filteredUsers" [ngClass]="{'pending': !user.enabled}">
       <div class="card-header">
         <div class="user-avatar">
-          <img [src]="user.profilePicture || 'https://via.placeholder.com/80'" alt="{{user.name}}">
+          <img [src]="getUserProfileImage(user)" alt="{{user.name}}">
+
+
           <span class="role-badge" [ngClass]="getRoleClass(user.role)">{{ user.role }}</span>
         </div>
         <div class="user-status" [ngClass]="user.enabled ? 'approved' : 'pending'">

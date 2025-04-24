@@ -9,6 +9,7 @@ export interface User {
     cin: number;
     enabled: boolean;
     profilePicture: any; // Or the correct type based on your implementation
+    profilePictureBase64?: string;
     dateOfBirth: Date;
     service: string;
     paymentInfo: string;

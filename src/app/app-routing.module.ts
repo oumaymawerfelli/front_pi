@@ -40,9 +40,11 @@ const routes: Routes = [
     { path: 'profile', component: ProfileComponent },
   ]
 },
+{path: '', redirectTo: '/landing', pathMatch: 'full'},
 
 { path: 'oauth2-redirect', component: OAuth2RedirectComponent },
 ];
+
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

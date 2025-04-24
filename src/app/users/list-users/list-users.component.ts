@@ -15,12 +15,16 @@ export class ListUsersComponent implements OnInit {
   selectedUser: User | null = null;
   showForm: boolean = false;
   searchTerm: string = '';
+  groupedUsers: { [role: string]: any[] } = {};
+
 
   constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit(): void {
     this.loadUsers();
+    
   }
+  
 
   loadUsers(): void {
     this.userService.getUsers().subscribe(
@@ -147,4 +151,9 @@ export class ListUsersComponent implements OnInit {
         console.error('Navigation error:', err);
       });
   }
+
+  getUserProfileImage(user: User): string {
+    return user.profilePictureBase64 || user.profilePicture || 'https://via.placeholder.com/80';
+  }
+  
 }

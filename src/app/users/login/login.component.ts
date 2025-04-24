@@ -32,12 +32,13 @@ onCaptchaResolved(token: string) {
         if (this.authService.isAdmin()) {
           this.router.navigate(['/admin/profile']);
         } else {
-          this.router.navigate(['/home/profile']);
+          this.router.navigate(['/home']);
         }
       },
-      error: () => {
-        this.errorMessage = 'Invalid email or password';
+      error: (err) => {
+        this.errorMessage = err?.error?.message || 'Invalid email or password';
       }
+      
     });
   }
   
