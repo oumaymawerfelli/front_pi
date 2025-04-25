@@ -1,0 +1,8 @@
+<div class="product-list">
+  <ng-container *ngFor="let prod of products">
+    <app-product 
+      *ngIf="searchText === '' || prod.productName.toLowerCase().includes(searchText.toLowerCase())"
+      [product]="prod">
+    </app-product>
+  </ng-container>
+</div>

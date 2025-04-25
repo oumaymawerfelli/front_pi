@@ -34,11 +34,15 @@ import { PanierComponent } from './panier/panier.component';
 import { FrontComponent } from './component/front/front.component';
 import { BackComponent } from './component/back/back.component';
 
+
 import { ContactComponent } from './contact/contact.component';
 
 
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { RecaptchaModule } from 'ng-recaptcha'; // Import RecaptchaModule
+import { MarketComponent } from './market/market.component';
+import { ProductListComponent } from './market/product-list/product-list.component';
+import { ProductComponent } from './market/product-list/product/product.component';
 
 
 
@@ -64,7 +68,11 @@ import { RecaptchaModule } from 'ng-recaptcha'; // Import RecaptchaModule
     LoanManagementComponent,
     LoanApplicationComponent,
     LoanInfoComponent,
-    ContactComponent
+    ContactComponent,
+    MarketplaceComponent,
+    MarketComponent,
+    ProductListComponent,
+    ProductComponent
   ],
   imports: [
     BrowserModule,

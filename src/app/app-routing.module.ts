@@ -16,6 +16,8 @@ import { LandingComponent } from './landing/landing.component';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { NgModule } from '@angular/core';
+import { MarketplaceComponent } from './marketplace/marketplace.component';
+import { MarketComponent } from './market/market.component';
 
 const routes: Routes = [
        // Default route
@@ -44,6 +46,9 @@ const routes: Routes = [
     { path: 'profile', component: ProfileComponent },
   ]
 },
+
+{ path: 'marketplace', component: MarketplaceComponent },
+{ path: 'market', component: MarketComponent },
 
 { path: 'oauth2-redirect', component: OAuth2RedirectComponent },
 ];
