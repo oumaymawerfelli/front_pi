@@ -15,6 +15,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RecaptchaModule } from 'ng-recaptcha';
 import { RouterModule } from '@angular/router';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { CompleteProfileComponent } from './complete-profile/complete-profile.component';
 
 
 
@@ -30,7 +31,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     LoginComponent,
     OAuth2RedirectComponent,
     ForgotPasswordComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    CompleteProfileComponent
   ],
   imports: [
     CommonModule,

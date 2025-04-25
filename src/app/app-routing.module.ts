@@ -18,6 +18,7 @@ import { HomeComponent } from './home/home.component';
 import { NgModule } from '@angular/core';
 import { MarketplaceComponent } from './marketplace/marketplace.component';
 import { MarketComponent } from './market/market.component';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
        // Default route
@@ -42,16 +43,19 @@ const routes: Routes = [
 },
 
 {path: 'home', component: HomeComponent,
+ 
   children:[
-    { path: 'profile', component: ProfileComponent },
+    { path: 'profile', component: ProfileComponent , canActivate:[AuthGuard],},
   ]
 },
+{path: '', redirectTo: '/landing', pathMatch: 'full'},
 
 { path: 'marketplace', component: MarketplaceComponent },
 { path: 'market', component: MarketComponent },
 
 { path: 'oauth2-redirect', component: OAuth2RedirectComponent },
 ];
+
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

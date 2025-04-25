@@ -15,27 +15,54 @@
     </div>
     
     <div class="stats-container">
-      <div class="stat-card">
+      <div class="stat-card" (click)="viewAllUsers()" [ngClass]="{'active': currentView === 'all'}">
         <div class="stat-value">{{users.length}}</div>
         <div class="stat-label">Total Users</div>
       </div>
-      <div class="stat-card">
+      <div class="stat-card" (click)="viewAllUsers()" [ngClass]="{'active': currentView === 'all'}">
         <div class="stat-value">{{approvedUsersCount}}</div>
         <div class="stat-label">Approved</div>
       </div>
-      <div class="stat-card accent">
-        <div class="stat-value">{{users.length - approvedUsersCount}}</div>
+      <div class="stat-card accent" (click)="viewPendingUsers()" [ngClass]="{'active': currentView === 'pending'}">
+        <div class="stat-value">{{pendingUsersCount}}</div>
         <div class="stat-label">Pending</div>
       </div>
     </div>
   </div>
 
-  <!-- User Cards Grid -->
-  <div class="users-grid" *ngIf="filteredUsers.length > 0; else noUsers">
+  <!-- Role Groups - Show only when viewing all -->
+  <div class="role-groups" *ngIf="currentView === 'all'">
+    <h2>User Groups by Role</h2>
+    <div class="role-cards">
+      <div class="role-card" *ngFor="let role of getRoles()" (click)="viewByRole(role)">
+        <div class="role-icon">
+          <i class="fas" [ngClass]="getRoleIcon(role)"></i>
+        </div>
+        <div class="role-info">
+          <h3>{{ role }}</h3>
+          <p>{{ groupedUsers[role].length || 0 }} users</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Current View Title - Show when not viewing all -->
+  <div class="view-title" *ngIf="currentView !== 'all'">
+    <button class="back-btn" (click)="viewAllUsers()">
+      <i class="fas fa-arrow-left"></i> Back to all
+    </button>
+    <h2>
+      <span *ngIf="currentView === 'pending'">Pending Approvals</span>
+      <span *ngIf="currentView === 'role'">{{currentRole}} Users</span>
+    </h2>
+  </div>
+
+  <!-- User Cards Grid - Show when not viewing all -->
+  <div class="users-grid" *ngIf="currentView !== 'all' && filteredUsers.length > 0;">
     <div class="user-card" *ngFor="let user of filteredUsers" [ngClass]="{'pending': !user.enabled}">
       <div class="card-header">
         <div class="user-avatar">
-          <img [src]="user.profilePicture || 'https://via.placeholder.com/80'" alt="{{user.name}}">
+          <img [src]="getUserProfileImage(user)" alt="{{user.name}}">
           <span class="role-badge" [ngClass]="getRoleClass(user.role)">{{ user.role }}</span>
         </div>
         <div class="user-status" [ngClass]="user.enabled ? 'approved' : 'pending'">
@@ -66,30 +93,4 @@
     </div>
   </div>
 
-  <ng-template #noUsers>
-    <div class="empty-state">
-      <i class="fas fa-users-slash"></i>
-      <h3>No users found</h3>
-      <p>Try adjusting your search or add a new user</p>
-      <button class="btn-primary" (click)="addNewUser()">
-        <i class="fas fa-user-plus"></i> Add User
-      </button>
-    </div>
-  </ng-template>
-
-  <!-- User Form Modal -->
-  <div class="modal-overlay" *ngIf="showForm">
-    <div class="modal-container">
-      <div class="modal-header">
-        <h2>{{selectedUser ? 'Edit User' : 'Create New User'}}</h2>
-        <button class="close-btn" (click)="cancelForm()">&times;</button>
-      </div>
-      <div class="modal-body">
-        <app-form
-          [userToEdit]="selectedUser"
-          (userSubmitted)="handleFormSubmit($event)">
-        </app-form>
-      </div>
-    </div>
-  </div>
-</div>
+ 
