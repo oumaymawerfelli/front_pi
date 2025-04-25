@@ -19,7 +19,12 @@ export class ProductListComponent implements OnInit {
 
   loadProducts(): void {
     this.productService.getAllProducts().subscribe((data) => {
-      this.products = data;
+      this.products = data.map((product) => {
+        if (!product.productImage) {
+          product.productImage = 'assets/market-assets/images/placeholder.PNG'; // Assign placeholder image
+        }
+        return product;
+      });
     });
   }
 }

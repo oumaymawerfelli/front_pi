@@ -5,13 +5,10 @@
       </div>
   
       <!-- On Sale Tag - only shows when discount is available -->
-      <div class="on-sale-tag" *ngIf="product.DiscountPrice != null && product.DiscountPrice > 0 && product.DiscountPrice < product.productPrice">
-        {{ (100 - ((product.DiscountPrice / product.productPrice) * 100)).toFixed(0) }}% OFF
-    </div>
+      <div class="ekart-on-sale-tag" *ngIf="product.DiscountPrice">{{ (100 - (product.DiscountPrice / product.productPrice) * 100).toFixed(0) }}% OFF</div>
     
       
-    </div>
-  
+  </div>
     <!-- Product Image -->
     <div class="product-image">
       <img [src]="product.productImage" class="product-image">
