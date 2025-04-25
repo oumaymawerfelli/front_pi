@@ -12,6 +12,7 @@ import { ProfileComponent } from './users/profile/profile.component';
 import { OAuth2RedirectComponent } from './users/oauth2-redirect/oauth2-redirect.component';
 import { ForgotPasswordComponent } from './users/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './users/reset-password/reset-password.component';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
        // Default route
@@ -36,8 +37,9 @@ const routes: Routes = [
 },
 
 {path: 'home', component: HomeComponent,
+ 
   children:[
-    { path: 'profile', component: ProfileComponent },
+    { path: 'profile', component: ProfileComponent , canActivate:[AuthGuard],},
   ]
 },
 {path: '', redirectTo: '/landing', pathMatch: 'full'},

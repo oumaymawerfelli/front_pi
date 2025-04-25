@@ -12,19 +12,20 @@ export class ListUsersComponent implements OnInit {
   users: User[] = [];
   filteredUsers: User[] = [];
   approvedUsersCount: number = 0;
+  pendingUsersCount: number = 0;
   selectedUser: User | null = null;
   showForm: boolean = false;
   searchTerm: string = '';
-  groupedUsers: { [role: string]: any[] } = {};
-
+  groupedUsers: { [role: string]: User[] } = {};
+  currentView: 'all' | 'role' | 'pending' = 'all';
+  currentRole: string = '';
+  pendingUsers: User[] = [];
 
   constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit(): void {
     this.loadUsers();
-    
   }
-  
 
   loadUsers(): void {
     this.userService.getUsers().subscribe(
@@ -32,11 +33,40 @@ export class ListUsersComponent implements OnInit {
         this.users = data;
         this.filteredUsers = [...this.users];
         this.approvedUsersCount = this.users.filter(user => user.enabled).length;
+        this.pendingUsersCount = this.users.length - this.approvedUsersCount;
+        this.pendingUsers = this.users.filter(user => !user.enabled);
+        this.groupUsersByRole();
       },
       (error) => {
         console.error('Error fetching users', error);
       }
     );
+  }
+
+  groupUsersByRole(): void {
+    this.groupedUsers = {};
+    this.users.forEach(user => {
+      if (!this.groupedUsers[user.role]) {
+        this.groupedUsers[user.role] = [];
+      }
+      this.groupedUsers[user.role].push(user);
+    });
+  }
+
+  viewByRole(role: string): void {
+    this.currentView = 'role';
+    this.currentRole = role;
+    this.filteredUsers = this.groupedUsers[role] || [];
+  }
+
+  viewPendingUsers(): void {
+    this.currentView = 'pending';
+    this.filteredUsers = this.pendingUsers;
+  }
+
+  viewAllUsers(): void {
+    this.currentView = 'all';
+    this.filteredUsers = [...this.users];
   }
 
   getRoleClass(role: string): string {
@@ -56,6 +86,20 @@ export class ListUsersComponent implements OnInit {
   editUser(user: User): void {
     this.selectedUser = {...user};
     this.showForm = true;
+  }
+  getRoles(): string[] {
+    return Object.keys(this.groupedUsers);
+  }
+  
+  getRoleIcon(role: string): string {
+    const roleLower = role.toLowerCase();
+    if (roleLower.includes('admin')) return 'fa-shield-alt';
+    if (roleLower.includes('farmer')) return 'fa-tractor';
+    if (roleLower.includes('student')) return 'fa-graduation-cap';
+    if (roleLower.includes('customer')) return 'fa-shopping-cart';
+    if (roleLower.includes('coach')) return 'fa-chalkboard-teacher';
+    if (roleLower.includes('investor')) return 'fa-chart-line';
+    return 'fa-user';
   }
 
   deleteUser(id?: number): void {

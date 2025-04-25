@@ -564,6 +564,100 @@
   overflow-y: auto;
   box-shadow: 0 10px 25px rgba(0,0,0,0.1);
 }
+/* Role Groups */
+.role-groups {
+  margin-bottom: 2rem;
+}
+
+.role-groups h2 {
+  color: #1e293b;
+  margin-bottom: 1rem;
+}
+
+.role-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.role-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.role-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.role-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+}
+
+.role-icon.farmer { background: #ecfdf5; color: #065f46; }
+.role-icon.student { background: #eff6ff; color: #1e40af; }
+.role-icon.admin { background: #fef2f2; color: #991b1b; }
+.role-icon.customer { background: #f5f3ff; color: #5b21b6; }
+.role-icon.coach { background: #fffbeb; color: #92400e; }
+.role-icon.investor { background: #f0fdf4; color: #166534; }
+
+.role-info h3 {
+  margin: 0 0 0.25rem;
+  color: #1e293b;
+  font-size: 1rem;
+}
+
+.role-info p {
+  margin: 0;
+  color: #64748b;
+  font-size: 0.875rem;
+}
+
+/* Active state for stat cards */
+.stat-card.active {
+  border: 2px solid #6366f1;
+}
+
+/* View title */
+.view-title {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  color: #64748b;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+}
+
+.back-btn:hover {
+  color: #475569;
+}
+
+.view-title h2 {
+  margin: 0;
+  color: #1e293b;
+}
 
 .modal-header {
   padding: 1.5rem;
