@@ -39,10 +39,12 @@ import { ContactComponent } from './contact/contact.component';
 
 
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
-import { RecaptchaModule } from 'ng-recaptcha'; // Import RecaptchaModule
+import { RecaptchaModule } from 'ng-recaptcha';
 import { MarketComponent } from './market/market.component';
 import { ProductListComponent } from './market/product-list/product-list.component';
 import { ProductComponent } from './market/product-list/product/product.component';
+import { FilterComponent } from './market/product-list/filter/filter.component';
+import { SearchComponent } from './market/product-list/search/search.component';
 
 
 
@@ -72,7 +74,9 @@ import { ProductComponent } from './market/product-list/product/product.componen
     MarketplaceComponent,
     MarketComponent,
     ProductListComponent,
-    ProductComponent
+    ProductComponent,
+    FilterComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,

@@ -2,6 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+
+export interface Farmer {
+  idUser: number;
+  name: string;
+  email: string;
+  
+}
 export interface Product {
 
   productName: string;       
@@ -9,10 +16,15 @@ export interface Product {
   productCategory: string; 
   productPrice: number;  
   DiscountPrice: number;  
-  productStock: number;      
-  productImage: string;      
+  productStock: number; 
+  farmer: Farmer;     
+  productImage: string; 
+
+      
 
 }
+
+
 
 @Injectable({
   providedIn: 'root',

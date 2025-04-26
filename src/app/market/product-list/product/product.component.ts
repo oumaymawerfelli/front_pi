@@ -8,4 +8,7 @@ import { Product } from 'src/app/core/services/product.service'; // Adjust path 
 })
 export class ProductComponent {
   @Input() product!: Product;
+
+
+  
 }

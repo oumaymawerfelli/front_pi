@@ -1,0 +1,44 @@
+/* Container for all radio buttons */
+div {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+  
+  /* Label styling */
+  label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: #f0f8ff;
+    padding: 0.6rem 1rem;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    font-size: 0.95rem;
+    color: #333;
+  }
+  
+  label:hover {
+    background-color: #ffe4e1;
+    transform: scale(1.05);
+  }
+  
+  /* Radio input hidden but still functional */
+  input[type="radio"] {
+    display: none;
+  }
+  
+  /* Add whimsical selection style */
+  input[type="radio"]:checked + span {
+    font-weight: bold;
+    color: #fff;
+    background: linear-gradient(to right, #f6d365, #fda085);
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    transition: all 0.3s ease-in-out;
+  }
+  

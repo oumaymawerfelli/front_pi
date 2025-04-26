@@ -24,7 +24,14 @@
   
     <!-- Product Category -->
     <div class="product-category">{{ product.productCategory }}</div>
-  
+
+    <!-- Farmer details -->
+    <div class="product-category">
+      <p><strong>Farmer Name:</strong> {{ product.farmer.name }}</p>
+      <p><strong>Farmer ID:</strong> {{ product.farmer.idUser }}</p>
+      {{ product.productCategory }}
+    </div>
+    
     <!-- Product Stock Availability -->
     <div class="product-in-stock" [ngStyle]="{ fontWeight: 'bold', color: product.productStock > 0 ? 'Green' : 'Red' }">
       {{ product.productStock > 0 ? 'Available in Stock' : 'Not Available in Stock' }}

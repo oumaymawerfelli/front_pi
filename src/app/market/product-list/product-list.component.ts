@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ProductService } from 'src/app/core/services/product.service'; 
 import { Product } from 'src/app/core/services/product.service'; 
 
@@ -10,6 +10,13 @@ import { Product } from 'src/app/core/services/product.service';
 export class ProductListComponent implements OnInit {
   products: Product[] = [];
   searchText: string = '';
+  totalProductCount : number = 0 ;
+  totalProductsInStock: number = 0 ;
+  totalProductsOutOfStock: number = 0 ;
+ 
+
+  
+ 
 
   constructor(private productService: ProductService) {}
 
@@ -20,11 +27,28 @@ export class ProductListComponent implements OnInit {
   loadProducts(): void {
     this.productService.getAllProducts().subscribe((data) => {
       this.products = data.map((product) => {
-        if (!product.productImage) {
-          product.productImage = 'assets/market-assets/images/placeholder.PNG'; // Assign placeholder image
+        const img = product.productImage?.trim().toLowerCase();
+        if (!img || img === 'string') {
+          product.productImage = 'assets/market-assets/images/placeholder.PNG';
         }
+
+
         return product;
       });
+      this.totalProductCount = this.products.length;
+      this.totalProductsInStock = this.products.filter (p=> p.productStock > 0).length;
+      this.totalProductsOutOfStock = this.products.filter (p=> p.productStock == 0).length;
     });
   }
+
+
+  selectedFilterRadioButton: string = 'all';
+    onFilterChanged(value:string){
+      this.selectedFilterRadioButton = value;
+    
+  }
+
+
+  
+
 }
