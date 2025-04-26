@@ -10,13 +10,25 @@ export class RegisterComponent {
   name = '';
   email = '';
   password = '';
+  confirmPassword = '';
   role = 'ROLE_CUSTOMER'; 
   phone = '';// Adjust the default role as needed
 
   constructor(private authService: AuthService) {}
 
   register(): void {
-    const request: RegisterRequest = { name: this.name, email: this.email, password: this.password, role: this.role , phone: this.phone};
+    if (this.password !== this.confirmPassword) {
+      alert("Passwords do not match");
+      return;
+    }
+    const request: RegisterRequest = { 
+      name: this.name, 
+      email: this.email, 
+      password: this.password, 
+      confirmPassword: this.confirmPassword, 
+      role: this.role, 
+      phone: this.phone 
+    };
     this.authService.register(request).subscribe({
       next: (response) => {
         console.log('User registered:', response);

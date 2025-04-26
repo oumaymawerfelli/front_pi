@@ -30,6 +30,8 @@ import { LoanInfoComponent } from './loans/loan-info/loan-info.component';
 import { LoanManagementComponent } from './loans/loan-management/loan-management.component';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { RecaptchaModule } from 'ng-recaptcha'; // Import RecaptchaModule
+import { NgChartsModule } from 'ng2-charts';
+import { AdminAnalyticsComponent } from './users/admin-analytics/admin-analytics.component';
 
 
 
@@ -48,7 +50,8 @@ import { RecaptchaModule } from 'ng-recaptcha'; // Import RecaptchaModule
     LoanManagementComponent,
     LoanApplicationComponent,
     LoanInfoComponent,
-    ContactComponent
+    ContactComponent,
+   
   ],
   imports: [
     BrowserModule,
@@ -59,10 +62,11 @@ import { RecaptchaModule } from 'ng-recaptcha'; // Import RecaptchaModule
     BrowserAnimationsModule,
     AppRoutingModule,
     NgbModule,
-    UsersModule,
+    
     FormsModule,
     ReactiveFormsModule,
-    RecaptchaModule
+    RecaptchaModule,
+    NgChartsModule
   ],
   providers: [AuthService, AdminGuard],
 

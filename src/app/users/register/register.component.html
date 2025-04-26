@@ -5,13 +5,23 @@
     <input id="name" type="text" [(ngModel)]="name" name="name" required />
 
     <label for="email">Email:</label>
-    <input id="email" type="email" [(ngModel)]="email" name="email" required />
+    <input id="email" type="email" [(ngModel)]="email" name="email" required email />
 
     <label for="password">Password:</label>
-    <input id="password" type="password" [(ngModel)]="password" name="password" required />
-    <label for="phone">Phone number:</label>
-    <input id="phone" type="string" [(ngModel)]="phone" name="phone" required />
+    <input id="password" type="password" [(ngModel)]="password" name="password" required 
+      pattern="^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{8,}$" />
+    <small *ngIf="registerForm.controls['password']?.invalid && registerForm.controls['password']?.touched">
+      Password must be at least 8 characters long, contain an uppercase letter, a number, and a special character.
+    </small>
 
+    <label for="confirmPassword">Confirm Password:</label>
+    <input id="confirmPassword" type="password" [(ngModel)]="confirmPassword" name="confirmPassword" required [pattern]="password" />
+    <small *ngIf="password !== confirmPassword && confirmPassword">
+      Passwords do not match.
+    </small>
+
+    <label for="phone">Phone number:</label>
+    <input id="phone" type="text" [(ngModel)]="phone" name="phone" required />
 
     <label for="role">Role:</label>
     <select id="role" [(ngModel)]="role" name="role" required>
@@ -27,6 +37,7 @@
     <p>Already have an account? <a routerLink="/login">Sign in</a></p>
   </form>
 </div>
+
 
 <style>
   /* Style for the form container */

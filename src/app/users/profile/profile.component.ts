@@ -157,5 +157,9 @@ logout(): void {
     this.isEditing = false;
   }
   
+  goToAnalytics() {
+    this.router.navigate(['/admin/analytics']);
+  }
+  
   
 }
