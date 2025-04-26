@@ -45,6 +45,11 @@ export class EquipmentService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.http.delete<void>(`${this.apiUrl}/${id}`, { headers });
   }
+  filterEquipments(filter: { name: string; type: string; availability: boolean | null }): Observable<Equipment[]> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.post<Equipment[]>(`${this.apiUrl}/search`, filter, { headers });
+  }
 }
 
 export { Equipment };

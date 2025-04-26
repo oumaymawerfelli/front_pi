@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ApiService } from 'src/app/services-loans/api.service';
 import SignaturePad from 'signature_pad';
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -14,6 +15,8 @@ export class LoanApplicationComponent implements OnInit, AfterViewInit {
   applicationForm: FormGroup;
   selectedItem!: any;
   borrower!: any;
+  owners: any[] = []; 
+  
   isEquipmentLoan: boolean = false;
   maxLoanDuration: number = 12;
   pageTitle: string = 'Loan application';
@@ -29,10 +32,12 @@ export class LoanApplicationComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private el: ElementRef,
     private renderer: Renderer2,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private http: HttpClient // ✅ Add this line
   ) {
     this.applicationForm = this.fb.group({
       borrowerName: ['', Validators.required],
+      ownerId: [null, Validators.required],
       borrowerContact: ['', [Validators.required, Validators.email]],
       loanPurpose: ['', Validators.required],
       loanDuration: ['', [Validators.required, Validators.min(1)]],
@@ -40,29 +45,24 @@ export class LoanApplicationComponent implements OnInit, AfterViewInit {
       specialRequest: [''],
       termsAccepted: [false, Validators.requiredTrue],
       signature: ['', Validators.required],
-      // Include hidden fields
       equipmentId: [null],
       landId: [null],
-      borrowerId: [null],
+      
       statusReq: ['PENDING']
     });
   }
-
+  
   ngOnInit(): void {
-    this.apiService.getHello().subscribe(
-      (      data: string) => this.messageFromBackend = data,
-      (      error: any) => console.error('Error fetching backend message:', error)
+   
+
+    this.apiService.getOwners().subscribe(
+      (data: any[]) => {
+        this.owners = data;
+        console.log('Owners fetched:', this.owners); // Optional: to debug
+      },
+      (error) => console.error('Error loading owners:', error)
     );
-
-    const navElement = this.el.nativeElement.querySelector('nav');
-    this.renderer.setStyle(navElement, 'background', 'url("assets/img/page-title-bg.jpg") no-repeat center center');
-    this.renderer.setStyle(navElement, 'background-size', 'cover');
-    this.renderer.setStyle(navElement, 'text-align', 'center');
-    this.renderer.setStyle(navElement, 'padding', '150px 0');
-
-    this.route.url.subscribe(url => {
-      this.pageTitle = url[0]?.path === 'loan-management' ? 'Loan Management' : 'Loan application';
-    });
+    
 
     const navigation = this.router.getCurrentNavigation();
     if (navigation?.extras?.state) {
@@ -74,7 +74,11 @@ export class LoanApplicationComponent implements OnInit, AfterViewInit {
       this.applicationForm.patchValue({
         equipmentId: this.isEquipmentLoan ? this.selectedItem.id : null,
         landId: !this.isEquipmentLoan ? this.selectedItem.id : null,
-        borrowerId: this.borrower?.id,
+        
+
+        ownerId: this.selectedItem?.owner?.id || null, // assuming selectedItem contains owner
+        
+        
         borrowerName: this.borrower?.name,
         borrowerContact: this.borrower?.email
       });
@@ -130,7 +134,7 @@ export class LoanApplicationComponent implements OnInit, AfterViewInit {
   
       console.log('Submitting loan request:', loanRequest);
   
-      this.apiService.createLoanRequest(loanRequest, loanRequest.borrowerId).subscribe({
+      this.apiService.createLoanRequest(loanRequest).subscribe({
         next: (response: any) => {
           console.log('Success:', response);
           alert('Loan request submitted successfully!');
@@ -141,10 +145,15 @@ export class LoanApplicationComponent implements OnInit, AfterViewInit {
           alert(`Submission failed. Error: ${err.message || 'Unknown error'}`);
         }
       });
+      
   
     } else {
       alert('Please complete all required fields.');
     }
+    console.log(this.applicationForm.value);
+console.log(this.applicationForm.valid);
+console.log(this.applicationForm.errors);
+
   }
   
   

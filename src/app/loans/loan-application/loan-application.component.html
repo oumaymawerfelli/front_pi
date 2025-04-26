@@ -13,52 +13,6 @@
   
 </head>
 
-<body class="contact-page">
-
-  <h1>{{ messageFromBackend }}</h1>
-
-
-
-
-
-
-
-
-
-
-  <header id="header" class="header d-flex align-items-center position-relative">
-    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
-
-      <a href="index.html" class="logo d-flex align-items-center">
-  <img src="assets/front/logo.png" alt="AgriCulture Logo">
- 
-</a>
-
-
-      </div>
-      </header>
-
-  <main class="main">
-
-  <!-- Page Title Section -->
-<div class="page-title dark-background" data-aos="fade" 
-style="background-image: url(assets/front/img/page-title-bg.webp);">
-<div class="container position-relative">
-<h1>{{ pageTitle }}</h1>
-
-
-<!-- Breadcrumb Navigation -->
-<nav class="breadcrumbs">
- <ol>
-  
-   <li><a routerLink="/loan-info">Loan Info /</a></li>
-
-   <li><a routerLink="/loan-management">  Loan Management</a></li>
- </ol>
-</nav>
-</div>
-</div><!-- End Page Title -->
-
 
 
 
@@ -139,9 +93,10 @@ style="background-image: url(assets/front/img/page-title-bg.webp);">
           <!-- Hidden fields -->
           <input type="hidden" formControlName="equipmentId">
           <input type="hidden" formControlName="landId">
-          <input type="hidden" formControlName="borrowerId">
+          
           <input type="hidden" formControlName="statusReq">
-      
+          <input type="hidden" formControlName="ownerId" />
+
           <div class="row">
             <!-- Borrower Name -->
             <div class="col-md-6 form-group">
@@ -153,15 +108,7 @@ style="background-image: url(assets/front/img/page-title-bg.webp);">
               </div>
             </div>
 
-              <!-- Borrower ID -->
-  <div class="col-md-6 form-group">
-    <label for="borrowerId">Borrower ID</label>
-    <input type="text" id="borrowerId" formControlName="borrowerId" class="form-control">
-    <div *ngIf="applicationForm.get('borrowerId')?.invalid && applicationForm.get('borrowerId')?.touched" 
-         class="error-message">
-      Required field
-    </div>
-  </div>
+  
       
             <!-- Borrower Email -->
             <div class="col-md-6 form-group">
@@ -174,6 +121,14 @@ style="background-image: url(assets/front/img/page-title-bg.webp);">
               </div>
             </div>
           </div>
+          <!-- Owner Selection -->
+          <div class="form-group">
+            <label for="ownerId">Choose Owner</label>
+            <select id="ownerId" formControlName="ownerId" class="form-control">
+              <option *ngFor="let owner of owners" [value]="owner.id">{{ owner.name }}</option>
+            </select>
+          </div>
+          
       
           <!-- Loan Purpose -->
           <div class="form-group">

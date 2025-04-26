@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { EquipmentService } from 'src/app/services-loans/equipment.service';
+import { EquipmentService } from 'src/app/services-loans/equipment.service'; 
+
 
 export interface Equipment {
   typeEquipment(arg0: string, typeEquipment: any): unknown;
