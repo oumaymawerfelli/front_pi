@@ -39,7 +39,7 @@ export class PendingUsersComponent implements OnInit {
       this.userService.approveUser(userId).subscribe({
         next: () => {
           alert('User approved and SMS sent!');
-          this.loadPendingUsers(); // Refresh the list
+          this.loadPendingUsers(); 
         },
         error: (err) => {
           alert('Error approving user: ' + err.message);
@@ -47,10 +47,10 @@ export class PendingUsersComponent implements OnInit {
       });
     }
   }
-  // Add this method
+
 logClick() {
   console.log('Button clicked!');
-  // Add any other debug info you need
+  
   console.log('Attempting to navigate to pending users...');
 }
 }

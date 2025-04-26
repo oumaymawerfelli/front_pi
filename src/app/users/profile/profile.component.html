@@ -46,7 +46,6 @@
     </div>
 
     <div class="content-card">
-      <!-- VIEW MODE -->
       <div *ngIf="!isEditing" class="view-mode">
         <div class="info-grid">
           <div class="info-group">
@@ -69,10 +68,13 @@
             <label><i class="fas fa-birthday-cake"></i> Date of Birth</label>
             <span>{{ user.dateOfBirth ? (user.dateOfBirth | date) : 'Not provided' }}</span>
           </div>
+          <div class="info-group" *ngIf="user.score !== undefined">
+            <label><i class="fas fa-star"></i> Profile Score</label>
+            <span>{{ user.score | number:'1.0-2' }}/1.00</span>
+          </div>
         </div>
       </div>
 
-      <!-- EDIT MODE -->
       <form *ngIf="isEditing" class="edit-mode">
         <div class="info-grid">
           <div class="info-group">
@@ -95,6 +97,8 @@
             <label for="dob"><i class="fas fa-birthday-cake"></i> Date of Birth</label>
             <input id="dob" type="date" [(ngModel)]="user.dateOfBirth" name="dob">
           </div>
+          
+          
         </div>
 
         <div class="form-actions">
@@ -108,7 +112,6 @@
       </form>
     </div>
 
-    <!-- Role Specific Sections -->
     <div class="role-section" *ngIf="user.role === 'STUDENT'">
       <div class="section-header">
         <h4><i class="fas fa-project-diagram"></i> Academic Projects</h4>

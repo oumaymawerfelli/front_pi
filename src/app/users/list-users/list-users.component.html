@@ -1,5 +1,5 @@
 <div class="admin-dashboard">
-  <!-- Top Navigation -->
+
   <div class="dashboard-header">
     <div class="header-content">
       <h1><i class="fas fa-users-cog"></i> User Management</h1>
@@ -30,7 +30,6 @@
     </div>
   </div>
 
-  <!-- Role Groups - Show only when viewing all -->
   <div class="role-groups" *ngIf="currentView === 'all'">
     <h2>User Groups by Role</h2>
     <div class="role-cards">
@@ -46,7 +45,6 @@
     </div>
   </div>
 
-  <!-- Current View Title - Show when not viewing all -->
   <div class="view-title" *ngIf="currentView !== 'all'">
     <button class="back-btn" (click)="viewAllUsers()">
       <i class="fas fa-arrow-left"></i> Back to all
@@ -57,7 +55,7 @@
     </h2>
   </div>
 
-  <!-- User Cards Grid - Show when not viewing all -->
+
   <div class="users-grid" *ngIf="currentView !== 'all' && filteredUsers.length > 0;">
     <div class="user-card" *ngFor="let user of filteredUsers" [ngClass]="{'pending': !user.enabled}">
       <div class="card-header">

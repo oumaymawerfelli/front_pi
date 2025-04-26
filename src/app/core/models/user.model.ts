@@ -8,12 +8,12 @@ export interface User {
     phone: string;
     cin: number;
     enabled: boolean;
-    profilePicture: any; // Or the correct type based on your implementation
+    profilePicture: any; 
     profilePictureBase64?: string;
     dateOfBirth: Date;
     service: string;
     paymentInfo: string;
     companyName: string;
     institution: any; 
-    status:string;// Adjust according to your relationships
+    status:string;
   }

@@ -12,8 +12,9 @@ interface UserProfile {
   adresse?: string;
   dateOfBirth?: string;
   profilePictureBase64?: string;
-  role?: string;// Optiona
-  institution? : string;// il, adjust based on your implementation
+  role?: string;
+  institution? : string;
+  score?: number;
 }
 
 @Component({
@@ -22,7 +23,7 @@ interface UserProfile {
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  user: UserProfile = { name: '', email: '' }; // Initialize with default values
+  user: UserProfile = { name: '', email: '' }; 
   errorMessage: string = '';
   isEditing = false;
 originalUser: any;
@@ -66,11 +67,10 @@ originalUser: any;
 
   
   getProfilePictureUrl(filePath: string): string {
-    // If the filePath is a Base64 image string, return it directly
     if (filePath && filePath.startsWith('data:image')) {
-      return filePath; // Return the Base64 string directly
+      return filePath; 
     }
-    return filePath ? `/uploads/${filePath}` : '/assets/default-profile.png'; // Fallback
+    return filePath ? `/uploads/${filePath}` : '/assets/default-profile.png'; 
   }
   
   
@@ -104,10 +104,10 @@ onFileSelected(event: Event): void {
   if (input.files && input.files.length > 0) {
     this.selectedFile = input.files[0];
     
-    // Preview the selected image
+
     const reader = new FileReader();
     reader.onload = (e: any) => {
-      this.user.profilePictureBase64 = e.target.result; // Preview
+      this.user.profilePictureBase64 = e.target.result; 
     };
     reader.readAsDataURL(this.selectedFile);
   }

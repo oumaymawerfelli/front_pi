@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, Observable, of, tap, throwError } from 'rxjs';
+import { catchError, map, Observable, of, tap, throwError } from 'rxjs';
 import { User } from '../models/user.model'; 
 
-import { UserProfile } from '../models/userProfile.model'; // Adjust the import based on your structure
+import { UserProfile } from '../models/userProfile.model'; 
 import { LoginAttempt } from '../models/LoginAttempt.model';
 
 
@@ -34,7 +34,7 @@ export class UserService {
   }
 
   addUser(user: User): Observable<User> {
-    // Create a new object without idUser
+
     const userToAdd = {
       name: user.name,
       email: user.email,
@@ -76,7 +76,7 @@ export class UserService {
     return this.http.put(`${this.apiUrl}/update-user-profile`, data, {
       headers: new HttpHeaders({
         'Authorization': `Bearer ${localStorage.getItem('token')}`
-        // Do NOT set Content-Type here – Angular sets it automatically for FormData
+       
       }),
       withCredentials: true
     });
@@ -119,9 +119,16 @@ getPendingUsers(): Observable<any[]> {
   getProfile(): Observable<UserProfile> {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.get<UserProfile>('http://localhost:8089/pi/profile/profile', { headers });
+    return this.http.get<{ user: UserProfile, score: number }>('http://localhost:8089/pi/profile/profile', { headers })
+      .pipe(
+     
+        map(response => ({
+          ...response.user,
+          score: response.score
+        }))
+      );
   }
-
+  
   getLoginAnalytics(): Observable<LoginAttempt[]> {
     const token = localStorage.getItem('token');
     if (!token) return of([]);

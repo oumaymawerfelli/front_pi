@@ -10,7 +10,7 @@ export class FormComponent {
   @Input() userToEdit: User | null = null;
   @Output() userSubmitted = new EventEmitter<User>();
 
-  // Initialize form without ID
+
   userForm: Omit<User, 'idUser'> & { idUser?: number } = {
     name: '',
     email: '',
@@ -31,10 +31,10 @@ export class FormComponent {
 
   ngOnChanges(): void {
     if (this.userToEdit) {
-      // Clone the user to edit
+
       this.userForm = { ...this.userToEdit };
     } else {
-      // Reset form for new user (without ID)
+      
       this.resetForm();
     }
   }

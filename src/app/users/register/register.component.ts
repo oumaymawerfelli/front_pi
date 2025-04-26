@@ -12,7 +12,7 @@ export class RegisterComponent {
   password = '';
   confirmPassword = '';
   role = 'ROLE_CUSTOMER'; 
-  phone = '';// Adjust the default role as needed
+  phone = '';
 
   constructor(private authService: AuthService) {}
 
