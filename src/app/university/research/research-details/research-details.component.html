@@ -1,4 +1,6 @@
 <div *ngIf="researchProject; else loading" class="project-container">
+  <button class="close-btn" (click)="close()">×</button>
+
     <div class="project-header">
       <h2>{{ researchProject.title }}</h2>
       <div class="status-badge" [ngClass]="getStatusClass(researchProject.status)">

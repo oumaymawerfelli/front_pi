@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges,Output, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { InstitutionService } from 'src/app/core/services/institution.service';
@@ -9,9 +9,13 @@ import { Institution } from 'src/app/core/models/institution.model';
   templateUrl: './edit-institution.component.html',
   styleUrls: ['./edit-institution.component.css']
 })
-export class EditInstitutionComponent implements OnInit {
+export class EditInstitutionComponent implements OnChanges {
   institutionForm: FormGroup;
   institutionId!: number;
+  isFormVisible: boolean = true;  // Flag to manage form visibility
+  @Input() institution!: Institution;
+  @Output() institutionUpdated = new EventEmitter<Institution>();
+  @Output() cancelEdit = new EventEmitter<void>();
 
   constructor(
     private route: ActivatedRoute,
@@ -25,19 +29,26 @@ export class EditInstitutionComponent implements OnInit {
       location: ['', Validators.required],
     });
   }
-
-  ngOnInit(): void {
-    this.institutionId = +this.route.snapshot.paramMap.get('id')!;
-    this.institutionService.getInstitutionById(this.institutionId).subscribe(data => {
-      this.institutionForm.patchValue(data);
-    });
-  }
-
-  onSubmit(): void {
-    if (this.institutionForm.valid) {
-      this.institutionService.updateInstitution(this.institutionForm.value).subscribe(() => {
-        this.router.navigate(['/institutions']);
+ 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['institution'] && this.institution) {
+      this.institutionForm.patchValue({
+        institutionId: this.institution.institutionId,
+        name: this.institution.name,
+        location: this.institution.location
       });
     }
   }
+  
+  onUpdate(): void {
+    if (this.institutionForm.valid) {
+      const updatedInstitution = this.institutionForm.value;
+      this.institutionService.updateInstitution(updatedInstitution).subscribe(() => {
+        this.institutionUpdated.emit(updatedInstitution);
+      });
+    }
+  }
+onCancel(): void {
+  this.cancelEdit.emit();
+}
 }

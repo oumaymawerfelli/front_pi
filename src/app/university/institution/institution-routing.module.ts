@@ -8,9 +8,6 @@ const routes: Routes = [
   { path: '', component: InstitutionListComponent },
   { path: 'add', component: AddInstitutionComponent },
   { path: 'edit/:id', component: EditInstitutionComponent },
-
-  
-
 ];
 
 @NgModule({

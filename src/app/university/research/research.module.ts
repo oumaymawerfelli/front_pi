@@ -6,6 +6,7 @@ import { EditResearchComponent } from './edit-research/edit-research.component';
 import { ResearchRoutingModule } from './research-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ResearchDetailsComponent } from './research-details/research-details.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -13,12 +14,15 @@ import { ResearchDetailsComponent } from './research-details/research-details.co
     AddResearchComponent,
     EditResearchComponent,
     ResearchDetailsComponent,
+
   ],
   imports: [
     CommonModule,
     ResearchRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    MatDialogModule,
+
   ]
 })
 export class ResearchModule {}

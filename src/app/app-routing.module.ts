@@ -5,7 +5,10 @@ import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },          // Default route
-  { path: 'login', component: LandingComponent } // /landing route
+  { path: 'login', component: LandingComponent } ,// /landing route
+  { path: 'university/institution', loadChildren: () => import('./university/institution/institution.module').then(m => m.InstitutionModule) },
+  { path: 'university/research-project', loadChildren: () => import('./university/research/research.module').then(m => m.ResearchModule) }
+  
 ];
 
 @NgModule({

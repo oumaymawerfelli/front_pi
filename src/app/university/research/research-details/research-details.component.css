@@ -1,12 +1,24 @@
 /* Container for the project details */
 .project-container {
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 900px;
-    margin: 20px auto;
-  }
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 900px;
+  margin: 20px auto;
+  min-height: 400px; /* Ensure the container has a minimum height */
+  margin-bottom: 80px; /* Adjust bottom margin if needed */
+  overflow: hidden;  /* Prevent content overflow */
+  position: relative; /* Allow content to be properly displayed */
+}
+.loading-message {
+    text-align: center;
+    font-size: 1.2em;
+    color: #888;
+    margin-top: 20px; /* Give some spacing above loading message */
+}
+
+
   
   /* Header of the project with title and status */
   .project-header {
@@ -68,3 +80,32 @@
     color: #888;
   }
   
+  /* Close Button inside the modal */
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  background: none;
+  border: none;
+  color: #333;
+  cursor: pointer;
+  padding: 5px;
+  font-weight: bold;
+  z-index: 10; /* Make sure the close button is on top */
+}
+
+.close-btn:hover {
+  color: #f44336; /* Optional: Change color when hovering */
+}
+
+/* Modal content */
+.modal-content {
+  background-color: red; /* Ensure background color is set to red */
+  padding: 20px;
+  border-radius: 8px;
+  width: 80%;
+  max-width: 900px;
+  z-index: 1060; /* Ensure it appears above the backdrop */
+  box-shadow: none; /* Optional: cleaner look */
+}

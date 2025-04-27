@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ResearchProjectService } from 'src/app/core/services/research-project.service';
 import { ResearchProject } from 'src/app/core/models/research-project';
@@ -10,8 +10,12 @@ import { ResearchProject } from 'src/app/core/models/research-project';
 
 })
 export class ResearchDetailsComponent implements OnInit {
-  projectId: number = 0;  // Initialisation de projectId à 0
+  //projectId: number = 0;  // Initialisation de projectId à 0
   researchProject: ResearchProject | undefined;
+  @Input() projectId: number | null = null;
+  @Output() closeModal = new EventEmitter<void>(); // Output to emit close event to parent component
+
+
 
   constructor(
     private route: ActivatedRoute,
@@ -19,19 +23,23 @@ export class ResearchDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Récupérer l'ID du projet depuis l'URL
-    this.projectId = +this.route.snapshot.paramMap.get('id')!;
-
-    // Appeler le service pour récupérer les détails du projet
-    this.researchProjectService.getProjectById(this.projectId).subscribe(
-      (project) => {
-        this.researchProject = project; // Stocker les détails du projet
-      },
-      (error) => {
-        console.error('Erreur lors de la récupération du projet:', error);
-      }
-    );
+    if (this.projectId) {
+      this.researchProjectService.getProjectById(this.projectId).subscribe(
+        (project) => {
+          this.researchProject = project;
+        },
+        (error) => {
+          console.error('Error fetching project details:', error);
+        }
+      );
+    }
   }
+
+  // Emit the close event to parent component
+  close() {
+    this.closeModal.emit();
+  }
+  
 
   getStatusClass(status: string): string {
     switch(status) {
