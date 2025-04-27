@@ -1,4 +1,6 @@
 import { Commentaire } from "./commentaire";
+import { PostCategory } from "./PostCategory";
+
 
 export interface Post {
   id?: number;
@@ -6,4 +8,6 @@ export interface Post {
   dateCreated?: Date;
   comments?: Commentaire[];
   img:string;
+  category: PostCategory; // Remove optional (?) if backend always returns it
+
 }
