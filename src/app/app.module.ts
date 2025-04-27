@@ -39,7 +39,6 @@ import { ContactComponent } from './contact/contact.component';
 
 
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
-import { RecaptchaModule } from 'ng-recaptcha';
 import { MarketComponent } from './market/market.component';
 import { ProductListComponent } from './market/product-list/product-list.component';
 import { ProductComponent } from './market/product-list/product/product.component';
@@ -47,6 +46,9 @@ import { FilterComponent } from './market/product-list/filter/filter.component';
 import { SearchComponent } from './market/product-list/search/search.component';
 import { FarmMenuComponent } from './market/farm-menu/farm-menu.component';
 import { AddProdComponent } from './market/farm-menu/add-prod/add-prod.component';
+import { RecaptchaModule } from 'ng-recaptcha'; // Import RecaptchaModule
+import { NgChartsModule } from 'ng2-charts';
+import { AdminAnalyticsComponent } from './users/admin-analytics/admin-analytics.component';
 
 
 
@@ -94,10 +96,11 @@ import { AddProdComponent } from './market/farm-menu/add-prod/add-prod.component
     BrowserAnimationsModule,
     AppRoutingModule,
     NgbModule,
-    UsersModule,
+    
     FormsModule,
     ReactiveFormsModule,
     RecaptchaModule,
+    NgChartsModule
   ],
   providers: [AuthService, AdminGuard],
 

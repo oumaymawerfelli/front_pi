@@ -10,34 +10,68 @@ import { ProductService, Product } from 'src/app/core/services/product.service';
 export class FarmMenuComponent implements OnInit {
   userName: string = '';
   userEmail: string = '';
-  products: Product[] = [];
+  userId: number = 0; // Fixed: Changed to number and initialized with 0
   myProducts: Product[] = [];  // Products belonging to the connected user
-  selectedProduct: Product | null = null; // Product currently being edited
+  
 
   constructor(private productService: ProductService, private userService: UserService) {}
 
   ngOnInit() {
-    this.userService.getProfile().subscribe(profile => {
-      this.userEmail = profile.email;
-      this.userName = profile.name;
+    // Fetch the logged-in user using the getLoggedInUser() method
+    this.userService.getLoggedInUser().subscribe(
+      (user) => {
+        // Safely assign userId if it's not undefined
+        if (user.idUser !== undefined) {
+          this.userId = user.idUser;
+        } else {
+          console.error('User idUser is undefined');
+        }
 
-      this.productService.getAllProducts().subscribe(allProducts => {
-        
-        // Set placeholder image if needed
-        allProducts.forEach(product => {
-          const img = product.productImage?.trim().toLowerCase();
-          if (!img || img === 'string') {
-            product.productImage = 'assets/market-assets/images/placeholder.PNG';
-          }
-        });
+        // Set user information
+        this.userEmail = user.email;
+        this.userName = user.name;
 
-        this.products = allProducts;
-        this.myProducts = this.products.filter(product =>
-          product.farmer && product.farmer.email === this.userEmail
-        );
-      });
-    });
+        // Now fetch the products for this user
+        this.loadProductsForUser(user);
+      },
+      (error) => {
+        console.error('Error fetching logged-in user:', error);
+      }
+    );
   }
 
- 
+  // Method to load products for the current user
+  loadProductsForUser(user: any) {
+    this.productService.getProductsByUserId(this.userId).subscribe(allProducts => {
+      // Set placeholder image if needed
+      allProducts.forEach(product => {
+        const img = product.productImage?.trim().toLowerCase();
+        if (!img || img === 'string') {
+          product.productImage = 'assets/market-assets/images/placeholder.PNG';
+        }
+      });
+
+      // Directly assign the products to myProducts
+      this.myProducts = allProducts;
+    });
+  }
+  editProduct(product: Product) {
+    console.log('Product received:', product);
+    // Now you can use the product object as needed
+  }
+
+  deleteProduct(productId: number) {
+    if (confirm('Are you sure you want to delete this product?')) {
+      this.productService.deleteProduct(productId).subscribe(
+        () => {
+          // If delete is successful, filter the deleted product out of the list
+          this.myProducts = this.myProducts.filter(product => product.productId !== productId);
+          console.log('Product deleted successfully');
+        },
+        (error) => {
+          console.error('Error deleting product:', error);
+        }
+      );
+    }
+  }
 }

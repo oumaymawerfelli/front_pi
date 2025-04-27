@@ -5,5 +5,6 @@ export interface UserProfile {
     adresse?: string;
     dateOfBirth?: string;
     profilePictureBase64?: string;
+    score?: number;
   }
   

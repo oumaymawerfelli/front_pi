@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ProductService } from 'src/app/core/services/product.service'; 
 import { Product } from 'src/app/core/services/product.service'; 
+import { UserService } from 'src/app/core/services/user.service';
 
 @Component({
   selector: 'app-product-list',
@@ -13,10 +14,6 @@ export class ProductListComponent implements OnInit {
   totalProductCount : number = 0 ;
   totalProductsInStock: number = 0 ;
   totalProductsOutOfStock: number = 0 ;
- 
-
-  
- 
 
   constructor(private productService: ProductService) {}
 
@@ -24,6 +21,8 @@ export class ProductListComponent implements OnInit {
     this.loadProducts();
   }
 
+
+  
   loadProducts(): void {
     this.productService.getAllProducts().subscribe((data) => {
       this.products = data.map((product) => {
@@ -40,8 +39,7 @@ export class ProductListComponent implements OnInit {
       this.totalProductsOutOfStock = this.products.filter (p=> p.productStock == 0).length;
     });
   }
-
-
+ 
   selectedFilterRadioButton: string = 'all';
     onFilterChanged(value:string){
       this.selectedFilterRadioButton = value;

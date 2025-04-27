@@ -3,12 +3,12 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 
-export interface Farmer {
-  idUser: number;
-  name: string;
-  email: string;
+// export interface Farmer {
+//   idUser: number;
+//   name: string;
+//   email: string;
   
-}
+// }
 export interface Product {
   productId: number;
   productName: string;       
@@ -17,7 +17,7 @@ export interface Product {
   productPrice: number;  
   DiscountPrice: number;  
   productStock: number; 
-  farmer: Farmer;     
+  farmer: { idUser: number, name: string, email: string };     
   productImage: string; 
 
       
@@ -56,6 +56,11 @@ export class ProductService {
     // Delete a product
     deleteProduct(id: number): Observable<void> {
       return this.http.delete<void>(`${this.baseUrl}/delete-product/${id}`);
+    }
+
+    // New method to get products by user ID
+    getProductsByUserId(userId: number): Observable<Product[]> {
+      return this.http.get<Product[]>(`${this.baseUrl}/get-products-by-user/${userId}`);
     }
 
 

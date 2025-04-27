@@ -19,6 +19,8 @@ import { NgModule } from '@angular/core';
 import { MarketplaceComponent } from './marketplace/marketplace.component';
 import { MarketComponent } from './market/market.component';
 import { AuthGuard } from './guards/auth.guard';
+import { AdminAnalyticsComponent } from './users/admin-analytics/admin-analytics.component';
+
 
 const routes: Routes = [
        // Default route
@@ -39,6 +41,7 @@ const routes: Routes = [
     { path: 'profile', component: ProfileComponent },
     { path: 'users', component: ListUsersComponent, canActivate: [AdminGuard] },
     { path: 'pending-users', component: PendingUsersComponent, canActivate: [AdminGuard]},
+    { path: 'analytics', component: AdminAnalyticsComponent, canActivate: [AdminGuard] },
   ]
 },
 
@@ -46,6 +49,7 @@ const routes: Routes = [
  
   children:[
     { path: 'profile', component: ProfileComponent , canActivate:[AuthGuard],},
+   
   ]
 },
 {path: '', redirectTo: '/landing', pathMatch: 'full'},

@@ -36,5 +36,9 @@
     <div class="product-in-stock" [ngStyle]="{ fontWeight: 'bold', color: product.productStock > 0 ? 'Green' : 'Red' }">
       {{ product.productStock > 0 ? 'Available in Stock' : 'Not Available in Stock' }}
     </div>
+
+    <!-- Show Edit button only if showEditButton is true -->
+  <button *ngIf="showEditButton" (click)="onEditProduct()">Edit</button>
+  
   </div>
   

@@ -8,8 +8,12 @@ import { Product } from 'src/app/core/services/product.service'; // Adjust path 
 })
 export class ProductComponent {
   @Input() product!: Product;
+  @Input() showEditButton: boolean = false;
   
-
+  onEditProduct() {
+    console.log('Edit product clicked for product:', this.product.productName);
+    // Implement your edit logic (e.g., navigate to an edit page or open a modal)
+  }
 
   
 }

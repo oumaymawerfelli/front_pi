@@ -1,0 +1,57 @@
+/* Container for the entire page */
+.page-container {
+    display: flex;
+    justify-content: flex-start;  /* Align to the left */
+    gap: 30px;  /* Add space between the product list and the edit form */
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;  /* Center the page container horizontally */
+  }
+  
+  /* Left side - product list container */
+  .product-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 20px;
+    width: 70%;  /* Ensure the product list takes up most of the space */
+  }
+  
+  /* Each product and its buttons */
+  .product-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;  /* Allow each product to take full width available */
+    max-width: 300px;  /* Limit the product width to a reasonable size */
+    box-sizing: border-box;
+  }
+  
+  /* Buttons styling */
+  .buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  /* Styling the buttons */
+  .buttons button {
+    padding: 8px 16px;
+    font-size: 14px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+    transition: background-color 0.3s ease;
+  }
+  
+  .buttons button:hover {
+    background-color: #ddd;
+  }
+  
+  /* Right side - edit form */
+  .edit-form {
+    width: 30%;  /* Take up 30% of the space for the edit form */
+    padding: 20px;
+    border-left: 1px solid #ccc;
+  }
+  

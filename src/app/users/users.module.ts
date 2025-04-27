@@ -16,6 +16,11 @@ import { RecaptchaModule } from 'ng-recaptcha';
 import { RouterModule } from '@angular/router';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { CompleteProfileComponent } from './complete-profile/complete-profile.component';
+import { AdminAnalyticsComponent } from './admin-analytics/admin-analytics.component';
+import { NgChartsConfiguration, NgChartsModule } from 'ng2-charts';
+import { Chart } from 'chart.js';
+
+
 
 
 
@@ -32,17 +37,21 @@ import { CompleteProfileComponent } from './complete-profile/complete-profile.co
     OAuth2RedirectComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
-    CompleteProfileComponent
+    CompleteProfileComponent,
+    AdminAnalyticsComponent
   ],
   imports: [
     CommonModule,
-    BrowserModule,
+  
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
     RecaptchaModule,
     RouterModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    NgChartsModule,
+   
+    
   
     
     

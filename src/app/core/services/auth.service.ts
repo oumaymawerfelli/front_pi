@@ -15,6 +15,7 @@ export interface RegisterRequest {
   name: string;
   email: string;
   password: string;
+  confirmPassword: string;
   role: string;
   phone: string;
 }
@@ -57,13 +58,13 @@ throw new Error('Method not implemented.');
     });
   }
   
-  // Redirects to the backend OAuth2 endpoint
+
   loginWithGoogle(): void {
     localStorage.clear();
     window.location.href = 'http://localhost:8089/pi/oauth2/authorization/google';
   }
   
-  // Handles the redirect from OAuth2 login
+
   handleOAuth2Redirect(token: string): void {
     if (!token) {
       this.router.navigate(['/home/login'], { queryParams: { error: 'auth_failed' } });
@@ -72,7 +73,7 @@ throw new Error('Method not implemented.');
     
     localStorage.setItem('token', token);
     
-    // Decode token to get user role
+
     try {
       const tokenPayload = JSON.parse(atob(token.split('.')[1]));
       const role = tokenPayload.role;
