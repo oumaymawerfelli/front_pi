@@ -5,6 +5,7 @@ import { User } from '../models/user.model';
 
 import { UserProfile } from '../models/userProfile.model'; 
 import { LoginAttempt } from '../models/LoginAttempt.model';
+import { jwtDecode } from 'jwt-decode';
 
 
 
@@ -57,13 +58,26 @@ export class UserService {
   }
   getLoggedInUser(): Observable<User> {
     const token = localStorage.getItem('token');
+    if (!token) {
+      throw new Error("No token found in local storage");
+    }
+  
+    // Decode the token to extract user information (like userId)
+    const decodedToken: any = jwtDecode(token); 
+    const userId = decodedToken?.userId || decodedToken?.idUser;
+  
+    if (!userId) {
+      throw new Error("User ID not found in token");
+    }
+  
     const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
     });
   
-    return this.http.get<User>(`${this.apiUrl}/profile/profile`, { headers });
-
+    // Fetch the logged-in user data using their ID
+    return this.http.get<User>(`${this.apiUrl}/get-user/${userId}`, { headers });
   }
+  
   
 
   updateUser(user: User): Observable<User> {

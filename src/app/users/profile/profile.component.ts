@@ -13,7 +13,7 @@ interface UserProfile {
   dateOfBirth?: string;
   profilePictureBase64?: string;
   role?: string;
-  institution? : string;
+  institution?: string;
   score?: number;
 }
 
@@ -26,62 +26,69 @@ export class ProfileComponent implements OnInit {
   user: UserProfile = { name: '', email: '' }; 
   errorMessage: string = '';
   isEditing = false;
-originalUser: any;
+  originalUser: any;
 
-  constructor(public authService: AuthService, private router: Router , private cdRef: ChangeDetectorRef,   private userService: UserService ) {}
+  constructor(
+    public authService: AuthService, 
+    private router: Router,
+    private cdRef: ChangeDetectorRef, 
+    private userService: UserService
+  ) {}
 
-    ngOnInit(): void {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        this.router.navigate(['/login']);
-        return;
+  ngOnInit(): void {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      this.router.navigate(['/login']);
+      return;
+    }
+  
+    const decodedToken: any = jwtDecode(token);
+    const userId = decodedToken?.userId || decodedToken?.idUser;
+  
+    if (!userId) {
+      console.error('User ID not found in token');
+      return;
+    }
+
+    // Fetch the profile of the logged-in user
+    this.userService.getLoggedInUser().subscribe(
+      (user: User) => {
+        this.user = {
+          name: user.name,
+          email: user.email,
+          phone: user.phone,
+          adresse: user.address,
+          dateOfBirth: user.dateOfBirth ? new Date(user.dateOfBirth).toISOString().split('T')[0] : undefined,
+          profilePictureBase64: user.profilePictureBase64, // Assuming the API provides this
+          role: user.role,
+        };
+        this.originalUser = JSON.parse(JSON.stringify(this.user));
+        console.log("Received logged-in user profile:", user);
+      },
+      error => {
+        console.error('Failed to load profile', error);
+        this.errorMessage = 'Failed to load profile data';
       }
-    
-      const decodedToken: any = jwtDecode(token);
-      const userId = decodedToken?.userId || decodedToken?.idUser;
-    
-      if (!userId) {
-        console.error('User ID not found in token');
-        return;
-      }
-      this.userService.getProfile().subscribe(
-        (profile: UserProfile) => {
-          this.user = {
-            ...profile,
-            dateOfBirth: profile.dateOfBirth ? new Date(profile.dateOfBirth).toISOString().split('T')[0] : undefined
-          };
-          this.originalUser = JSON.parse(JSON.stringify(this.user));
-          console.log("Received profile:", profile);
+    );
+  }
 
-        },
-        error => {
-          console.error('Failed to load profile', error);
-          this.errorMessage = 'Failed to load profile data';
-        }
-      );
-    }      
-    
   goToUsers() {
     this.router.navigate(['/admin/users']);
   }
 
-  
   getProfilePictureUrl(filePath: string): string {
     if (filePath && filePath.startsWith('data:image')) {
       return filePath; 
     }
     return filePath ? `/uploads/${filePath}` : '/assets/default-profile.png'; 
   }
-  
-  
 
   updateUser(): void {
-   
     if (!(this.user as any).idUser) {
       console.error('User ID is missing');
       return;
     }
-  
+
     this.userService.updateUser(this.user as unknown as User).subscribe(
       (updatedUser: User) => {
         this.user = { 
@@ -96,70 +103,94 @@ originalUser: any;
       }
     );
   }
-  
+
   selectedFile: File | null = null;
 
-onFileSelected(event: Event): void {
-  const input = event.target as HTMLInputElement;
-  if (input.files && input.files.length > 0) {
-    this.selectedFile = input.files[0];
-    
+  onFileSelected(event: any): void {
+    const file: File = event.target.files[0];
+    if (file) {
+      const formData = new FormData();
+      formData.append('profilePicture', file);
+      formData.append('name', this.user.name);
+      formData.append('email', this.user.email);
+      if (this.user.phone) formData.append('phone', this.user.phone);
+      if (this.user.adresse) formData.append('adresse', this.user.adresse);
+      if (this.user.dateOfBirth) formData.append('dateOfBirth', this.user.dateOfBirth);
 
-    const reader = new FileReader();
-    reader.onload = (e: any) => {
-      this.user.profilePictureBase64 = e.target.result; 
-    };
-    reader.readAsDataURL(this.selectedFile);
-  }
-}
+      this.userService.updateUserProfile(formData).subscribe(
+        (response) => {
+          console.log('Profile updated successfully', response);
 
-saveChanges(): void {
-  console.log("Save Changes clicked!");
-  const formData = new FormData();
-  formData.append('name', this.user.name);
-  formData.append('email', this.user.email);
-  formData.append('phone', this.user.phone || '');
-  formData.append('adresse', this.user.adresse || '');
-  formData.append('dateOfBirth', this.user.dateOfBirth || '');
-
-  if (this.selectedFile) {
-    formData.append('profilePicture', this.selectedFile);
-  }
-
-  this.userService.updateUserProfile(formData).subscribe(
-    response => {
-      console.log('Profile updated successfully', response);
-      this.isEditing = false;
-   
-    },
-    error => {
-      console.error('Error updating profile:', error);
+          // Update profile picture base64 value
+          const reader = new FileReader();
+          reader.onload = () => {
+            this.user.profilePictureBase64 = reader.result as string;
+            // Manually trigger change detection to update the view
+            this.cdRef.detectChanges();
+          };
+          reader.readAsDataURL(file);
+        },
+        (error) => {
+          console.error('Error updating profile', error);
+        }
+      );
     }
-  );
-}
-logout(): void {
-  this.authService.logout();
-  this.router.navigate(['/landing']);
-}
+  }
 
+  saveChanges(): void {
+    console.log("Save Changes clicked!");
+    const formData = new FormData();
+    formData.append('name', this.user.name);
+    formData.append('email', this.user.email);
+    formData.append('phone', this.user.phone || '');
+    formData.append('adresse', this.user.adresse || '');
+    formData.append('dateOfBirth', this.user.dateOfBirth || '');
 
+    if (this.selectedFile) {
+      formData.append('profilePicture', this.selectedFile);
+    }
 
+    this.userService.updateUserProfile(formData).subscribe(
+      response => {
+        console.log('Profile updated successfully', response);
+        this.isEditing = false;
+
+        // Fetch the updated user profile after saving changes
+        this.userService.getLoggedInUser().subscribe(
+          (updatedUser: User) => {
+            this.user = { 
+              ...updatedUser, 
+              dateOfBirth: updatedUser.dateOfBirth ? new Date(updatedUser.dateOfBirth).toISOString().split('T')[0] : undefined
+            };
+            this.originalUser = JSON.parse(JSON.stringify(this.user));
+            console.log('Updated profile loaded:', updatedUser);
+          },
+          error => {
+            console.error('Failed to reload updated profile', error);
+          }
+        );
+      },
+      error => {
+        console.error('Error updating profile:', error);
+      }
+    );
+  }
+
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/landing']);
+  }
 
   editProfilePicture() {
-
     console.log('Edit profile picture clicked');
   }
-  
-  
-  
+
   cancelEdit() {
     this.user = JSON.parse(JSON.stringify(this.originalUser));
     this.isEditing = false;
   }
-  
+
   goToAnalytics() {
     this.router.navigate(['/admin/analytics']);
   }
-  
-  
 }
