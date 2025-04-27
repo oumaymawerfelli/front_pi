@@ -51,26 +51,27 @@ export class ProfileComponent implements OnInit {
     }
 
     // Fetch the profile of the logged-in user
-    this.userService.getLoggedInUser().subscribe(
-      (user: User) => {
+    this.userService.getProfile().subscribe(
+      (user: UserProfile) => {
         this.user = {
           name: user.name,
           email: user.email,
           phone: user.phone,
-          adresse: user.address,
-          dateOfBirth: user.dateOfBirth ? new Date(user.dateOfBirth).toISOString().split('T')[0] : undefined,
-          profilePictureBase64: user.profilePictureBase64, // Assuming the API provides this
+          adresse: user.adresse,
+          dateOfBirth: user.dateOfBirth,
+          profilePictureBase64: user.profilePictureBase64,
           role: user.role,
+          score: user.score  // <-- Now you also save the score
         };
         this.originalUser = JSON.parse(JSON.stringify(this.user));
-        console.log("Received logged-in user profile:", user);
+        console.log("Received profile with score:", user);
       },
       error => {
-        console.error('Failed to load profile', error);
+        console.error('Failed to load profile with score', error);
         this.errorMessage = 'Failed to load profile data';
       }
     );
-  }
+  }    
 
   goToUsers() {
     this.router.navigate(['/admin/users']);

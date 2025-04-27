@@ -2,6 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/core/services/user.service';
 import { ChartOptions, ChartType, ChartData } from 'chart.js';
 import { LoginAttempt } from 'src/app/core/models/LoginAttempt.model';
+import { forkJoin } from 'rxjs';
+
+const CHART_COLORS = {
+  border: '#42A5F5',
+  background: 'rgba(66,165,245,0.2)',
+  point: '#42A5F5',
+  grid: '#eee',
+  ticks: '#666',
+  tooltipBg: '#f5f5f5',
+  tooltipTitle: '#333',
+  tooltipBody: '#666',
+};
 
 @Component({
   selector: 'app-admin-analytics',
@@ -11,20 +23,28 @@ import { LoginAttempt } from 'src/app/core/models/LoginAttempt.model';
 export class AdminAnalyticsComponent implements OnInit {
   loginAttempts: LoginAttempt[] = [];
   usersMap = new Map<number, string>();
-
-  loginHoursData: number[] = new Array(24).fill(0);
+  loginHoursData = new Array(24).fill(0);
   suspiciousCount = 0;
+  loading = true;
 
-  labels: string[] = Array.from({ length: 24 }, (_, i) => `${i}:00`);
-
+  readonly labels = Array.from({ length: 24 }, (_, i) => `${i}:00`);
+  readonly chartType: ChartType = 'line';
+  
   chartData: ChartData<'line'> = {
     labels: this.labels,
-    datasets: [
-      { data: this.loginHoursData, label: 'Login Attempts by Hour' }
-    ]
+    datasets: [{
+      data: this.loginHoursData,
+      label: 'Login Attempts by Hour',
+      tension: 0.4,
+      borderColor: CHART_COLORS.border,
+      backgroundColor: CHART_COLORS.background,
+      borderWidth: 2,
+      pointBackgroundColor: CHART_COLORS.point,
+      pointRadius: 4
+    }]
   };
 
-  options: ChartOptions = {
+  chartOptions: ChartOptions = {
     responsive: true,
     plugins: {
       legend: {
@@ -32,96 +52,79 @@ export class AdminAnalyticsComponent implements OnInit {
         position: 'top',
         labels: {
           color: '#333',
-          font: {
-            size: 14
-          }
+          font: { size: 14 }
         }
       },
       tooltip: {
-        enabled: true,
-        backgroundColor: '#f5f5f5',
-        titleColor: '#333',
-        bodyColor: '#666',
+        backgroundColor: CHART_COLORS.tooltipBg,
+        titleColor: CHART_COLORS.tooltipTitle,
+        bodyColor: CHART_COLORS.tooltipBody,
+        callbacks: {
+          label: (ctx) => `Attempts: ${ctx.parsed.y}`
+        }
       }
     },
     scales: {
       x: {
-        ticks: {
-          color: '#666',
-        },
-        grid: {
-          color: '#eee',
-        }
+        ticks: { color: CHART_COLORS.ticks },
+        grid: { color: CHART_COLORS.grid }
       },
       y: {
-        ticks: {
-          color: '#666',
-        },
-        grid: {
-          color: '#eee',
-        }
-      }
-    },
-    elements: {
-      line: {
-        tension: 0.4, // smooth curves
-        borderColor: '#42A5F5',
-        backgroundColor: 'rgba(66,165,245,0.2)',
-        borderWidth: 2
-      },
-      point: {
-        radius: 4,
-        backgroundColor: '#42A5F5'
+        ticks: { color: CHART_COLORS.ticks },
+        grid: { color: CHART_COLORS.grid }
       }
     }
   };
 
-  chartType: ChartType = 'line';
-
   constructor(private userService: UserService) {}
 
   ngOnInit(): void {
-    this.loadAnalytics();  
+    this.loadAnalytics();
   }
 
   loadAnalytics(): void {
-    this.userService.getUsers().subscribe(users => {
+    this.loading = true;
+    forkJoin({
+      users: this.userService.getUsers(),
+      attempts: this.userService.getLoginAnalytics()
+    }).subscribe(({ users, attempts }) => {
       users.forEach(user => {
         if (user.idUser !== undefined) {
           this.usersMap.set(user.idUser, user.name);
         }
       });
-  
-      this.userService.getLoginAnalytics().subscribe(attempts => {
-        this.loginAttempts = attempts;
-        this.processAnalytics();
-      });
+
+      this.loginAttempts = attempts;
+      this.processAnalytics();
+      this.loading = false;
     });
   }
-  
 
   getUsername(userId: number): string {
-    return this.usersMap.get(userId) || 'Unknown User';
+    return this.usersMap.get(userId) ?? 'Unknown User';
   }
 
   processAnalytics(): void {
     this.loginHoursData.fill(0);
     this.suspiciousCount = 0;
 
-    for (let attempt of this.loginAttempts) {
-      if (attempt.loginHour >= 0 && attempt.loginHour <= 23) {
-        this.loginHoursData[attempt.loginHour]++;
+    this.loginAttempts.forEach(({ loginHour, suspicious }) => {
+      if (loginHour >= 0 && loginHour <= 23) {
+        this.loginHoursData[loginHour]++;
       }
-      if (attempt.suspicious) {
+      if (suspicious) {
         this.suspiciousCount++;
       }
-    }
+    });
 
-    this.chartData = {
-      labels: this.labels,
-      datasets: [
-        { data: [...this.loginHoursData], label: 'Login Attempts by Hour' }
-      ]
-    };
+    this.chartData.datasets[0].data = [...this.loginHoursData];
   }
+
+  formatTimestamp(timestamp: string): string {
+    if (!timestamp) return '';
+  
+    const date = new Date(timestamp);
+    return `${date.toLocaleDateString()} ${date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+  }
+  
 }

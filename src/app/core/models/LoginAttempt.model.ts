@@ -5,5 +5,6 @@ export interface LoginAttempt {
     loginHour: number;
     suspicious: boolean;
     timestamp: string;
+    action: string;
   }
   
