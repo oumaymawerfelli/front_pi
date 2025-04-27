@@ -41,4 +41,8 @@ export class PostService {
     const url = `${this.baseUrl}/all${category === 'All' ? '' : `?category=${category}`}`;
     return this.http.get<Post[]>(url);
   }
+  
+  searchPosts(query: string): Observable<Post[]> {
+    return this.http.get<Post[]>(`${this.baseUrl}/search?query=${encodeURIComponent(query)}`);
+  }
 }

@@ -26,6 +26,8 @@ export class PostComponent implements OnInit {
   currentFilter: string = 'All';
   showDebug: boolean = true;
   commentLoading: { [postId: number]: boolean } = {};
+  searchQuery: string = '';
+  isSearching: boolean = false;
 
 
 
@@ -255,5 +257,31 @@ onCategoryChange(category: string): void {
   this.loadPosts();
 }
 
+
+
+searchPosts(): void {
+  if (!this.searchQuery.trim()) {
+    this.getAllPosts();
+    this.isSearching = false;
+    return;
+  }
+
+  this.isSearching = true;
+  this.postService.searchPosts(this.searchQuery).subscribe({
+    next: (posts) => {
+      this.filteredPosts = posts;
+    },
+    error: (err) => {
+      console.error('Search failed:', err);
+      this.isSearching = false;
+    }
+  });
+}
+
+clearSearch(): void {
+  this.searchQuery = '';
+  this.isSearching = false;
+  this.getAllPosts();
+}
 
 }
