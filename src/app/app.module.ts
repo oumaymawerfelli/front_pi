@@ -45,6 +45,8 @@ import { ProductListComponent } from './market/product-list/product-list.compone
 import { ProductComponent } from './market/product-list/product/product.component';
 import { FilterComponent } from './market/product-list/filter/filter.component';
 import { SearchComponent } from './market/product-list/search/search.component';
+import { FarmMenuComponent } from './market/farm-menu/farm-menu.component';
+import { AddProdComponent } from './market/farm-menu/add-prod/add-prod.component';
 
 
 
@@ -76,7 +78,9 @@ import { SearchComponent } from './market/product-list/search/search.component';
     ProductListComponent,
     ProductComponent,
     FilterComponent,
-    SearchComponent
+    SearchComponent,
+    FarmMenuComponent,
+    AddProdComponent,
   ],
   imports: [
     BrowserModule,
@@ -93,7 +97,7 @@ import { SearchComponent } from './market/product-list/search/search.component';
     UsersModule,
     FormsModule,
     ReactiveFormsModule,
-    RecaptchaModule
+    RecaptchaModule,
   ],
   providers: [AuthService, AdminGuard],
 

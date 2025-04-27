@@ -10,7 +10,7 @@ export interface Farmer {
   
 }
 export interface Product {
-
+  productId: number;
   productName: string;       
   productDescription: string; 
   productCategory: string; 
@@ -38,6 +38,26 @@ export class ProductService {
   getAllProducts(): Observable<Product[]> {
     return this.http.get<Product[]>(`${this.baseUrl}/get-all-products`);  // Appending the specific endpoint
   }
+    // Add a new product
+    addProduct(product: Product): Observable<Product> {
+      return this.http.post<Product>(`${this.baseUrl}/add-product`, product);
+    }
+  
+    // Update a product
+    updateProduct(id: number, product: Product): Observable<Product> {
+      return this.http.put<Product>(`${this.baseUrl}/update-product/${id}`, product);
+    }
+  
+    // Get a product by ID
+    getProductById(id: number): Observable<Product> {
+      return this.http.get<Product>(`${this.baseUrl}/get-product/${id}`);
+    }
+  
+    // Delete a product
+    deleteProduct(id: number): Observable<void> {
+      return this.http.delete<void>(`${this.baseUrl}/delete-product/${id}`);
+    }
+
 
 
 }
