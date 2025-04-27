@@ -1,0 +1,134 @@
+<div class="section-title">
+  📊 Post and Comment Statistics
+</div>
+
+<div *ngIf="isLoading" class="loader">Loading Statistics...</div>
+
+<div *ngIf="!isLoading" class="dashboard-container">
+
+  <!-- Posts by Category -->
+  <div class="card animate">
+    <h3>🗂️ Posts by Category</h3>
+    <div *ngFor="let cat of postCategories" class="bar-chart">
+      <div class="bar-label">{{ cat.label }}</div>
+      <div
+        class="bar-fill"
+        [ngStyle]="{
+          'background': cat.color,
+          '--target-width': cat.percentage + '%'
+        }">
+      </div>
+    </div>
+    <div class="hint">
+      ➡️ Distribution of your posts by category 📚
+    </div>
+  </div>
+
+  <!-- Total Comments Counter -->
+  <div class="card animate big-card">
+    <h3>💬 Total Comments</h3>
+    <div class="big-number animated-counter">{{ totalComments }}</div>
+    <div class="hint">
+      ➡️ Total number of comments across all posts ✨
+    </div>
+  </div>
+
+  <!-- Posts Activity Line Chart -->
+  <div class="card card-activity animate">
+    <h3>📈 Post Activity Over Time</h3>
+
+    <div class="line-chart-container">
+      <svg viewBox="0 0 600 300" class="line-chart">
+
+        <defs>
+          <linearGradient id="lineGradient" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#00c6ff"/>
+            <stop offset="100%" stop-color="#0072ff"/>
+          </linearGradient>
+        </defs>
+
+        <!-- Y Axis -->
+        <g *ngFor="let y of yAxisLabels">
+          <line [attr.x1]="50" [attr.y1]="scaleY(y)" [attr.x2]="580" [attr.y2]="scaleY(y)"
+            stroke="#ddd" stroke-dasharray="5,5" />
+          <text [attr.x]="20" [attr.y]="scaleY(y) + 5" class="axis-label">{{ y }}</text>
+        </g>
+
+        <!-- X Axis -->
+        <g *ngFor="let date of xAxisLabels; let i = index">
+          <text *ngIf="i % 3 === 0" [attr.x]="i * 80 + 70" [attr.y]="280" class="date-label">
+            {{ date }}
+          </text>
+        </g>
+
+        <!-- Data Line -->
+        <polyline [attr.points]="postActivityPoints"
+          stroke="url(#lineGradient)"
+          fill="none"
+          stroke-width="3"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+
+        <!-- Points -->
+        <g *ngFor="let point of dataPoints">
+          <circle [attr.cx]="point.x" [attr.cy]="point.y" r="4" fill="#0072ff" stroke="#fff" stroke-width="2">
+            <title>{{ point.label }}</title>
+          </circle>
+        </g>
+
+      </svg>
+    </div>
+
+    <div class="hint">
+      ➡️ Evolution of the number of posts 📈
+    </div>
+  </div>
+
+  <!-- Top 5 Most Commented Posts -->
+  <div class="card animate">
+    <h3>🏆 Top Commented Posts</h3>
+    <div *ngFor="let top of topCommentedPosts" class="top-post-card">
+      <strong>{{ top.title }}</strong> <span>{{ top.comments }} comments</span>
+    </div>
+    <div class="hint">
+      ➡️ Your most popular posts 🎯
+    </div>
+  </div>
+
+  <!-- Likes vs Dislikes -->
+  <div class="card animate">
+    <h3>👍 vs 👎 Overall</h3>
+    <div class="donut-wrapper">
+      <div class="donut" [style.background]="likeDislikeBackground"></div>
+      <div class="donut-center">
+        <div>{{ likePercent | number:'1.0-0' }}% 👍</div>
+        <div>{{ dislikePercent | number:'1.0-0' }}% 👎</div>
+      </div>
+    </div>
+    <div class="hint">➡️ Overall Like vs Dislike ratio</div>
+  </div>
+
+  <!-- Top 5 Comments -->
+  <div class="card animate">
+    <h3>🏅 Top 5 Comments</h3>
+    <div *ngFor="let comment of topLikedComments" class="top-comment-card">
+      <div class="comment-text">"{{ comment.text.length > 30 ? (comment.text | slice:0:30) + '...' : comment.text }}"</div>
+      <div class="comment-likes">❤️ {{ comment.likeCount }}</div>
+    </div>
+    <div class="hint">➡️ Your top comments 🌟</div>
+  </div>
+
+  <!-- Likes per Category -->
+  <div class="card animate">
+    <h3>📚 Likes by Category</h3>
+    <div *ngFor="let cat of likesPerCategory" class="stacked-bar">
+      <div class="stacked-fill" [style.width.%]="cat.percentage">
+        {{ cat.category }} - {{ cat.totalLikes }} 👍 ({{ cat.percentage | number:'1.0-0' }}%)
+      </div>
+    </div>
+    <div class="hint">➡️ Popularity by content type 📖</div>
+  </div>
+
+
+</div>

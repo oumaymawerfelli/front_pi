@@ -12,6 +12,7 @@ import { ProfileComponent } from './users/profile/profile.component';
 import { OAuth2RedirectComponent } from './users/oauth2-redirect/oauth2-redirect.component';
 import { HomeComponent } from './home/home.component';
 import { PostComponent } from './post/post.component';
+import { StatPostComponent } from './stat-post/stat-post.component';
 
 const routes: Routes = [
 
@@ -54,12 +55,13 @@ const routes: Routes = [
     children: [
       { path: 'profile', component: ProfileComponent },
       { path: 'post', component: PostComponent },
+      { path: 'statPost', component: StatPostComponent }, //  a ajouter dans  backoffice module routing
 
 
     ],
   },
 
-  
+
   { path: 'oauth2-redirect', component: OAuth2RedirectComponent },
 
 

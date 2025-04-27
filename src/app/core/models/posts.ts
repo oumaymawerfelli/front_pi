@@ -8,6 +8,6 @@ export interface Post {
   dateCreated?: Date;
   comments?: Commentaire[];
   img:string;
-  category: PostCategory; // Remove optional (?) if backend always returns it
+  category: PostCategory; 
 
 }

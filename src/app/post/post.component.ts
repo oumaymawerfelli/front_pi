@@ -27,11 +27,9 @@ export class PostComponent implements OnInit {
   showDebug: boolean = true;
   commentLoading: { [postId: number]: boolean } = {};
 
- // Stores filtered posts
 
 
   categories = ALL_CATEGORIES;
-  // selectedCategory: PostCategory | 'All' = 'All';
   selectedCategory: string = 'All';
 
   @ViewChild('postTextarea') postTextarea!: ElementRef;
@@ -135,7 +133,7 @@ submitPost(): void {
     if (file) {
       this.selectedFile = file;
       this.postForm.patchValue({ img: file });
-  
+
       // Show preview
       const reader = new FileReader();
       reader.onload = () => {
@@ -162,14 +160,14 @@ submitPost(): void {
   editPost(post: Post): void {
     this.isEditing = true;
     this.editingPostId = post.id ?? null;
-  
+
     this.postForm.patchValue({
       content: post.content,
       img: post.img || null,
       category: post.category || PostCategory.OTHER
     });
-    
-    
+
+
   setTimeout(() => {
     this.postTextarea.nativeElement.focus();
     this.postTextarea.nativeElement.select();
@@ -191,7 +189,7 @@ submitPost(): void {
     if (fileInput) fileInput.value = '';
   }
 
- 
+
 
 deletePost(id: number): void {
     this.postService.deletePost(id).subscribe(() => this.getAllPosts());
@@ -207,7 +205,7 @@ deletePost(id: number): void {
       });
   }
 
- 
+
   submitComment(postId: number): void {
     const text = this.commentTexts[postId];
     if (!text || text.trim() === '') return;
@@ -219,7 +217,7 @@ deletePost(id: number): void {
       if (post) this.loadComments(post);
     });
   }
-  
+
   likeComment(commentId: number, post: Post): void {
     this.commentService
       .likeComment(commentId)
@@ -238,15 +236,15 @@ deletePost(id: number): void {
       .subscribe(() => this.loadComments(post));
   }
 
- 
+
 
 filterPosts(category: string): void {
   this.currentFilter = category;
-  
+
   if (category === 'All') {
     this.filteredPosts = [...this.posts];
   } else {
-    this.filteredPosts = this.posts.filter(post => 
+    this.filteredPosts = this.posts.filter(post =>
       post.category?.toUpperCase() === category.toUpperCase()
     );
   }

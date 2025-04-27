@@ -1,138 +1,142 @@
 <div class="container">
   <h2>📝 Posts Forum</h2>
 
-  <!-- Category Filter -->
   <div class="category-filter">
-      <label>Filter by category:</label>
-      <select #categorySelect 
-              (change)="filterPosts(categorySelect.value)"
-              class="form-control">
-          <option value="All">All Categories</option>
-          <option *ngFor="let cat of categories" [value]="cat">
-              {{ cat }}
-          </option>
-      </select>
+    <label>Filter by category:</label>
+    <select #categorySelect
+      (change)="filterPosts(categorySelect.value)"
+      class="form-control">
+      <option value="All">All Categories</option>
+      <option *ngFor="let cat of categories" [value]="cat">
+        {{ cat }}
+      </option>
+    </select>
   </div>
 
-  <form [formGroup]="postForm" (ngSubmit)="submitPost()" class="form-post" enctype="multipart/form-data">
-      <textarea #postTextarea 
-               formControlName="content" 
-               placeholder="Express yourself here..." 
-               rows="4" 
-               maxlength="5000"></textarea>
+  <form [formGroup]="postForm" (ngSubmit)="submitPost()" class="form-post"
+    enctype="multipart/form-data">
+    <textarea #postTextarea
+      formControlName="content"
+      placeholder="Express yourself here..."
+      rows="4"
+      maxlength="5000"></textarea>
 
-      <!-- Category Selection -->
-      <div class="form-group">
-          <label>Category:</label>
-      
-          <select formControlName="category" class="form-control">
-            <option *ngFor="let cat of categories" [value]="cat">
-              {{ cat }}
-            </option>
-          </select>
-      </div>
+    <div class="form-group">
+      <label>Category:</label>
 
-      <div class="file-upload-section">
-          <label for="fileInput" class="file-upload-label">
-              <span class="file-upload-button">📁 Choose File</span>
-              <span class="file-name" *ngIf="selectedFile">{{ selectedFile.name }}</span>
-              <span class="no-file" *ngIf="!selectedFile && !isEditing">No file chosen</span>
-              <span class="no-file" *ngIf="!selectedFile && isEditing && !postForm.value.img">No file chosen</span>
-              <span class="current-file" *ngIf="!selectedFile && isEditing && postForm.value.img">
-                  Current file: {{ postForm.value.img }}
-              </span>
-          </label>
-          <input id="fileInput" 
-                 type="file" 
-                 (change)="onFileChange($event)" 
-                 accept="image/*" 
-                 style="display: none;" />
-      </div>
+      <select formControlName="category" class="form-control">
+        <option *ngFor="let cat of categories" [value]="cat">
+          {{ cat }}
+        </option>
+      </select>
+    </div>
 
-      <div *ngIf="previewUrl" class="preview-container">
-          <img [src]="previewUrl" 
-               alt="Selected image preview" 
-               style="max-width: 200px; border-radius: 8px; margin-top: 8px;" />
-          <button type="button" 
-                  class="btn btn-sm btn-danger mt-2"
-                  (click)="removeImagePreview()">
-              Remove Image
-          </button>
-      </div>
+    <div class="file-upload-section">
+      <label for="fileInput" class="file-upload-label">
+        <span class="file-upload-button">📁 Choose File</span>
+        <span class="file-name" *ngIf="selectedFile">{{ selectedFile.name
+          }}</span>
+        <span class="no-file" *ngIf="!selectedFile && !isEditing">No file
+          chosen</span>
+        <span class="no-file"
+          *ngIf="!selectedFile && isEditing && !postForm.value.img">No file
+          chosen</span>
+        <span class="current-file"
+          *ngIf="!selectedFile && isEditing && postForm.value.img">
+          Current file: {{ postForm.value.img }}
+        </span>
+      </label>
+      <input id="fileInput"
+        type="file"
+        (change)="onFileChange($event)"
+        accept="image/*"
+        style="display: none;" />
+    </div>
 
-      <div *ngIf="isEditing && !previewUrl && postForm.value.img" class="current-image-container">
-          <p>Current image:</p>
-          <img [src]="'assets/img/posts/' + postForm.value.img" 
-               alt="Current post image"
-               style="max-width: 200px; border-radius: 8px; margin-top: 8px;" />
-      </div>
+    <div *ngIf="previewUrl" class="preview-container">
+      <img [src]="previewUrl"
+        alt="Selected image preview"
+        style="max-width: 200px; border-radius: 8px; margin-top: 8px;" />
+      <button type="button"
+        class="btn btn-sm btn-danger mt-2"
+        (click)="removeImagePreview()">
+        Remove Image
+      </button>
+    </div>
 
-      <div class="form-buttons">
-          <button type="submit">
-              {{ isEditing ? '✏️ Update post' : '➕ Publish post' }}
-          </button>
-          <button *ngIf="isEditing" 
-                  type="button" 
-                  class="cancel-btn" 
-                  (click)="resetForm()">
-              ❌ Cancel
-          </button>
-      </div>
+    <div *ngIf="isEditing && !previewUrl && postForm.value.img"
+      class="current-image-container">
+      <p>Current image:</p>
+      <img [src]="'assets/img/posts/' + postForm.value.img"
+        alt="Current post image"
+        style="max-width: 200px; border-radius: 8px; margin-top: 8px;" />
+    </div>
+
+    <div class="form-buttons">
+      <button type="submit">
+        {{ isEditing ? '✏️ Update post' : '➕ Publish post' }}
+      </button>
+      <button *ngIf="isEditing"
+        type="button"
+        class="cancel-btn"
+        (click)="resetForm()">
+        ❌ Cancel
+      </button>
+    </div>
   </form>
 
   <hr />
 
   <!-- Posts list -->
   <div *ngFor="let post of filteredPosts" class="post-card">
-      <div class="post-header">
-          <span class="category-badge">{{ post.category || 'Other' }}</span>
-          <small class="post-date">🕒 {{ post.dateCreated | date: 'medium' }}</small>
+    <div class="post-header">
+      <span class="category-badge">{{ post.category || 'Other' }}</span>
+      <small class="post-date">🕒 {{ post.dateCreated | date: 'medium'
+        }}</small>
+    </div>
+
+    <div class="post-content">
+      <p>🗨️ {{ post.content }}</p>
+    </div>
+
+    <!-- Display post image -->
+    <img *ngIf="post.img"
+      [src]="'assets/img/posts/' + post.img"
+      alt="Post image"
+      style="max-width:100%; height:auto;" />
+
+    <div class="post-actions">
+      <button (click)="editPost(post)">✏️ Edit</button>
+      <button (click)="deletePost(post.id!)">🗑️ Delete</button>
+    </div>
+
+    <!-- Comments Section -->
+    <div class="comments-section">
+      <h4>💬 Comments ({{ post.comments?.length || 0 }})</h4>
+
+      <div *ngFor="let comment of post.comments" class="comment-box">
+        <p>{{ comment.text }}</p>
+        <small>{{ comment.dateCreated | date: 'short' }}</small>
+        <div class="comment-actions">
+          <span>👍 {{ comment.likeCount || 0 }}</span>
+          <button (click)="likeComment(comment.id!, post)">Like</button>
+          <span>👎 {{ comment.dislikeCount || 0 }}</span>
+          <button (click)="dislikeComment(comment.id!, post)">Dislike</button>
+          <button (click)="deleteComment(comment.id!, post)">🗑️</button>
+        </div>
       </div>
-      
-      <div class="post-content">
-          <p>🗨️ {{ post.content }}</p>
+
+      <div class="add-comment">
+        <textarea [(ngModel)]="commentTexts[post.id!]"
+          placeholder="Add a comment..."
+          rows="2"
+          [disabled]="commentLoading[post.id!]"></textarea>
+        <button (click)="submitComment(post.id!)"
+          [disabled]="commentLoading[post.id!]">
+          <span *ngIf="!commentLoading[post.id!]">📩 Send</span>
+          <span *ngIf="commentLoading[post.id!]">⏳ Sending...</span>
+        </button>
       </div>
+    </div>
 
-      <!-- Display post image -->
-      <img *ngIf="post.img"
-          [src]="'assets/img/posts/' + post.img"
-          alt="Post image"
-          style="max-width:100%; height:auto;" />
-
-      <div class="post-actions">
-          <button (click)="editPost(post)">✏️ Edit</button>
-          <button (click)="deletePost(post.id!)">🗑️ Delete</button>
-      </div>
-
-      <!-- Comments Section -->
-      <div class="comments-section">
-          <h4>💬 Comments ({{ post.comments?.length || 0 }})</h4>
-
-          <div *ngFor="let comment of post.comments" class="comment-box">
-              <p>{{ comment.text }}</p>
-              <small>{{ comment.dateCreated | date: 'short' }}</small>
-              <div class="comment-actions">
-                  <span>👍 {{ comment.likeCount || 0 }}</span>
-                  <button (click)="likeComment(comment.id!, post)">Like</button>
-                  <span>👎 {{ comment.dislikeCount || 0 }}</span>
-                  <button (click)="dislikeComment(comment.id!, post)">Dislike</button>
-                  <button (click)="deleteComment(comment.id!, post)">🗑️</button>
-              </div>
-          </div>
-
-
-          <div class="add-comment">
-            <textarea [(ngModel)]="commentTexts[post.id!]"
-                      placeholder="Add a comment..." 
-                      rows="2"
-                      [disabled]="commentLoading[post.id!]"></textarea>
-            <button (click)="submitComment(post.id!)" 
-                    [disabled]="commentLoading[post.id!]">
-              <span *ngIf="!commentLoading[post.id!]">📩 Send</span>
-              <span *ngIf="commentLoading[post.id!]">⏳ Sending...</span>
-            </button>
-      </div>
   </div>
-
-
-</div>

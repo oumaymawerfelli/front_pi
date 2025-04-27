@@ -34,6 +34,7 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { PostComponent } from './post/post.component';
 import { CommentComponent } from './comment/comment.component';
+import { StatPostComponent } from './stat-post/stat-post.component';
 // Import RecaptchaModule
 
 @NgModule({
@@ -54,6 +55,7 @@ import { CommentComponent } from './comment/comment.component';
     ContactComponent,
     PostComponent,
     CommentComponent,
+    StatPostComponent,
   ],
   imports: [
     BrowserModule,
