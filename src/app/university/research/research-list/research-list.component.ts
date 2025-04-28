@@ -5,6 +5,8 @@ import { ResearchProject } from 'src/app/core/models/research-project'; // Adjus
 import { MatDialog } from '@angular/material/dialog';
 import { AddResearchComponent } from '../add-research/add-research.component';  // adjust path if needed
 import { ActivatedRoute } from '@angular/router';
+import { ModalConfirmDeleteComponent } from 'src/app/university/modal-confirm-delete/modal-confirm-delete.component';
+import { EditResearchComponent } from '../edit-research/edit-research.component';
 
 declare var AOS: any;
 declare var GLightbox: any;
@@ -20,6 +22,8 @@ export class ResearchListComponent implements OnInit {
   showAddForm = false;
   showDetails = false;
   selectedProjectId: number | null = null;
+  isModalVisible: boolean = false; // Controls visibility of the delete confirmation modal
+  selectedProjectIdToDelete: number | null = null; // Stores the selected project ID to delete
 
 
 
@@ -50,29 +54,25 @@ export class ResearchListComponent implements OnInit {
   }
 
   editProject(projectId: number) {
-    // Rediriger vers la page d'édition du projet
-    this.router.navigate(['/research/edit', projectId]); // Adaptez cela à votre routage
+    const dialogRef = this.dialog.open(EditResearchComponent, {
+      width: '600px', // you can adjust the size
+      data: { id: projectId }
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      // Refresh list or handle after closing edit
+      console.log('The dialog was closed');
+    });
   }
-  deleteProject(projectId: number): void {
-    console.log(`Attempting to delete project with ID: ${projectId}`);
-    if (confirm('Êtes-vous sûr de vouloir supprimer ce projet ?')) {
-      this.researchProjectService.deleteProject(projectId).subscribe(
-        () => {
-          // On successful deletion, filter out the project from the list
-          console.log('Project deleted successfully');
-          this.researchProjects = this.researchProjects.filter(
-            (project) => project.projectId !== projectId
-          );
-          alert('Le projet a été supprimé.');
-        },
-        (error) => {
-          console.error('Erreur lors de la suppression du projet:', error);
-          alert('Erreur lors de la suppression du projet.');
-        }
-      );
-    }
+  deleteProject(id: number): void {
+    if (id === undefined) return;
+  
+    this.researchProjectService.deleteProject(id).subscribe(() => {
+      console.log(`Project with ID ${id} deleted`);
+      this.getResearchProjects(); // Refresh the list of projects
+    });
   }
-
+  
   
   
 
@@ -117,27 +117,30 @@ export class ResearchListComponent implements OnInit {
   }
   
 
-  openAddResearchDialog(event: MouseEvent): void {
-    event.preventDefault(); // Prevent the default anchor behavior
   
+
+
+
+  openAddResearchDialog(event: Event): void {
+    event.preventDefault();
+
     // Open the dialog with the AddResearchComponent and custom styles
     const dialogRef = this.dialog.open(AddResearchComponent, {
       width: '800px', // Set dialog width (adjusted for your preference)
-      panelClass: 'custom-dialog-container', // Custom dialog container class for styling
-      disableClose: true, // Prevent dialog from closing by clicking outside
     });
   
-    // Optionally subscribe to the result after the dialog is closed
     dialogRef.afterClosed().subscribe(result => {
-      if (result === true) {  // If the result is true, it means the project was added
-        this.refreshResearchProjects(); // Refresh the list of projects
+      if (result === 'projectAdded') {
+        this.refreshResearchProjects(); // Refresh after adding a project
       }
     });
   }
-  
 
+  // This method should fetch the latest list of research projects
   refreshResearchProjects() {
-    this.getResearchProjects(); // or whatever method you already have to reload the projects
+    this.researchProjectService.getProjects().subscribe((projects) => {
+      this.researchProjects = projects;
+    });
   }
 
   onProjectAdded(): void {
@@ -155,6 +158,57 @@ export class ResearchListComponent implements OnInit {
    openModal(projectId: number): void {
     this.selectedProjectId = projectId;
   }
+  openDeleteModal(projectId: number | undefined): void {
+    if (projectId === undefined) {
+      console.error('Project ID is undefined');
+      return;
+    }
+    this.isModalVisible = true; // Open the modal for deletion
+    this.selectedProjectIdToDelete = projectId; // Store the selected project ID to delete
+  }
+  
+  
+  onConfirmDelete(): void {
+    if (this.selectedProjectIdToDelete !== null) {
+      this.researchProjectService.deleteProject(this.selectedProjectIdToDelete).subscribe(
+        () => {
+          console.log(`Project with ID ${this.selectedProjectIdToDelete} deleted successfully.`);
+          this.getResearchProjects(); // Refresh the list of research projects
+          this.isModalVisible = false; // Close modal after successful deletion
+          this.selectedProjectIdToDelete = null; // Reset selected ID
+        },
+        (error) => {
+          console.error('Error while deleting project:', error);
+          alert('Error occurred while deleting the project');
+        }
+      );
+    }
+  }
+  
+  onCancelDelete(): void {
+    this.isModalVisible = false; // Close the modal without making changes
+    this.selectedProjectIdToDelete = null; // Reset the selected project ID
+  }
+
+
+  openEditResearchDialog(event: Event, project: ResearchProject): void {
+    event.preventDefault();
+
+    const dialogRef = this.dialog.open(EditResearchComponent, {
+        width: '800px',
+        data: project
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+        if (result === 'projectUpdated') {
+            this.refreshResearchProjects();
+        }
+    });
+}
+  
+  
+  
+  
 
 
   

@@ -1,44 +1,60 @@
-<div *ngIf="researchProject; else loading" class="project-container">
+<div *ngIf="researchProject; else loading" class="project-details-container">
   <button class="close-btn" (click)="close()">×</button>
 
-    <div class="project-header">
-      <h2>{{ researchProject.title }}</h2>
-      <div class="status-badge" [ngClass]="getStatusClass(researchProject.status)">
-        {{ researchProject.status }}
-      </div>
-    </div>
-  
-    <div class="project-details">
-      <div class="project-detail">
-        <p><strong>Description:</strong> {{ researchProject.description }}</p>
-      </div>
-      <div class="project-detail">
-        <p><strong>Start Date:</strong> {{ researchProject.startDate | date }}</p>
-      </div>
-      <div class="project-detail">
-        <p><strong>Estimated Duration:</strong> {{ researchProject.estimatedDuration }} months</p>
-      </div>
-      <div class="project-detail">
-        <p><strong>Research Focus:</strong> {{ researchProject.researchFocus }}</p>
-      </div>
-      <div class="project-detail">
-        <p><strong>Soil Type:</strong> {{ researchProject.soilType }}</p>
-      </div>
-      <div class="project-detail">
-        <p><strong>Water Requirement:</strong> {{ researchProject.waterRequirement }} L/m²</p>
-      </div>
-      <div class="project-detail">
-        <p><strong>Climate Conditions:</strong> {{ researchProject.climateConditions }}</p>
-      </div>
-      <div class="project-detail">
-        <p><strong>Funding Source:</strong> {{ researchProject.fundingSource }}</p>
-      </div>
+  <div class="project-details-header">
+    <h2>{{ researchProject.title }}</h2>
+    <div class="status-badge" [ngClass]="getStatusClass(researchProject.status)">
+      {{ researchProject.status }}
     </div>
   </div>
-  
-  <ng-template #loading>
-    <div class="loading-message">
-      <p>Chargement des détails du projet...</p>
+
+  <div class="project-details-section">
+    <h3>Project Information</h3>
+    <div class="detail-row">
+      <span class="detail-label">Description:</span>
+      <span class="detail-value">{{ researchProject.description }}</span>
     </div>
-  </ng-template>
-  
+    <div class="detail-row">
+      <span class="detail-label">Start Date:</span>
+      <span class="detail-value">{{ researchProject.startDate | date }}</span>
+    </div>
+    <div class="detail-row">
+      <span class="detail-label">Estimated Duration:</span>
+      <span class="detail-value">{{ researchProject.estimatedDuration }} months</span>
+    </div>
+    <div class="detail-row">
+      <span class="detail-label">Research Focus:</span>
+      <span class="detail-value">{{ researchProject.researchFocus }}</span>
+    </div>
+  </div>
+
+  <div class="project-details-section">
+    <h3>Environmental Details</h3>
+    <div class="detail-row">
+      <span class="detail-label">Soil Type:</span>
+      <span class="detail-value">{{ researchProject.soilType }}</span>
+    </div>
+    <div class="detail-row">
+      <span class="detail-label">Water Requirement:</span>
+      <span class="detail-value">{{ researchProject.waterRequirement }} L/m²</span>
+    </div>
+    <div class="detail-row">
+      <span class="detail-label">Climate Conditions:</span>
+      <span class="detail-value">{{ researchProject.climateConditions || 'N/A' }}</span>
+    </div>
+  </div>
+
+  <div class="project-details-section">
+    <h3>Funding</h3>
+    <div class="detail-row">
+      <span class="detail-label">Funding Source:</span>
+      <span class="detail-value">{{ researchProject.fundingSource }}</span>
+    </div>
+  </div>
+ </div>
+
+ <ng-template #loading>
+  <div class="loading-message">
+    <p>Loading project details...</p>
+    </div>
+ </ng-template>

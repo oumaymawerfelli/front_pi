@@ -7,6 +7,7 @@ import { ResearchRoutingModule } from './research-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ResearchDetailsComponent } from './research-details/research-details.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { InstitutionModule } from '../institution/institution.module';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     EditResearchComponent,
     ResearchDetailsComponent,
 
+
   ],
   imports: [
     CommonModule,
@@ -22,6 +24,9 @@ import { MatDialogModule } from '@angular/material/dialog';
     FormsModule,
     ReactiveFormsModule,
     MatDialogModule,
+    InstitutionModule,  // Import InstitutionModule so ModalConfirmDeleteComponent is available
+
+    
 
   ]
 })

@@ -6,7 +6,7 @@ import { ResearchProject } from 'src/app/core/models/research-project';
 @Component({
   selector: 'app-research-details',
   templateUrl: './research-details.component.html',
-  styleUrls: ['./research-details.component.css'], // Lien vers ton fichier CSS
+  styleUrls: ['./research-details.component.css'], 
 
 })
 export class ResearchDetailsComponent implements OnInit {

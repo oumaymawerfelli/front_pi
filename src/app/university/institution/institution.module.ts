@@ -21,7 +21,9 @@ import { ModalConfirmDeleteComponent } from '../modal-confirm-delete/modal-confi
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-  ]
+  ],
+  exports: [ModalConfirmDeleteComponent]  // Export to make it available in other modules
+
 })
 export class InstitutionModule {}
  

@@ -9,7 +9,7 @@ import { ResearchDetailsComponent } from './research-details/research-details.co
 const routes: Routes = [
   { path: '', component: ResearchListComponent },
   { path: 'add', component: AddResearchComponent },
-  { path: 'edit/:id', component: EditResearchComponent },
+  { path: 'edit/:id', component: EditResearchComponent },  // Edit research route
   { path: 'research-project/:id', component: ResearchDetailsComponent }, // Détails du projet
 
 ];

@@ -25,9 +25,12 @@ export class ResearchProjectService {
     return this.http.post<ResearchProject>(`${this.baseUrl}/add-project`, project);
   }
 
-  updateProject(id: number, project: ResearchProject): Observable<ResearchProject> {
-    return this.http.put<ResearchProject>(`${this.baseUrl}/modify-project/${id}`, project);
+
+
+  updateProject(project: ResearchProject): Observable<ResearchProject> {
+    return this.http.put<ResearchProject>(`${this.baseUrl}/modify-project`, project);
   }
+  
   
 
   deleteProject(id: number): Observable<void> {

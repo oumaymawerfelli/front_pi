@@ -22,5 +22,7 @@ export class ModalConfirmDeleteComponent {
   onCancel() {
     this.cancel.emit(); // Emit the cancel event
     this.isVisible = false; // Hide the modal after cancellation
+
+    
   }
 }

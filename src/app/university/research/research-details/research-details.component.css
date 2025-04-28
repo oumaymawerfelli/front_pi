@@ -1,111 +1,141 @@
-/* Container for the project details */
-.project-container {
-  background-color: #f9f9f9;
-  border-radius: 8px;
+.project-details-container {
+  position: relative;
+  background-color: #f8fef9; /* Very light green background */
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  max-width: 900px;
   margin: 20px auto;
-  min-height: 400px; /* Ensure the container has a minimum height */
-  margin-bottom: 80px; /* Adjust bottom margin if needed */
-  overflow: hidden;  /* Prevent content overflow */
-  position: relative; /* Allow content to be properly displayed */
-}
-.loading-message {
-    text-align: center;
-    font-size: 1.2em;
-    color: #888;
-    margin-top: 20px; /* Give some spacing above loading message */
-}
+  max-width: 800px;
+  width: 95%;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #d4edda; /* Light green border */
+ }
 
-
-  
-  /* Header of the project with title and status */
-  .project-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  
-  .project-header h2 {
-    font-size: 1.8em;
-    font-weight: 600;
-    color: #333;
-  }
-  
-  .status-badge {
-    padding: 5px 15px;
-    font-size: 1.2em;
-    border-radius: 20px;
-    color: white;
-  }
-  
-  .status-badge.approved {
-    background-color: #4CAF50;
-  }
-  
-  .status-badge.pending {
-    background-color: #FF9800;
-  }
-  
-  .status-badge.rejected {
-    background-color: #f44336;
-  }
-  
-  /* Each project detail section */
-  .project-details {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-  }
-  
-  .project-detail {
-    background-color: #ffffff;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .project-detail p {
-    margin: 0;
-    font-size: 1.1em;
-    color: #555;
-  }
-  
-  /* Loading message */
-  .loading-message {
-    text-align: center;
-    font-size: 1.2em;
-    color: #888;
-  }
-  
-  /* Close Button inside the modal */
-.close-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 24px;
-  background: none;
+ .close-btn {
+  align-self: flex-end;
   border: none;
-  color: #333;
+  background: none;
   cursor: pointer;
-  padding: 5px;
+  font-size: 1.5em;
+  color: #5cb85c; /* Green close button */
+ }
+
+ .project-details-header {
+  text-align: center;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #c3e6cb; /* Light green border */
+  padding-bottom: 10px;
+ }
+
+ .project-details-header h2 {
+  font-size: 24px;
+  color: #22863a; /* Darker green title */
+  margin-bottom: 10px;
+ }
+
+ .status-badge {
+  display: inline-block;
+  padding: 8px 12px;
+  border-radius: 15px;
+  font-size: 14px;
   font-weight: bold;
-  z-index: 10; /* Make sure the close button is on top */
-}
+  color: white;
+ }
 
-.close-btn:hover {
-  color: #f44336; /* Optional: Change color when hovering */
-}
+ .approved {
+  background-color: #4caf50;
+ }
 
-/* Modal content */
-.modal-content {
-  background-color: red; /* Ensure background color is set to red */
+ .pending {
+  background-color: #ff9800;
+ }
+
+ .rejected {
+  background-color: #f44336;
+ }
+
+ .project-details-section {
+  margin-bottom: 20px;
+ }
+
+ .project-details-section h3 {
+  font-size: 18px;
+  color: #38761d; /* Forest green section header */
+  margin-bottom: 10px;
+  border-bottom: 1px solid #c3e6cb; /* Light green border */
+  padding-bottom: 5px;
+ }
+
+ .detail-row {
+  display: flex;
+  justify-content: flex-start;
+  align-items: baseline;
+  margin-bottom: 10px;
+ }
+
+ .detail-label {
+  font-weight: bold;
+  color: #45818e; /* Teal-ish green label */
+  width: 180px;
+  margin-right: 10px;
+ }
+
+ .detail-value {
+  color: #333;
+  flex: 1;
+ }
+
+ .loading-message {
+  text-align: center;
   padding: 20px;
-  border-radius: 8px;
-  width: 80%;
-  max-width: 900px;
-  z-index: 1060; /* Ensure it appears above the backdrop */
-  box-shadow: none; /* Optional: cleaner look */
-}
+  color: #555;
+ }
+
+ /* Form-like styling */
+ .form-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+ }
+
+ .form-column {
+  flex: 1 1 48%;
+  margin-bottom: 15px;
+ }
+
+ .form-group {
+  margin-bottom: 15px;
+ }
+
+ .form-group label {
+  display: block;
+  margin-bottom: 5px;
+  color: #555;
+  font-weight: bold;
+ }
+
+ .form-control {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  box-sizing: border-box;
+ }
+
+ /* Responsive adjustments */
+ @media (max-width: 768px) {
+  .project-details-container {
+    width: 95%;
+    margin: 10px auto;
+  }
+
+  .form-container {
+    flex-direction: column;
+  }
+
+  .form-column {
+    flex: 1 1 100%;
+  }
+ }

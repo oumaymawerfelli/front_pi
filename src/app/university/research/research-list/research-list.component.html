@@ -132,10 +132,9 @@
         <p>Empowering Research for a Better Future</p>
       </div>
 
-
-      
-
+    
       <div class="row gy-4">
+
         <div *ngFor="let project of researchProjects" class="col-lg-4">
           <article class="position-relative h-100">
             <div class="post-img position-relative overflow-hidden">
@@ -169,7 +168,22 @@
             <button (click)="openModal(project.projectId)" class="readmore">
               <span>View Details</span><i class="bi bi-arrow-right"></i>
             </button>
+            <div class="action-icons">
+              <!-- Delete Icon -->
+              <i (click)="openDeleteModal(project.projectId)" class="fa fa-trash delete-icon-btn"></i>
+              
+              <!-- Edit Icon -->
+              <i (click)="openEditResearchDialog($event, project)" class="fa fa-pencil edit-icon-btn"></i>
+            </div>
             
+
+
+<!-- Modal to confirm delete -->
+<app-modal-confirm-delete 
+[isVisible]="isModalVisible" 
+(confirm)="onConfirmDelete()" 
+(cancel)="onCancelDelete()">
+</app-modal-confirm-delete>
 
           </div>
 
