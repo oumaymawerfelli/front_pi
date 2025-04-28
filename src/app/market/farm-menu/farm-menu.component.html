@@ -1,17 +1,29 @@
 <div class="page-container">
+  <p>Manage your products</p>
   <div class="product-list">
     <div *ngFor="let product of myProducts" class="product-item">
       <app-product [product]="product"></app-product>
-
       <div class="buttons">
         <button (click)="editProduct(product)">Edit</button>
         <button (click)="deleteProduct(product.productId)">Delete</button>
       </div>
     </div>
   </div>
-
-  <!-- Edit Form Container -->
-  <div class="edit-form">
-    <!-- <app-edit-prod></app-edit-prod> -->
+  
+  
+  <div class="add-form">
+     <app-add-prod></app-add-prod> 
   </div>
 </div>
+
+<div *ngIf="isEditing && selectedProduct" class="modal-overlay">
+  <div class="modal-content">
+    <app-edit-prod 
+      [productToEdit]="selectedProduct" 
+      (closeEdit)="onCloseEdit()" 
+      (productUpdated)="onProductUpdated($event)">
+    </app-edit-prod>
+  </div>
+</div>
+
+

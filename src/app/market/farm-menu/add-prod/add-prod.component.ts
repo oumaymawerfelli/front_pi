@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ProductService } from 'src/app/core/services/product.service'; 
-import { Router } from '@angular/router';
+import { ProductService } from 'src/app/core/services/product.service';
+import { Product } from 'src/app/core/services/product.service';
 
 @Component({
   selector: 'app-add-prod',
@@ -9,35 +9,54 @@ import { Router } from '@angular/router';
   styleUrls: ['./add-prod.component.css']
 })
 export class AddProdComponent {
-  productForm: FormGroup;
+  productForm!: FormGroup;
+  categories = ['Produce', 'Items', 'Equipment', 'Others'];
+  submissionSuccess = false;
+  isLoading = false;
+  showForm: boolean = false;
 
   constructor(
-    private fb: FormBuilder,
     private productService: ProductService,
-    private router: Router
+    private fb: FormBuilder
   ) {
     this.productForm = this.fb.group({
-      productName: ['', Validators.required],
+      productName: ['', [Validators.required]],
+      productDescription: ['', [Validators.required]],
+      productCategory: ['', [Validators.required]],
       productPrice: ['', [Validators.required, Validators.min(0)]],
-      productDescription: [''],
-      productCategory: ['', Validators.required]
+      productStock: ['', [Validators.required, Validators.min(0)]],
+      productImage: ['']
     });
   }
 
-  onSubmit() {
-    if (this.productForm.valid) {
-      const product = this.productForm.value;
-      this.productService.addProduct(product).subscribe({
-        next: (response) => {
-          console.log('Produit ajouté avec succès', response);
-          this.productForm.reset();
-          // Redirect or notify
-          this.router.navigate(['/farm-menu']); // ou autre page après ajout
-        },
-        error: (err) => {
-          console.error('Erreur lors de l\'ajout', err);
-        }
-      });
+  onSubmit(): void {
+    if (this.productForm.invalid || this.isLoading) {
+      return;
     }
+
+    this.isLoading = true;
+    const product: Product = this.productForm.value;
+
+    this.productService.addProduct(product).subscribe({
+      next: (response) => {
+        console.log('Product added successfully', response);
+        this.submissionSuccess = true;
+        this.productForm.reset();
+        this.isLoading = false;
+        
+        // Hide success message after 3 seconds
+        setTimeout(() => {
+          this.submissionSuccess = false;
+        }, 3000);
+      },
+      error: (error) => {
+        console.error('Error adding product', error);
+        this.isLoading = false;
+      }
+    });
+  }
+
+  toggleForm(): void {
+    this.showForm = !this.showForm;
   }
 }

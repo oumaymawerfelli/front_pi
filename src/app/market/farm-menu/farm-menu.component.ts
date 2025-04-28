@@ -14,6 +14,9 @@ export class FarmMenuComponent implements OnInit {
   myProducts: Product[] = [];  // Products belonging to the connected user
   
 
+  selectedProduct: Product | null = null;
+  isEditing: boolean = false;
+
   constructor(private productService: ProductService, private userService: UserService) {}
 
   ngOnInit() {
@@ -55,9 +58,28 @@ export class FarmMenuComponent implements OnInit {
       this.myProducts = allProducts;
     });
   }
+  // editProduct(product: Product) {
+  //   console.log('Product received:', product);
+  //   // Now you can use the product object as needed
+  // }
+
   editProduct(product: Product) {
-    console.log('Product received:', product);
-    // Now you can use the product object as needed
+    console.log('Editing product:', product);
+    this.selectedProduct = { ...product };  // Make a copy to avoid direct mutation
+    this.isEditing = true;
+  }
+  
+  onProductUpdated(updatedProduct: Product) {
+    // Update the product in the list without reloading everything
+    const index = this.myProducts.findIndex(p => p.productId === updatedProduct.productId);
+    if (index !== -1) {
+      this.myProducts[index] = updatedProduct;
+    }
+  }
+  
+  onCloseEdit() {
+    this.isEditing = false;
+    this.selectedProduct = null;
   }
 
   deleteProduct(productId: number) {

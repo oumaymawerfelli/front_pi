@@ -49,6 +49,8 @@ import { AddProdComponent } from './market/farm-menu/add-prod/add-prod.component
 import { RecaptchaModule } from 'ng-recaptcha'; // Import RecaptchaModule
 import { NgChartsModule } from 'ng2-charts';
 import { AdminAnalyticsComponent } from './users/admin-analytics/admin-analytics.component';
+import { EditProdComponent } from './market/farm-menu/edit-prod/edit-prod.component';
+
 
 
 
@@ -83,6 +85,7 @@ import { AdminAnalyticsComponent } from './users/admin-analytics/admin-analytics
     SearchComponent,
     FarmMenuComponent,
     AddProdComponent,
+    EditProdComponent,
   ],
   imports: [
     BrowserModule,

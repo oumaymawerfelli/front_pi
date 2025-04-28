@@ -12,7 +12,7 @@ export class ProductComponent {
   
   onEditProduct() {
     console.log('Edit product clicked for product:', this.product.productName);
-    // Implement your edit logic (e.g., navigate to an edit page or open a modal)
+    
   }
 
   

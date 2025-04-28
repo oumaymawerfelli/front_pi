@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
+import { UserService } from 'src/app/core/services/user.service';
 
 // export interface Farmer {
 //   idUser: number;
@@ -32,20 +32,36 @@ export interface Product {
 export class ProductService {
   private baseUrl = 'http://localhost:8089/pi/products';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+
+  }
+  private getHeaders() {
+    const token = localStorage.getItem('token');
+    return new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+  }
+
 
   // Get all products
   getAllProducts(): Observable<Product[]> {
     return this.http.get<Product[]>(`${this.baseUrl}/get-all-products`);  // Appending the specific endpoint
   }
-    // Add a new product
-    addProduct(product: Product): Observable<Product> {
-      return this.http.post<Product>(`${this.baseUrl}/add-product`, product);
-    }
+
+  addProduct(product: Product): Observable<Product> {
+    const { farmer, ...productDetails } = product; // Exclude farmer info, it's handled by the backend
+    const headers= this.getHeaders()
+    return this.http.post<Product>(`${this.baseUrl}/add-product`, productDetails, {headers
+    });
+  }
+  
+  
   
     // Update a product
     updateProduct(id: number, product: Product): Observable<Product> {
-      return this.http.put<Product>(`${this.baseUrl}/update-product/${id}`, product);
+      const headers = this.getHeaders();
+      return this.http.put<Product>(`${this.baseUrl}/update-product/${id}`, product, { headers });
     }
   
     // Get a product by ID
