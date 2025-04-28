@@ -1,4 +1,5 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, AfterViewInit } from '@angular/core';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-landing',
@@ -6,9 +7,29 @@ import { Component, OnInit, HostListener } from '@angular/core';
   styleUrls: ['./landing.component.css']
 })
 export class LandingComponent implements OnInit {
+  childRouteActive = false;
+
+  constructor(private router: Router, private route: ActivatedRoute) {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        const currentUrl = this.router.url;
+        this.childRouteActive = currentUrl !== '/landing';
+
+        // Scroll to auth form after route change
+        if (this.childRouteActive) {
+          setTimeout(() => {
+            const el = document.getElementById('authForms');
+            if (el) {
+              el.scrollIntoView({ behavior: 'smooth' });
+            }
+          }, 100); // short delay to make sure element is rendered
+        }
+      }
+    });
+  }
 
   ngOnInit(): void {
-    this.onScroll(); // Run once in case the page is already scrolled
+    this.onScroll();
   }
 
   @HostListener('window:scroll', [])
@@ -21,5 +42,9 @@ export class LandingComponent implements OnInit {
         navbar.classList.remove('scrolled');
       }
     }
+  }
+
+  closeModal(): void {
+    this.router.navigate(['/landing']);
   }
 }

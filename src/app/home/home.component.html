@@ -7,6 +7,8 @@
   <title>Index - AgriCulture Bootstrap Template</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
 
   <!-- Favicons -->
   <link href="./assets/img/favicon.png" rel="icon">
@@ -63,7 +65,7 @@
               <li><a href="#">Dropdown 4</a></li>
             </ul>
           </li>
-          <li><a href="contact.html">Contact</a></li>
+          <li><a class="nav-link" routerLink="/home/profile">Profile</a></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
@@ -72,7 +74,7 @@
   </header>
 
   <main class="main">
-
+    <router-outlet></router-outlet>
     <!-- Hero Section -->
     <section id="hero" class="hero section dark-background">
 
@@ -131,7 +133,7 @@
       </div>
 
     </section><!-- /Hero Section -->
-
+   
     <!-- Services Section -->
     <section id="services" class="services section">
 
