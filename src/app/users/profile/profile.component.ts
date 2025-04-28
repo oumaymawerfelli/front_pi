@@ -9,7 +9,7 @@ interface UserProfile {
   name: string;
   email: string;
   phone?: string;
-  adresse?: string;
+  address?: string;
   dateOfBirth?: string;
   profilePictureBase64?: string;
   role?: string;
@@ -57,7 +57,7 @@ export class ProfileComponent implements OnInit {
           name: user.name,
           email: user.email,
           phone: user.phone,
-          adresse: user.adresse,
+          address: user.address,
           dateOfBirth: user.dateOfBirth,
           profilePictureBase64: user.profilePictureBase64,
           role: user.role,
@@ -115,7 +115,7 @@ export class ProfileComponent implements OnInit {
       formData.append('name', this.user.name);
       formData.append('email', this.user.email);
       if (this.user.phone) formData.append('phone', this.user.phone);
-      if (this.user.adresse) formData.append('adresse', this.user.adresse);
+      if (this.user.address) formData.append('address', this.user.address);
       if (this.user.dateOfBirth) formData.append('dateOfBirth', this.user.dateOfBirth);
 
       this.userService.updateUserProfile(formData).subscribe(
@@ -144,7 +144,7 @@ export class ProfileComponent implements OnInit {
     formData.append('name', this.user.name);
     formData.append('email', this.user.email);
     formData.append('phone', this.user.phone || '');
-    formData.append('adresse', this.user.adresse || '');
+    formData.append('address', this.user.address || '');
     formData.append('dateOfBirth', this.user.dateOfBirth || '');
 
     if (this.selectedFile) {
