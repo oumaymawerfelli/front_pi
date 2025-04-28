@@ -1,0 +1,48 @@
+<div class="container mt-4">
+  <h2>Add Institution</h2>
+
+  <form [formGroup]="institutionForm" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+      <label for="name" class="form-label">Name:</label>
+      <input
+        id="name"
+        type="text"
+        formControlName="name"
+        class="form-control"
+        [ngClass]="{
+          'is-invalid': institutionForm.get('name')?.invalid &&
+                       institutionForm.get('name')?.touched
+        }"
+      />
+      <div class="invalid-feedback" *ngIf="institutionForm.get('name')?.touched && institutionForm.get('name')?.invalid">
+        Name is required.
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="location" class="form-label">Location:</label>
+      <input
+        id="location"
+        type="text"
+        formControlName="location"
+        class="form-control"
+        [ngClass]="{
+          'is-invalid': institutionForm.get('location')?.invalid &&
+                       institutionForm.get('location')?.touched
+        }"
+      />
+      <div class="invalid-feedback" *ngIf="institutionForm.get('location')?.touched && institutionForm.get('location')?.invalid">
+        Location is required.
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-between">
+      <button type="submit" class="btn btn-success" [disabled]="institutionForm.invalid">
+        Add Institution
+      </button>
+      <button type="button" (click)="onCancel()" class="btn btn-secondary">
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>

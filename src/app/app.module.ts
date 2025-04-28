@@ -29,11 +29,14 @@ import { ContactComponent } from './contact/contact.component';
 import { LoanApplicationComponent } from './loans/loan-application/loan-application.component';
 import { LoanInfoComponent } from './loans/loan-info/loan-info.component';
 import { LoanManagementComponent } from './loans/loan-management/loan-management.component';
-
+import { Institution } from './core/models/institution.model';
 import { EquipmentComponent } from './loans/equipment/equipment.component';
 import { AddEquipmentComponent } from './loans/add-equipment/add-equipment.component';
 import { AddLandComponent } from './loans/add-land/add-land.component';
 import { TermsAcceptanceComponent } from './loans/terms-acceptance/terms-acceptance.component';
+import { InstitutionModule } from './university/institution/institution.module';
+import { ResearchModule } from './university/research/research.module';
+
 
 
 
@@ -53,7 +56,8 @@ import { TermsAcceptanceComponent } from './loans/terms-acceptance/terms-accepta
     EquipmentComponent,
     AddEquipmentComponent,
     AddLandComponent,
-    TermsAcceptanceComponent
+    TermsAcceptanceComponent,
+ 
 
   ],
   imports: [
@@ -65,9 +69,11 @@ import { TermsAcceptanceComponent } from './loans/terms-acceptance/terms-accepta
     HttpClientModule,
     BrowserAnimationsModule,
     NgbModule,
+    InstitutionModule,
     RecaptchaModule,
     NgChartsModule,
-    UsersModule
+    UsersModule,
+    ResearchModule,
   ],
   providers: [
     AuthService,

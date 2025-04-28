@@ -31,6 +31,7 @@ import { AdminGuard } from './guards/admin.guard';
 import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
+  
 
   // ✅ Default route redirecting to landing/login
   { path: '', redirectTo: '/landing/login', pathMatch: 'full' },
@@ -57,6 +58,10 @@ const routes: Routes = [
       { path: 'loan-application', component: LoanApplicationComponent, canActivate:[AuthGuard], },
       { path: 'loan-info', component: LoanInfoComponent,  canActivate:[AuthGuard], },
       { path: 'loan-management', component: LoanManagementComponent, canActivate:[AuthGuard], },
+      { path: 'university/institution', loadChildren: () => import('./university/institution/institution.module').then(m => m.InstitutionModule) },
+      { path: 'university/research-project', loadChildren: () => import('./university/research/research.module').then(m => m.ResearchModule) },
+  
+      
 
     
   

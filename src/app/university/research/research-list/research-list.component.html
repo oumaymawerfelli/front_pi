@@ -1,0 +1,362 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Index - AgriCulture Bootstrap Template</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+
+  <!-- Favicons -->
+  <link href="./assets/img/favicon.png" rel="icon">
+  <link href="./assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Marcellus:wght@400&display=swap" rel="stylesheet">
+
+
+
+  <!-- =======================================================
+  * Template Name: AgriCulture
+  * Template URL: https://bootstrapmade.com/agriculture-bootstrap-website-template/
+  * Updated: Aug 07 2024 with Bootstrap v5.3.3
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body class="index-page">
+
+  <header id="header" class="header d-flex align-items-center position-relative">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+
+      <a href="index.html" class="logo d-flex align-items-center">
+        <!-- Uncomment the line below if you also wish to use an image logo -->
+        <img src="assets/img/logo.png" alt="AgriCulture">
+        <!-- <h1 class="sitename">AgriCulture</h1>  -->
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="index.html" class="active">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="services.html">Our Services</a></li>
+          <li><a href="testimonials.html">Testimonials</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li class="dropdown">
+            <a routerLink="#" (click)="$event.preventDefault()"><span>University</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+            <ul>
+              <li><a routerLink="/home/university/institution" routerLinkActive="active">Institution</a></li>
+              <li><a routerLink="/home/university/research-project" routerLinkActive="active">Research Project</a></li>
+            </ul>
+          </li>
+          
+          
+          <li><a href="contact.html">ContactBLAAA</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
+ 
+    </div>
+  </header>     
+
+<!-- Main Content Area -->
+<main>
+    
+
+    <!-- Page Title -->
+    <div class="page-title dark-background" data-aos="fade" style="background-image: url(assets/img/page-title-bg.webp);">
+      <div class="container position-relative">
+        <h1>About</h1>
+        <p>Esse dolorum voluptatum ullam es</p>
+        <nav class="breadcrumbs">
+          <ol>
+            <li><a href="index.html">Home</a></li>
+            <li class="current">Research Project</li>
+          </ol>
+        </nav>
+      </div>
+    </div><!-- End Page Title -->
+
+<!-- About 3 Section -->
+<section id="about-3" class="about-3 section">
+
+
+  <div class="container" >
+
+
+ 
+    <div class="row gy-4 justify-content-between align-items-center">
+      <div class="col-lg-6 order-lg-2 position-relative" data-aos="zoom-out">
+        <img src="assets/images/img_sq_8.jpg" alt="Image" class="img-fluid">
+        <a href="https://www.youtube.com/watch?v=UE8fQm_DxI4" class="glightbox pulsating-play-btn">
+          <span class="play"><i class="bi bi-play-fill"></i></span>
+        </a>
+      </div>
+      <div class="col-lg-5 order-lg-1" data-aos="fade-up" data-aos-delay="100">
+        <h2 class="content-title mb-4">Plants Make Life Better</h2>
+        <p class="mb-4">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim
+          necessitatibus placeat, atque qui voluptatem velit explicabo vitae
+          repellendus architecto provident nisi ullam minus asperiores commodi!
+          Tenetur, repellat aliquam nihil illo.
+        </p>
+        <ul class="list-unstyled list-check">
+          <li>Lorem ipsum dolor sit amet</li>
+          <li>Velit explicabo vitae repellendu</li>
+          <li>Repellat aliquam nihil illo</li>
+        </ul>
+        <p><a href="#" class="btn-cta" (click)="openAddResearchDialog($event)">Add Research Project</a></p>
+
+
+        
+        
+
+      </div>
+    </div>
+  </div>
+</section><!-- /About 3 Section -->
+
+<div class="card p-3 mb-4 shadow-sm" style="max-width: 1000px; margin: 0 auto;">
+  <form (ngSubmit)="filterProjects()">
+    <div class="row g-3">
+
+      <!-- Status Filter -->
+      <div class="col-md-3">
+        <label for="status" class="form-label">Status</label>
+        <select [(ngModel)]="filters.status" name="status" id="status" class="form-select">
+          <option value="">-- Select Status --</option>
+          <option value="Ongoing">Ongoing</option>
+          <option value="Completed">Completed</option>
+          <option value="Pending">Pending</option>
+        </select>
+      </div>
+
+      <!-- Research Focus Filter -->
+      <div class="col-md-3">
+        <label for="researchFocus" class="form-label">Research Focus</label>
+        <select [(ngModel)]="filters.researchFocus" name="researchFocus" id="researchFocus" class="form-select">
+          <option value="">-- Select Focus --</option>
+          <option *ngFor="let focus of researchFocusList" [value]="focus.name">{{ focus.name }}</option>
+        </select>
+      </div>
+
+      <!-- Funding Source Filter (Numeric) -->
+      <div class="col-md-3">
+        <label for="fundingSource" class="form-label">Funding Source (Amount)</label>
+        <input
+          type="number"
+          [(ngModel)]="filters.fundingSource"
+          name="fundingSource"
+          id="fundingSource"
+          class="form-control"
+          min="0"
+          step="100"
+          placeholder="Enter a positive amount"
+        />
+      </div>
+
+      <!-- Search Text -->
+      <div class="col-md-3">
+        <label for="searchText" class="form-label">Keyword</label>
+        <input type="text" [(ngModel)]="filters.searchText" name="searchText" id="searchText" class="form-control" placeholder="Enter a keyword">
+      </div>
+
+      <!-- Filter Button -->
+      <div class="col-md-12 text-end mt-2">
+        <button type="submit" id="filterButton" class="btn custom-filter-btn55">Apply Filters</button>
+      </div>
+
+    </div>
+  </form>
+</div>
+
+
+
+
+  <section id="blog-posts-2" class="blog-posts-2 section">
+    <div class="container" data-aos="fade-up">
+
+      <div class="section-title">
+        <h2>Research Projects</h2>
+        <p>Empowering Research for a Better Future</p>
+      </div>
+
+    
+      <div class="row gy-4">
+
+        <div *ngFor="let project of researchProjects" class="col-lg-4">
+          <article class="position-relative h-100">
+            <div class="post-img position-relative overflow-hidden">
+              <img [src]="getImageByFocus(project.researchFocus)" class="img-fluid w-100 h-100 object-fit-cover" alt="{{ project.researchFocus }}">
+            </div>
+
+            <div class="meta d-flex align-items-end">
+              <!-- Date with Day and Month in separate lines -->
+              <span class="post-date">
+                <span class="day">{{ getDay(project.startDate) }}</span>
+                <span class="month">{{ getMonth(project.startDate) }}</span>
+              </span>
+
+              <!-- Research Focus -->
+              <div class="d-flex align-items-center ms-2">
+                <i class="bi bi-person"></i>
+                <span class="ps-2">{{ project.researchFocus }}</span>
+              </div>
+
+              <span class="px-3 text-black-50">/</span>
+
+              <!-- Status -->
+              <div class="d-flex align-items-center">
+                <i class="bi bi-folder2"></i>
+                <span class="ps-2">{{ project.status }}</span>
+              </div>
+            </div>
+
+            <div class="post-content d-flex flex-column">
+            <h3 class="post-title">{{ project.title }}</h3>
+            <button (click)="openModal(project.projectId)" class="readmore">
+              <span>View Details</span><i class="bi bi-arrow-right"></i>
+            </button>
+            <div class="action-icons">
+              <!-- Delete Icon -->
+              <i (click)="openDeleteModal(project.projectId)" class="fa fa-trash delete-icon-btn"></i>
+              
+              <!-- Edit Icon -->
+              <i (click)="openEditResearchDialog($event, project)" class="fa fa-pencil edit-icon-btn"></i>
+            </div>
+            
+
+
+<!-- Modal to confirm delete -->
+<app-modal-confirm-delete 
+[isVisible]="isModalVisible" 
+(confirm)="onConfirmDelete()" 
+(cancel)="onCancelDelete()">
+</app-modal-confirm-delete>
+
+          </div>
+
+          </article>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Modal for Research Details (using the existing component) -->
+    <div class="modal-backdrop" *ngIf="selectedProjectId">
+      <div class="modal-content">
+
+        <app-research-details 
+          [projectId]="selectedProjectId" 
+          (closeModal)="closeModal()">
+        </app-research-details>
+      </div>
+    </div>
+
+   
+  </section>
+
+
+</main>
+
+
+
+  
+
+<footer id="footer" class="footer dark-background">
+
+  <div class="footer-top">
+    <div class="container">
+      <div class="row gy-4">
+        <div class="col-lg-4 col-md-6 footer-about">
+          <a href="index.html" class="logo d-flex align-items-center">
+            <span class="sitename">AgriCulture</span>
+          </a>
+          <div class="footer-contact pt-3">
+            <p>A108 Adam Street</p>
+            <p>New York, NY 535022</p>
+            <p class="mt-3"><strong>Phone:</strong> <span>+1 5589 55488 55</span></p>
+            <p><strong>Email:</strong> <span>infoexample.com</span></p>
+          </div>
+        </div>
+
+        <div class="col-lg-2 col-md-3 footer-links">
+          <h4>Useful Links</h4>
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About us</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">Terms of service</a></li>
+            <li><a href="#">Privacy policy</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-2 col-md-3 footer-links">
+          <h4>Our Services</h4>
+          <ul>
+            <li><a href="#">Web Design</a></li>
+            <li><a href="#">Web Development</a></li>
+            <li><a href="#">Product Management</a></li>
+            <li><a href="#">Marketing</a></li>
+            <li><a href="#">Graphic Design</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-2 col-md-3 footer-links">
+          <h4>Hic solutasetp</h4>
+          <ul>
+            <li><a href="#">Molestiae accusamus iure</a></li>
+            <li><a href="#">Excepturi dignissimos</a></li>
+            <li><a href="#">Suscipit distinctio</a></li>
+            <li><a href="#">Dilecta</a></li>
+            <li><a href="#">Sit quas consectetur</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-2 col-md-3 footer-links">
+          <h4>Nobis illum</h4>
+          <ul>
+            <li><a href="#">Ipsam</a></li>
+            <li><a href="#">Laudantium dolorum</a></li>
+            <li><a href="#">Dinera</a></li>
+            <li><a href="#">Trodelas</a></li>
+            <li><a href="#">Flexo</a></li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="copyright text-center">
+    <div class="container d-flex flex-column flex-lg-row justify-content-center justify-content-lg-between align-items-center">
+
+      <div class="d-flex flex-column align-items-center align-items-lg-start">
+        <div>
+          © Copyright <strong><span>MyWebsite</span></strong>. All Rights Reserved
+        </div>
+        <div class="credits">
+          <!-- All the links in the footer should remain intact. -->
+          <!-- You can delete the links only if you purchased the pro version. -->
+          <!-- Licensing information: https://bootstrapmade.com/license/ -->
+          <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/herobiz-bootstrap-business-template/ -->
+          Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> Distributed by <a href="https://themewagon.com">ThemeWagon</a>
+        </div>
+      </div>
+
+      <div class="social-links order-first order-lg-last mb-3 mb-lg-0">
+        <a href=""><i class="bi bi-twitter-x"></i></a>
+        <a href=""><i class="bi bi-facebook"></i></a>
+        <a href=""><i class="bi bi-instagram"></i></a>
+        <a href=""><i class="bi bi-linkedin"></i></a>
+      </div>
+
+    </div>
+  </div>
+
+</footer>

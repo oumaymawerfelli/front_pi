@@ -33,7 +33,7 @@ export class EquipmentService {
   }
 
   // Update an existing equipment with FormData (including images)
-  updateEquipment(id: number, equipmentData: FormData): Observable<Equipment> {
+  updateEquipment(id: number, equipmentData: FormData): Observable<any> {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.http.put<Equipment>(`${this.apiUrl}/${id}`, equipmentData, { headers });

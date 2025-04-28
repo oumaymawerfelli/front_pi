@@ -1,0 +1,171 @@
+<div *ngIf="project">
+  <form (ngSubmit)="onSubmit()" #editResearchForm="ngForm">
+      <span class="cancel-icon" (click)="onCancel()">&#10006;</span>
+
+      <h2>Edit Research Project</h2>
+      <div class="form-container">
+          <div class="form-column">
+              <div class="form-group">
+                  <label for="title">Title</label>
+                  <input type="text" id="title" class="form-control" [(ngModel)]="project.title" name="title"
+                      maxlength="100" required />
+                  <div
+                      *ngIf="!editResearchForm.form.controls['title']?.valid && editResearchForm.form.controls['title']?.touched"
+                      class="text-danger">
+                      Title is required.
+                  </div>
+              </div>
+
+              <div class="form-group">
+                  <label for="description">Description</label>
+                  <textarea id="description" class="form-control" [(ngModel)]="project.description"
+                      name="description" maxlength="500" required></textarea>
+                  <div
+                      *ngIf="!editResearchForm.form.controls['description']?.valid && editResearchForm.form.controls['description']?.touched"
+                      class="text-danger">
+                      Description is required.
+                  </div>
+              </div>
+
+              <div class="form-group">
+                  <label for="researchFocus">Research Focus</label>
+                  <select id="researchFocus" class="form-control" [(ngModel)]="project.researchFocus"
+                      name="researchFocus" required>
+                      <option value="Soil Fertility Management">Soil Fertility Management</option>
+                      <option value="Crop Rotation and Diversification">Crop Rotation and Diversification</option>
+                      <option value="Water Conservation Techniques">Water Conservation Techniques</option>
+                      <option value="Organic Farming Practices">Organic Farming Practices</option>
+                      <option value="Agroforestry">Agroforestry</option>
+                      <option value="Precision Agriculture">Precision Agriculture</option>
+                      <option value="Integrated Pest Management">Integrated Pest Management</option>
+                      <option value="Soil Erosion Control">Soil Erosion Control</option>
+                      <option value="Hydroponics or Aquaponics">Hydroponics or Aquaponics</option>
+                      <option value="Sustainable Livestock Grazing">Sustainable Livestock Grazing</option>
+                      <option value="Agrochemical Use and Environmental Impact">Agrochemical Use and Environmental
+                          Impact</option>
+                      <option value="Biochar for Soil Improvement">Biochar for Soil Improvement</option>
+                      <option value="Plant Disease Management">Plant Disease Management</option>
+                      <option value="Composting and Waste Recycling">Composting and Waste Recycling</option>
+                      <option value="Renewable Energy Integration">Renewable Energy Integration</option>
+                      <option value="Agri-ecosystem Restoration">Agri-ecosystem Restoration</option>
+                      <option value="Improved Irrigation Systems">Improved Irrigation Systems</option>
+                      <option value="Bee Pollination and Crop Productivity">Bee Pollination and Crop Productivity</option>
+                      <option value="Forest Farming">Forest Farming</option>
+                      <option value="Medicinal Plant Cultivation">Medicinal Plant Cultivation</option>
+                  </select>
+                  <div
+                      *ngIf="!editResearchForm.form.controls['researchFocus']?.valid && editResearchForm.form.controls['researchFocus']?.touched"
+                      class="text-danger">
+                      Research focus is required.
+                  </div>
+              </div>
+              <div class="form-group">
+                  <label for="status">Status</label>
+                  <select id="status" class="form-control" [(ngModel)]="project.status" name="status" required>
+                      <option value="Active">Active</option>
+                      <option value="Completed">Completed</option>
+                      <option value="Pending">Pending</option>
+                      <option value="On Hold">On Hold</option>
+                  </select>
+                  <div
+                      *ngIf="!editResearchForm.form.controls['status']?.valid && editResearchForm.form.controls['status']?.touched"
+                      class="text-danger">
+                      Status is required.
+                  </div>
+              </div>
+
+              <div class="form-group">
+                  <label for="waterRequirement">Water Requirement</label>
+                  <select id="waterRequirement" class="form-control" [(ngModel)]="project.waterRequirement"
+                      name="waterRequirement" required>
+                      <option value="Low">Low</option>
+                      <option value="Medium">Medium</option>
+                      <option value="High">High</option>
+                  </select>
+                  <div
+                      *ngIf="!editResearchForm.form.controls['waterRequirement']?.valid && editResearchForm.form.controls['waterRequirement']?.touched"
+                      class="text-danger">
+                      Water requirement is required.
+                  </div>
+              </div>
+          </div>
+
+          <div class="form-column">
+              <div class="form-group">
+                  <label for="soilType">Soil Type</label>
+                  <select id="soilType" class="form-control" [(ngModel)]="project.soilType" name="soilType"
+                      required>
+                      <option value="Loamy">Loamy</option>
+                      <option value="Sandy">Sandy</option>
+                      <option value="Clayey">Clayey</option>
+                      <option value="Peaty">Peaty</option>
+                      <option value="Saline">Saline</option>
+                      <option value="Chalky">Chalky</option>
+                  </select>
+                  <div
+                      *ngIf="!editResearchForm.form.controls['soilType']?.valid && editResearchForm.form.controls['soilType']?.touched"
+                      class="text-danger">
+                      Soil type is required.
+                  </div>
+              </div>
+
+              <div class="form-group">
+                  <label for="climateConditions">Climate Conditions</label>
+                  <select id="climateConditions" class="form-control" [(ngModel)]="project.climateConditions"
+                      name="climateConditions">
+                      <option value="Tropical">Tropical</option>
+                      <option value="Temperate">Temperate</option>
+                      <option value="Arid">Arid</option>
+                      <option value="Cold">Cold</option>
+                  </select>
+              </div>
+
+              <div class="form-group">
+                  <label for="fundingSource">Requested Funding</label>
+                  <input type="text" id="fundingSource" class="form-control" [(ngModel)]="project.fundingSource"
+                      name="fundingSource" required pattern="^[0-9]+(\.[0-9]{1,2})?$"
+                      placeholder="Enter amount (e.g., 1000, 5000.75)" />
+                  <div
+                      *ngIf="!editResearchForm.form.controls['fundingSource']?.valid && editResearchForm.form.controls['fundingSource']?.touched"
+                      class="text-danger">
+                      Please enter a valid amount (e.g., 1000, 5000.75).
+                  </div>
+              </div>
+
+              <div class="form-group">
+                  <label for="startDate">Start Date</label>
+                  <input type="date" id="startDate" class="form-control" [(ngModel)]="project.startDate"
+                      name="startDate" [min]="minDate" required />
+                  <div
+                      *ngIf="!editResearchForm.form.controls['startDate']?.valid && editResearchForm.form.controls['startDate']?.touched"
+                      class="text-danger">
+                      Start date is required.
+                  </div>
+              </div>
+
+              <div class="form-group">
+                  <label for="estimatedDuration">Estimated Duration (in months)</label>
+                  <input type="number" id="estimatedDuration" class="form-control"
+                      [(ngModel)]="project.estimatedDuration" name="estimatedDuration" min="1" required />
+                  <div
+                      *ngIf="!editResearchForm.form.controls['estimatedDuration']?.valid && editResearchForm.form.controls['estimatedDuration']?.touched"
+                      class="text-danger">
+                      Estimated duration is required and must be at least 1 month.
+                  </div>
+              </div>
+
+
+
+              <div class="form-group">
+                  <button type="submit" class="btn btn-primary" [disabled]="!editResearchForm.form.valid">
+                      Update Project
+                  </button>
+              </div>
+          </div>
+      </div>
+  </form>
+</div>
+<div *ngIf="formSubmitted" class="alert alert-success alert-dismissible fade show">
+  <p class="success-message">Project updated successfully!</p>
+  <button type="button" class="btn-close" aria-label="Close" (click)="closeSuccessMessage()"></button>
+</div>

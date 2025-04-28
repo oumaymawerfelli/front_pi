@@ -26,7 +26,7 @@
           <div class="post-img position-relative overflow-hidden mb-3">
             <img
               *ngIf="equipment.images?.length; else noImage"
-              [src]="equipment.images[0]"
+              [src]="equipment.images[0]"ngf
               [alt]="equipment.nameEquipment"
               class="img-fluid"
               style="height: 230px; width: 100%; object-fit: cover; border: 3px solid green; border-radius: 10px;"

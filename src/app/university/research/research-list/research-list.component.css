@@ -1,0 +1,104 @@
+.post-content {
+  position: relative;
+  z-index: 1;
+}
+
+
+
+.article:hover .admin-actions {
+  opacity: 1; /* Icônes visibles au survol de l'article */
+}
+
+.post-title {
+  margin-bottom: 10px; /* Ajouter un peu d'espace entre le titre et les actions */
+}
+
+
+
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.3); /* Semi-transparent black */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1050; /* Ensure this is above other elements */
+  pointer-events: auto;
+}
+
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-body {
+  margin-top: 20px;
+}
+
+button.readmore {
+  margin-top: 10px;
+}
+
+/* Container for both icons */
+.action-icons {
+  position: fixed;  /* Keep icons fixed at the bottom right */
+  bottom: 20px;
+  right: 20px;
+  display: flex;  /* Use flexbox to arrange icons next to each other */
+  gap: 20px;      /* Space between the two icons */
+  z-index: 1000;   /* Ensure icons appear above other content */
+}
+
+/* Style for the delete icon */
+.delete-icon-btn {
+  font-size: 40px;
+  color: #ff5733;
+  cursor: pointer;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.delete-icon-btn:hover {
+  color: #e02e00;
+  transform: scale(1.2);
+}
+
+/* Style for the edit icon */
+.edit-icon-btn {
+  font-size: 40px;
+  color: #4caf50;  /* Green color for the edit icon */
+  cursor: pointer;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.edit-icon-btn:hover {
+  color: #388e3c;
+  transform: scale(1.2);
+}
+
+
+/* Custom Green Button Style */
+#filterButton.custom-filter-btn {
+  background-color: #28a745 !important;  /* Green background */
+  color: white !important;  /* White text color */
+  border: none;  /* Remove the border */
+  border-radius: 5px;  /* Rounded corners */
+  padding: 10px 20px;  /* Padding around the text */
+  font-size: 16px;  /* Adjust font size */
+  transition: background-color 0.3s ease, transform 0.2s ease;  /* Smooth hover effect */
+}
+
+#filterButton.custom-filter-btn:hover {
+  background-color: #218838 ;
+  transform: scale(1.05); 
+}
+
+#filterButton.custom-filter-btn:focus {
+  outline: none;  
+  box-shadow: none;  
+}

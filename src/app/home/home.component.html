@@ -43,8 +43,16 @@
           <li><a href="index.html" class="active">Home</a></li>
           <li><a href="about.html">About Us</a></li>
           <li><a href="services.html">Our Services</a></li>
-          <li><a href="testimonials.html">Testimonials</a></li>
-          <li><a href="blog.html">Blog</a></li>
+         
+      
+
+          <li class="dropdown">
+            <a routerLink="#" (click)="$event.preventDefault()"><span>University</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+            <ul>
+              <li><a routerLink="/home/university/institution" routerLinkActive="active">Institution</a></li>
+              <li><a routerLink="/home/university/research-project" routerLinkActive="active">Research Project</a></li>
+            </ul>
+          </li>
 
           <li class="dropdown">
             <a href="#"><span>Loans</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
@@ -57,7 +65,7 @@
                 <a href="#"><span>Equipments</span> <i class="bi bi-chevron-right toggle-dropdown"></i></a>
                 <ul>
                   <li><a routerLink="/home/equipment">Manage Equipment</a></li>
-                  <li><a routerLink="/home/add-equipment">Add Equipment</a></li>
+                
                 </ul>
               </li>
 
@@ -83,7 +91,7 @@
 
 
   <main class="main">
-    <router-outlet></router-outlet>
+   
     <!-- Hero Section -->
     <section id="hero" class="hero section dark-background">
 
@@ -142,6 +150,7 @@
       </div>
 
     </section><!-- /Hero Section -->
+    <router-outlet></router-outlet>
    
     <!-- Services Section -->
     <section id="services" class="services section">

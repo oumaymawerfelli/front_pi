@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EquipmentService, Equipment } from 'src/app/services-loans/equipment.service';
 import { Router } from '@angular/router';
-
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-equipment',
@@ -22,6 +22,7 @@ export class EquipmentComponent implements OnInit {
     type: '',
     availability: null
   };
+
   
   applyFilter(): void {
     this.equipmentService.filterEquipments(this.filter).subscribe((data: Equipment[]) => {
@@ -36,8 +37,11 @@ selectedEquipmentId: number | null = null;
   
 
   constructor(
-    private equipmentService: EquipmentService,
-    private router: Router
+   
+      private equipmentService: EquipmentService,
+      private router: Router,
+      private http: HttpClient // ✅ inject it here!
+   
   ) {}
 
   ngOnInit(): void {
@@ -51,6 +55,10 @@ selectedEquipmentId: number | null = null;
     this.getAllEquipment();
     
   }
+
+
+
+  
   toggleAddForm(equipmentId: number): void {
     if (this.selectedEquipmentId === equipmentId && this.showAddForm) {
       // Close the form if it's already open for the same equipment
@@ -110,34 +118,43 @@ selectedEquipmentId: number | null = null;
     this.selectedFiles = event.target.files;
   }
 
-  // Mise à jour d’un équipement avec fichiers + URLs
   updateEquipment(id: number, equipment: Equipment): void {
     const formData = new FormData();
-
-    formData.append('nameEquipment', equipment.nameEquipment);
-
-    formData.append('descriptionEquipment', equipment.descriptionEquipment);
+  
+    formData.append('nameEquipment', equipment.nameEquipment || '');
+    formData.append('descriptionEquipment', equipment.descriptionEquipment || '');
     formData.append('availabilityEquipment', String(equipment.availabilityEquipment));
-    
-    // Ajouter les URLs
+  
+    // Prepare image URLs if available
     const imageUrls = this.imageUrlsInput
-      .split(',')
-      .map((url) => url.trim())
-      .filter((url) => url !== '');
+      ? this.imageUrlsInput.split(',').map(url => url.trim()).filter(url => url !== '')
+      : (equipment.images || []);
+  
     imageUrls.forEach((url) => {
-      formData.append('imageUrls', url);
+      formData.append('imageUrls', url); // Append multiple imageUrls correctly
     });
-
-    // Ajouter les fichiers uploadés
+  
     for (let i = 0; i < this.selectedFiles.length; i++) {
       formData.append('images', this.selectedFiles[i], this.selectedFiles[i].name);
     }
-
-    this.equipmentService.updateEquipment(id, formData).subscribe(() => {
-      this.getAllEquipment();
-      this.selectedEquipment = null;
-      this.selectedFiles = [];
-      this.imageUrlsInput = '';
-    });
+  
+    this.http.put(`http://localhost:8089/your-backend-api/equipment/update/${id}`, formData)
+      .subscribe({
+        next: (response: any) => {
+          console.log('Update successful:', response);
+          this.getAllEquipment();
+          this.resetForm();
+        },
+        error: (error: any) => {
+          console.error('Update failed:', error);
+        }
+      });
   }
-}
+  
+  resetForm() {
+    this.selectedFiles = [];
+    this.imageUrlsInput = '';
+    this.selectedEquipmentId = null;
+    this.showAddForm = false;
+  }
+}  

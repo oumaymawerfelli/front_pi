@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {LandService  } from 'src/app/services-loans/lands-service.service';
 import { ApiService } from 'src/app/services-loans/api.service';
+
 
 @Component({
   selector: 'app-add-equipment',

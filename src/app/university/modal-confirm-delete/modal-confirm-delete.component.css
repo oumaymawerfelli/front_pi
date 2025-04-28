@@ -1,0 +1,61 @@
+/* Modal Container */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1050;
+    transition: opacity 0.3s ease;
+  }
+  
+  .modal-content {
+    background-color: white;
+    border-radius: 5px;
+    padding: 20px;
+    width: 400px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  /* Title Style */
+  .modal-header {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+  
+  /* Button Styles */
+  .modal-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .modal-footer button {
+    padding: 10px 20px;
+    border-radius: 4px;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  
+  .modal-footer .confirm-btn {
+    background-color: #d9534f;
+    color: white;
+  }
+  
+  .modal-footer .cancel-btn {
+    background-color: #5bc0de;
+    color: white;
+  }
+  
+  /* Hover Effects */
+  .modal-footer button:hover {
+    opacity: 0.8;
+  }
+  
