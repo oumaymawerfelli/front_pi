@@ -1,0 +1,56 @@
+<div class="analytics-container" *ngIf="!loading; else loadingTemplate">
+  <h2>Login Attempts Analytics</h2>
+
+  <div class="chart-wrapper">
+    <canvas 
+      baseChart
+      [data]="chartData"
+      [options]="chartOptions"
+      [type]="chartType">
+    </canvas>
+  </div>
+
+  <div class="summary-cards">
+    <div class="card">
+      <h3>Total Attempts</h3>
+      <p>{{ loginAttempts.length }}</p>
+    </div>
+    <div class="card">
+      <h3>Suspicious Logins</h3>
+      <p class="highlight">{{ suspiciousCount }}</p>
+    </div>
+  </div>
+
+  <div class="user-attempts">
+    <h3>Login Attempt Details</h3>
+    <table class="attempts-table">
+      <thead>
+        <tr>
+          <th>User</th>
+          <th>Date</th>
+          <th>Failed Attempts</th>
+          <th>Suspicious</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let attempt of loginAttempts">
+          <td>{{ getUsername(attempt.userId) }}</td>
+          <td>{{ formatTimestamp(attempt.timestamp) }}</td>
+          <td>{{ attempt.failedAttempts }}</td>
+          <td>
+            <span [class.badge]="true" [class.badge-danger]="attempt.suspicious">
+              {{ attempt.suspicious ? 'Yes' : 'No' }}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+</div>
+
+<ng-template #loadingTemplate>
+  <div class="loading-spinner">
+    Loading analytics...
+  </div>
+</ng-template>

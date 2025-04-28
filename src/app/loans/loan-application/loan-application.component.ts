@@ -4,7 +4,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ApiService } from 'src/app/services-loans/api.service';
 import SignaturePad from 'signature_pad';
 import { LoanRequestResponseDto } from 'src/app/models/loan-request-response.dto';
-
+import { HttpClient } from '@angular/common/http'; // ✅ Add this line
+ 
 @Component({
   selector: 'app-loan-application',
   templateUrl: './loan-application.component.html',

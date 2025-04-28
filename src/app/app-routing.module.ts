@@ -15,9 +15,9 @@ import { PendingUsersComponent } from './pending-users/pending-users.component';
 import { ForgotPasswordComponent } from './users/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './users/reset-password/reset-password.component';
 import { OAuth2RedirectComponent } from './users/oauth2-redirect/oauth2-redirect.component';
-
+import { AdminAnalyticsComponent } from './users/admin-analytics/admin-analytics.component';
 // Loan components
-import { LoanApprovalComponent } from './loans/loan-approval/loan-approval-component.component';
+
 import { LoanApplicationComponent } from './loans/loan-application/loan-application.component';
 import { LoanInfoComponent } from './loans/loan-info/loan-info.component';
 import { LoanManagementComponent } from './loans/loan-management/loan-management.component';
@@ -57,7 +57,7 @@ const routes: Routes = [
       { path: 'loan-application', component: LoanApplicationComponent, canActivate:[AuthGuard], },
       { path: 'loan-info', component: LoanInfoComponent,  canActivate:[AuthGuard], },
       { path: 'loan-management', component: LoanManagementComponent, canActivate:[AuthGuard], },
-      { path: 'loan-approval', component: LoanApprovalComponent },
+
     
   
       // ✅ Equipment routes
@@ -83,7 +83,8 @@ const routes: Routes = [
     children: [
       { path: 'profile', component: ProfileComponent },
       { path: 'users', component: ListUsersComponent },
-      { path: 'pending-users', component: PendingUsersComponent }
+      { path: 'pending-users', component: PendingUsersComponent },
+      { path: 'analytics', component: AdminAnalyticsComponent, canActivate: [AdminGuard] },
     ]
   },
   

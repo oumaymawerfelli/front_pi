@@ -1,4 +1,5 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, AfterViewInit } from '@angular/core';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-landing',
@@ -6,8 +7,6 @@ import { Component, OnInit, HostListener } from '@angular/core';
   styleUrls: ['./landing.component.css']
 })
 export class LandingComponent implements OnInit {
-<<<<<<< Updated upstream
-=======
   childRouteActive = false;
 
   constructor(private router: Router, private route: ActivatedRoute) {
@@ -15,36 +14,22 @@ export class LandingComponent implements OnInit {
       if (event instanceof NavigationEnd) {
         const currentUrl = this.router.url;
         this.childRouteActive = currentUrl !== '/landing';
-    
+
+        // Scroll to auth form after route change
         if (this.childRouteActive) {
           setTimeout(() => {
-            let targetId = '';
-    
-            if (currentUrl.includes('loan-management')) {
-              targetId = 'loanManagementSection';
-            } else if (currentUrl.includes('equipment-management')) {
-              targetId = 'equipmentManagementSection';
-            } else if (currentUrl.includes('loan-approval')) {
-              targetId = 'loanApprovalSection';
-            } else {
-              targetId = 'authForms'; // fallback
-            }
-    
-            const el = document.getElementById(targetId);
+            const el = document.getElementById('authForms');
             if (el) {
               el.scrollIntoView({ behavior: 'smooth' });
             }
-          }, 100);
+          }, 100); // short delay to make sure element is rendered
         }
       }
     });
-    
-   
   }
->>>>>>> Stashed changes
 
   ngOnInit(): void {
-    this.onScroll(); // Run once in case the page is already scrolled
+    this.onScroll();
   }
 
   @HostListener('window:scroll', [])
@@ -57,5 +42,9 @@ export class LandingComponent implements OnInit {
         navbar.classList.remove('scrolled');
       }
     }
+  }
+
+  closeModal(): void {
+    this.router.navigate(['/landing']);
   }
 }

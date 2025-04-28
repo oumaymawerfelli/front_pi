@@ -24,7 +24,7 @@ export class EquipmentComponent implements OnInit {
   };
   
   applyFilter(): void {
-    this.EquipmentService.filterEquipments(this.filter).subscribe((data: Equipment[]) => {
+    this.equipmentService.filterEquipments(this.filter).subscribe((data: Equipment[]) => {
       this.equipmentList = data;
     });
   }
