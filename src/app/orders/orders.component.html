@@ -1,0 +1,88 @@
+<div class="container">
+  <h1>Liste des commandes</h1>
+
+  <!-- Chargement -->
+  <div *ngIf="isLoading" class="loading">Chargement...</div>
+
+  <!-- Erreur -->
+  <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+
+  <!-- Liste des commandes -->
+  <div *ngIf="!isLoading && orders.length > 0">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Client</th>
+          <th>Status</th>
+          <th>Date</th>
+          <th>Total</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of orders">
+          <td>{{ order.id }}</td>
+          <td>{{ order.customer.name }}</td>
+          <td>{{ order.status }}</td>
+          <td>{{ order.dateCommande | date: 'short' }}</td>
+          <td>{{ getTotalPrice(order) | currency: 'TND' }}</td>
+          <td>
+            <!--
+            <button (click)="editOrder(order)" class="btn btn-warning">Éditer</button>-->
+            <button (click)="deleteOrder(order.id ?? 0)" class="btn btn-danger">Supprimer</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Formulaire d'édition 
+  <div *ngIf="editOrderId !== null && editedOrder" class="edit-order-form">
+    <h2>Édition de la commande {{ editedOrder.id }}</h2>
+    <form (ngSubmit)="saveEdit()">
+      
+      <div class="form-group">
+        <label for="status">Statut</label>
+        <input type="text" id="status" [(ngModel)]="editedOrder.status" name="status" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label for="paymentMethod">Méthode de paiement</label>
+        <input type="text" id="paymentMethod" [(ngModel)]="editedOrder.paymentMethod" name="paymentMethod" class="form-control">
+      </div>
+
+   
+    
+    
+     <h3>Lignes du panier</h3>
+      <div *ngFor="let ligne of editedOrder.lignePanier; let i = index" class="ligne-panier mt-2 p-2 border rounded">
+        <p><strong>{{ ligne.produit.productName }}</strong> - {{ ligne.produit.productPrice | currency:'TND' }}</p>
+
+        <div class="form-group">
+          <label for="quantity{{i}}">Quantité</label>
+          <input type="number" 
+                 id="quantity{{i}}" 
+                 [(ngModel)]="ligne.quantite" 
+                 name="quantity{{i}}" 
+                 min="1" 
+                 class="form-control" 
+                 (change)="updateProductQuantity(ligne, ligne.quantite)">
+        </div>
+
+        <button type="button" 
+                (click)="deleteProductFromOrder(ligne.produit.productId)" 
+                class="btn btn-danger mt-2">
+          Supprimer
+        </button>
+      </div>
+
+      <button type="submit" class="btn btn-success mt-3">Sauvegarder les modifications</button>
+    </form>
+  </div>
+-->
+  <!-- Pas de commandes -->
+  <div *ngIf="!isLoading && orders.length === 0">
+    <p>Aucune commande disponible.</p>
+  </div>
+</div>

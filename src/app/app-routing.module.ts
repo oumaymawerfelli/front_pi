@@ -12,7 +12,9 @@ import { ProfileComponent } from './users/profile/profile.component';
 import { OAuth2RedirectComponent } from './users/oauth2-redirect/oauth2-redirect.component';
 import { ForgotPasswordComponent } from './users/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './users/reset-password/reset-password.component';
-
+import { MarketplaceComponent } from './marketplace/marketplace.component';
+import { PanierComponent } from './panier/panier.component';
+import { OrdersComponent } from './orders/orders.component';
 const routes: Routes = [
        // Default route
   { path: 'landing', component: LandingComponent ,
@@ -21,6 +23,8 @@ const routes: Routes = [
     {path: 'login', component: LoginComponent},
     {path: 'forgot-password', component: ForgotPasswordComponent},
     {path: 'reset-password/:token', component: ResetPasswordComponent},
+  
+
   ]
 } ,// /landing route
 
@@ -38,6 +42,15 @@ const routes: Routes = [
 {path: 'home', component: HomeComponent,
   children:[
     { path: 'profile', component: ProfileComponent },
+    
+    
+{
+  path: 'panier', component: PanierComponent},
+  { path: 'orders', component: OrdersComponent },
+
+
+  { path: 'market', component: MarketplaceComponent 
+  }
   ]
 },
 

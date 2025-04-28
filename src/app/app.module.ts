@@ -29,7 +29,8 @@ import { LoanApplicationComponent } from './loans/loan-application/loan-applicat
 import { LoanInfoComponent } from './loans/loan-info/loan-info.component';
 import { LoanManagementComponent } from './loans/loan-management/loan-management.component';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
-import { RecaptchaModule } from 'ng-recaptcha'; // Import RecaptchaModule
+import { RecaptchaModule } from 'ng-recaptcha';
+import { OrdersComponent } from './orders/orders.component'; // Import RecaptchaModule
 
 
 
@@ -48,7 +49,8 @@ import { RecaptchaModule } from 'ng-recaptcha'; // Import RecaptchaModule
     LoanManagementComponent,
     LoanApplicationComponent,
     LoanInfoComponent,
-    ContactComponent
+    ContactComponent,
+    OrdersComponent
   ],
   imports: [
     BrowserModule,

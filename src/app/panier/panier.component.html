@@ -1,59 +1,84 @@
+<div class="container mt-4">
+  <h2 class="text-center mb-4">🛒 Mon Panier</h2>
 
+  <ng-template #panierVide>
+    <p>Votre panier est vide.</p>
+  </ng-template>
 
+  <div *ngIf="lignesPanier.length > 0; else panierVide">
+    <table class="table table-hover shadow-sm rounded">
+      <thead class="table-primary">
+        <tr class="text-center">
+          <th>Produit</th>
+          <th>Prix Unitaire</th>
+          <th>Quantité</th>
+          <th>Total</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let ligne of lignesPanier" class="text-center align-middle">
+          <td>{{ ligne.produit.productName }}</td>
+          <td>{{ ligne.produit.productPrice | currency:'TND' }}</td>
+          <td>
+            <div class="d-flex justify-content-center align-items-center gap-2">
+              <button 
+                class="btn btn-sm btn-outline-secondary" 
+                (click)="changerQuantite(ligne, -1)" 
+                [disabled]="ligne.quantite <= 1">−
+              </button>
+              <span>{{ ligne.quantite }}</span>
+              <button 
+                class="btn btn-sm btn-outline-secondary" 
+                (click)="changerQuantite(ligne, +1)">+
+              </button>
+            </div>
+          </td>
+          <td>{{ (ligne.produit.productPrice * ligne.quantite) | currency:'TND' }}</td>
+          <td>
+            <button 
+              class="btn btn-sm btn-danger" 
+              (click)="supprimerLigne(ligne.id)" 
+              *ngIf="ligne.id !== undefined && ligne.id !== null">🗑 Supprimer
+            </button>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot class="table-light">
+        <tr>
+          <td colspan="3" class="text-end"><strong>Total :</strong></td>
+          <td colspan="2" class="text-start"><strong>{{ getTotal() | currency:'TND' }}</strong></td>
+        </tr>
+      </tfoot>
+    </table>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panier d'Achats</title>
-</head>
-<body>
+    <!-- Partie Validation du Panier -->
+    <div *ngIf="!commandeValidee" class="mt-4">
+      <h4>Choisissez la méthode de paiement :</h4>
 
-    <!-- Section Panier -->
-    <div class="cart-container">
-        <h2>Votre Panier</h2>
-        
-        <!-- Liste des produits dans le panier -->
-        <table class="cart-table">
-            <thead>
-                <tr>
-                    <th>Produit</th>
-                    <th>Prix</th>
-                    <th>Quantité</th>
-                    <th>Total</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Exemple d'un produit dans le panier -->
-                <tr>
-                    <td>Produit A</td>
-                    <td>25 €</td>
-                    <td>
-                        <input type="number" value="1" min="1" class="quantity-input">
-                    </td>
-                    <td>25 €</td>
-                    <td><button class="remove-btn">Supprimer</button></td>
-                </tr>
-                <tr>
-                    <td>Produit B</td>
-                    <td>15 €</td>
-                    <td>
-                        <input type="number" value="2" min="1" class="quantity-input">
-                    </td>
-                    <td>30 €</td>
-                    <td><button class="remove-btn">Supprimer</button></td>
-                </tr>
-            </tbody>
-        </table>
+      <div class="mb-3">
+        <select id="paymentMethod" class="form-select" [(ngModel)]="paymentMethod">
+          <option value="">-- Choisir --</option>
+          <option value="CREDIT_CARD">Carte Bancaire</option>
+          <option value="CASH_ON_DELIVERY">Paiement à la livraison</option>
+          <option value="PAYPAL">PayPal</option>
+        </select>
+      </div>
 
-        <!-- Total -->
-        <div class="cart-summary">
-            <p><strong>Total: </strong><span id="total-price">55 €</span></p>
-            <button class="checkout-btn">Passer à la Caisse</button>
-        </div>
+      <button class="btn btn-success" (click)="validerPanier(panierId)">Valider la commande</button>
     </div>
 
-</body>
-</html>
+    <!-- Affichage après validation -->
+    <div *ngIf="commandeValidee" class="mt-4">
+      <h2>Commande Validée 🎉</h2>
+      <p><strong>Numéro de commande :</strong> {{ commandeValidee.id }}</p>
+      <p><strong>Date :</strong> {{ commandeValidee.dateCommande | date:'medium' }}</p>
+      <p><strong>Status :</strong> {{ commandeValidee.status }}</p>
+      <p><strong>Méthode de paiement :</strong> {{ commandeValidee.paymentMethod }}</p>
+    </div>
+  </div>
+  <button (click)="allerVersOrders()" class="btn btn-primary">
+    Voir Mes Commandes
+  </button>
+  
+</div>
