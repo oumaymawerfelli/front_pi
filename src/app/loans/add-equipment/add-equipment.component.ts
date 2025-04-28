@@ -9,8 +9,8 @@ import { ApiService } from 'src/app/services-loans/api.service';
 })
 export class AddEquipmentComponent {
   equipmentForm: FormGroup;
-pageTitle: any;
-messageFromBackend: any;
+  pageTitle: any;
+  messageFromBackend: any;
 
   constructor(private fb: FormBuilder, private apiService: ApiService) {
     this.equipmentForm = this.fb.group({
@@ -35,12 +35,22 @@ messageFromBackend: any;
         next: () => {
           alert('Equipment added successfully!');
           this.equipmentForm.reset({ availabilityEquipment: true });
+          this.closeModal();
         },
         error: (err) => {
           console.error(err);
-          alert(' Failed to add equipment');
+          alert('Failed to add equipment.');
         }
       });
+    }
+  }
+
+  closeModal() {
+    const modalElement = document.getElementById('addEquipmentModal');
+    if (modalElement) {
+      // Ensure Bootstrap is available globally
+      const modalInstance = (window as any).bootstrap.Modal.getInstance(modalElement);
+      modalInstance?.hide();
     }
   }
 }

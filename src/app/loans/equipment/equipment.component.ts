@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { EquipmentService, Equipment } from 'src/app/services-loans/equipment.service';
 import { Router } from '@angular/router';
 
+
 @Component({
   selector: 'app-equipment',
   templateUrl: './equipment.component.html',
@@ -14,7 +15,25 @@ export class EquipmentComponent implements OnInit {
   imageUrlsInput: string = '';
   searchId!: number;
   searchError: boolean = false;
-pageTitle: any;
+  pageTitle: string = "Equipment Management";
+
+  filter = {
+    name: '',
+    type: '',
+    availability: null
+  };
+  
+  applyFilter(): void {
+    this.EquipmentService.filterEquipments(this.filter).subscribe((data: Equipment[]) => {
+      this.equipmentList = data;
+    });
+  }
+  showAddForm: boolean = false;
+selectedEquipmentId: number | null = null;
+
+
+
+  
 
   constructor(
     private equipmentService: EquipmentService,
@@ -22,8 +41,28 @@ pageTitle: any;
   ) {}
 
   ngOnInit(): void {
+    setTimeout(() => {
+      const el = document.getElementById('equipmentManagementSection');
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100); // Small delay to wait until view is rendered
+  
     this.getAllEquipment();
+    
   }
+  toggleAddForm(equipmentId: number): void {
+    if (this.selectedEquipmentId === equipmentId && this.showAddForm) {
+      // Close the form if it's already open for the same equipment
+      this.showAddForm = false;
+      this.selectedEquipmentId = null;
+    } else {
+      // Open the form for this equipment
+      this.showAddForm = true;
+      this.selectedEquipmentId = equipmentId;
+    }
+  }
+
 
   // Récupérer tous les équipements
   getAllEquipment(): void {
@@ -31,6 +70,7 @@ pageTitle: any;
       this.equipmentList = data;
     });
   }
+  
 
   // Rechercher un équipement par ID
   getEquipment(id: number): void {

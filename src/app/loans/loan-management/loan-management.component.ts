@@ -11,8 +11,15 @@ export class LoanManagementComponent implements OnInit, OnDestroy {
   onWindowScroll() {
     this.toggleScrollTopButton();
   }
-
   ngOnInit(): void {
+    setTimeout(() => {
+      const el = document.getElementById('loanManagementSection');
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100); // Small delay to wait until view is rendered
+  
+
     this.toggleScrollTopButton();
     window.addEventListener('scroll', this.toggleScrollTopButton.bind(this));
   }

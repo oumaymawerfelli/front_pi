@@ -3,8 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ApiService } from 'src/app/services-loans/api.service';
 import SignaturePad from 'signature_pad';
-import { HttpClient } from '@angular/common/http';
-
+import { LoanRequestResponseDto } from 'src/app/models/loan-request-response.dto';
 
 @Component({
   selector: 'app-loan-application',
@@ -15,8 +14,8 @@ export class LoanApplicationComponent implements OnInit, AfterViewInit {
   applicationForm: FormGroup;
   selectedItem!: any;
   borrower!: any;
-  owners: any[] = []; 
-  
+  owners: any[] = [];
+
   isEquipmentLoan: boolean = false;
   maxLoanDuration: number = 12;
   pageTitle: string = 'Loan application';
@@ -24,13 +23,11 @@ export class LoanApplicationComponent implements OnInit, AfterViewInit {
 
   @ViewChild('canvas', { static: false }) canvasEl!: ElementRef<HTMLCanvasElement>;
   signaturePad!: SignaturePad;
-  canvasElement: any;
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
-    private el: ElementRef,
     private renderer: Renderer2,
     private apiService: ApiService,
     private http: HttpClient // ✅ Add this line
@@ -46,23 +43,19 @@ export class LoanApplicationComponent implements OnInit, AfterViewInit {
       termsAccepted: [false, Validators.requiredTrue],
       signature: ['', Validators.required],
       equipmentId: [null],
-      landId: [null],
-      
-      statusReq: ['PENDING']
+      landId: [null]
+
     });
   }
   
   ngOnInit(): void {
-   
-
-    this.apiService.getOwners().subscribe(
-      (data: any[]) => {
+    this.apiService.getOwners().subscribe({
+      next: (data: any[]) => {
         this.owners = data;
-        console.log('Owners fetched:', this.owners); // Optional: to debug
+        console.log('Owners fetched:', this.owners);
       },
-      (error) => console.error('Error loading owners:', error)
-    );
-    
+      error: (error) => console.error('Error loading owners:', error)
+    });
 
     const navigation = this.router.getCurrentNavigation();
     if (navigation?.extras?.state) {
@@ -74,13 +67,10 @@ export class LoanApplicationComponent implements OnInit, AfterViewInit {
       this.applicationForm.patchValue({
         equipmentId: this.isEquipmentLoan ? this.selectedItem.id : null,
         landId: !this.isEquipmentLoan ? this.selectedItem.id : null,
-        
-
-        ownerId: this.selectedItem?.owner?.id || null, // assuming selectedItem contains owner
-        
-        
+        ownerId: this.selectedItem?.owner?.id || null,
         borrowerName: this.borrower?.name,
-        borrowerContact: this.borrower?.email
+        borrowerContact: this.borrower?.email,
+        startDate: this.formatDate(new Date())
       });
     }
   }
@@ -91,15 +81,8 @@ export class LoanApplicationComponent implements OnInit, AfterViewInit {
       penColor: 'black'
     });
 
-    this.canvasEl.nativeElement.addEventListener('mouseup', () => {
-      const dataURL = this.signaturePad.toDataURL();
-      this.applicationForm.get('signature')?.setValue(dataURL);
-    });
-
-    this.canvasEl.nativeElement.addEventListener('touchend', () => {
-      const dataURL = this.signaturePad.toDataURL();
-      this.applicationForm.get('signature')?.setValue(dataURL);
-    });
+    this.canvasEl.nativeElement.addEventListener('mouseup', this.updateSignature.bind(this));
+    this.canvasEl.nativeElement.addEventListener('touchend', this.updateSignature.bind(this));
   }
 
   private isLoanItem(item: any): boolean {
@@ -107,48 +90,79 @@ export class LoanApplicationComponent implements OnInit, AfterViewInit {
   }
 
   private setLoanDurationValidation(): void {
-    this.maxLoanDuration = this.isEquipmentLoan ?
-      parseInt((this.selectedItem.duration as string).split('-')[1], 10) : 60;
+    this.maxLoanDuration = this.isEquipmentLoan
+      ? parseInt((this.selectedItem.duration as string).split('-')[1], 10)
+      : 60;
 
-    this.applicationForm.get('loanDuration')?.setValidators([
-      Validators.required,
-      Validators.min(1),
-      Validators.max(this.maxLoanDuration)
-    ]);
-    this.applicationForm.get('loanDuration')?.updateValueAndValidity();
+    const loanDurationControl = this.applicationForm.get('loanDuration');
+    if (loanDurationControl) {
+      loanDurationControl.setValidators([
+        Validators.required,
+        Validators.min(1),
+        Validators.max(this.maxLoanDuration)
+      ]);
+      loanDurationControl.updateValueAndValidity();
+    }
   }
 
+  private updateSignature(): void {
+    const dataURL = this.signaturePad.toDataURL();
+    this.applicationForm.get('signature')?.setValue(dataURL);
+  }
+  
+  private formatDate(date: Date): string {
+    return date.toISOString().split('T')[0]; // returns 'YYYY-MM-DD'
+  }
+  
+  private isSignatureReallyEmpty(): boolean {
+    const canvas = this.canvasEl.nativeElement;
+    const context = canvas.getContext('2d');
+  
+    if (!context) return true;
+  
+    const pixelBuffer = new Uint32Array(
+      context.getImageData(0, 0, canvas.width, canvas.height).data.buffer
+    );
+  
+    return !pixelBuffer.some(color => color !== 0xffffffff);
+  }
+  
+ 
   submitApplication(): void {
-    // Ensure signature is saved
-    if (!this.signaturePad.isEmpty()) {
-      const dataURL = this.signaturePad.toDataURL();
-      this.applicationForm.get('signature')?.setValue(dataURL);
-      this.applicationForm.get('signature')?.markAsTouched();
-    } else {
-      this.applicationForm.get('signature')?.setValue('');
+    if (this.isSignatureReallyEmpty()) {
+      alert('Please provide your signature before submitting.');
+      return;
     }
   
-    // Validate and submit
+    this.updateSignature(); // capture the signature again just before sending!
+  
+    console.log('Form validity:', this.applicationForm.valid);
+    console.log('Form errors:', this.applicationForm.errors);
+    console.log('Form value:', this.applicationForm.value);
+  
     if (this.applicationForm.valid) {
-      const loanRequest = this.applicationForm.value;
-  
-      console.log('Submitting loan request:', loanRequest);
-  
-      this.apiService.createLoanRequest(loanRequest).subscribe({
-        next: (response: any) => {
-          console.log('Success:', response);
-          alert('Loan request submitted successfully!');
-          this.router.navigate(['/confirmation'], { state: { applicationData: response } });
+      console.log('Submitting form...');
+      this.apiService.createLoanRequest(this.applicationForm.value).subscribe({
+        next: (response: LoanRequestResponseDto) => {
+          console.log('API Response:', response);
+          if (response.requestId) {
+            this.router.navigate(['/confirmation'], {
+              state: {
+                applicationData: response,
+                requestId: response.requestId
+              }
+            });
+          }
         },
-        error: (err: { message: any; }) => {
-          console.error('Error submitting loan request:', err);
-          alert(`Submission failed. Error: ${err.message || 'Unknown error'}`);
+        error: (err) => {
+          console.error('Error:', err);
+          this.messageFromBackend = err.message || 'Submission failed';
+          alert('Submission failed: ' + err.message);
         }
       });
-      
-  
     } else {
-      alert('Please complete all required fields.');
+      this.applicationForm.markAllAsTouched();
+      alert('Please complete all required fields correctly.');
     }
     console.log(this.applicationForm.value);
 console.log(this.applicationForm.valid);
@@ -156,9 +170,7 @@ console.log(this.applicationForm.errors);
 
   }
   
-  
-  
-  
+    
   cancelApplication(): void {
     this.router.navigate(['/loan-info']);
   }
@@ -169,12 +181,12 @@ console.log(this.applicationForm.errors);
 
   clearSignature(): void {
     this.signaturePad.clear();
-    this.applicationForm.get('signature')?.setValue('');
+    this.applicationForm.get('signature')?.reset();
   }
-
+  
   undoSignature(): void {
     const data = this.signaturePad.toData();
-    if (data) {
+    if (data.length > 0) {
       data.pop();
       this.signaturePad.fromData(data);
       const updated = this.signaturePad.toDataURL();
@@ -189,11 +201,10 @@ console.log(this.applicationForm.errors);
     }
 
     const signatureData = this.signaturePad.toDataURL();
-    this.applicationForm.patchValue({ signature: signatureData });
-
     const link = document.createElement('a');
     link.href = signatureData;
     link.download = 'signature.png';
     link.click();
   }
+
 }

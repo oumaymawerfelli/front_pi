@@ -1,86 +1,87 @@
-<main class="main">
-  <!-- Page Title Section -->
-  <div
-    class="page-title dark-background"
-    data-aos="fade"
-    style="background-image: url(assets/img/page-title-bg.webp);"
-  >
-    <div class="container position-relative">
-      <h1>{{ pageTitle }}</h1>
-      <nav class="breadcrumbs">
-        <ol>
-          <li><a routerLink="/loan-info">Loan Info /</a></li>
-          <li><a routerLink="/loan-management">Loan Management</a></li>
-        </ol>
-      </nav>
+<section id="equipmentManagementSection" class="equipment-management section">
+  <div class="container">
+    <div class="row gy-4">
+
+      <!-- Search Bar -->
+      <div class="col-12">
+        <div class="equipment-search d-flex mb-4">
+          <input
+            type="number"
+            [(ngModel)]="searchId"
+            placeholder="Enter Equipment ID"
+            class="form-control me-2"
+          />
+          <button class="btn btn-primary me-2" (click)="getEquipment(searchId)">Search</button>
+          <button class="btn btn-secondary" (click)="resetSearch()">Reset</button>
+        </div>
+
+        <div *ngIf="searchError" class="error alert alert-danger">
+          ⚠️ Equipment not found.
+        </div>
+      </div>
+
+      <!-- Equipment Cards -->
+      <div class="col-lg-4" *ngFor="let equipment of equipmentList">
+        <article class="position-relative h-100 p-3 border rounded shadow-sm">
+          <div class="post-img position-relative overflow-hidden mb-3">
+            <img
+              *ngIf="equipment.images?.length; else noImage"
+              [src]="equipment.images[0]"
+              [alt]="equipment.nameEquipment"
+              class="img-fluid"
+              style="height: 230px; width: 100%; object-fit: cover; border: 3px solid green; border-radius: 10px;"
+            />
+            <ng-template #noImage>
+              <img
+                src="https://via.placeholder.com/600x400?text=No+Image"
+                alt="No Image Available"
+                class="img-fluid"
+                style="height: 230px; width: 100%; object-fit: cover;"
+              />
+            </ng-template>
+          </div>
+
+          <div class="meta d-flex align-items-center mb-2">
+            <div class="d-flex align-items-center">
+              <i class="bi bi-tools"></i> 
+              <span class="ps-2">{{ equipment.typeEquipment || 'Unknown Type' }}</span>
+            </div>
+            <span class="px-3 text-black-50">/</span>
+            <div class="d-flex align-items-center">
+              <i class="bi bi-calendar"></i> 
+              <span class="ps-2">{{ equipment.idEquipment }}</span>
+            </div>
+          </div>
+
+          <h4 class="fw-bold">{{ equipment.nameEquipment }}</h4>
+          <p class="text-success" style="font-size: 0.95rem;">
+            {{ equipment.descriptionEquipment ? (equipment.descriptionEquipment | slice:0:120) + '...' : 'No description provided.' }}
+          </p>
+
+          <!-- ✅ Add Equipment Button INSIDE the card -->
+          <div class="d-flex justify-content-center mt-3">
+            <button class="btn btn-success btn-sm" (click)="toggleAddForm(equipment.idEquipment)">
+              <i class="bi bi-plus"></i> {{ selectedEquipmentId === equipment.idEquipment && showAddForm ? 'Close Form' : 'Add Equipment' }}
+            </button>
+          </div>
+
+          <!-- ✅ Add Equipment Form INSIDE the card -->
+          <div *ngIf="selectedEquipmentId === equipment.idEquipment && showAddForm" class="mt-3">
+            <app-add-equipment></app-add-equipment>
+          </div>
+
+          <div class="d-flex justify-content-between align-items-center mt-3">
+            <a (click)="getEquipment(equipment.idEquipment)" class="btn btn-outline-primary btn-sm">
+              View Details <i class="bi bi-arrow-right"></i>
+            </a>
+            <button class="btn btn-outline-danger btn-sm" (click)="deleteEquipment(equipment.idEquipment)">
+              <i class="bi bi-trash"></i> Delete
+            </button>
+          </div>
+
+        </article>
+      </div>
+
     </div>
   </div>
-
-  <!-- Search Bar -->
-  <div class="equipment-search">
-    <input
-      type="number"
-      [(ngModel)]="searchId"
-      placeholder="Enter Equipment ID"
-    />
-    <button (click)="getEquipment(searchId)">Search</button>
-    <button (click)="resetSearch()">Reset</button>
-
-    <div *ngIf="searchError" class="error">
-      ⚠️ Equipment not found.
-    </div>
-  </div>
-
-  <!-- Equipment List -->
-  <h2>All Equipment</h2>
-  <ul>
-    <li *ngFor="let equipment of equipmentList">
-      <h4>{{ equipment.nameEquipment }}</h4>
-      <img
-        *ngIf="equipment.images && equipment.images.length"
-        [src]="equipment.images[0]"
-        alt="{{ equipment.nameEquipment }}"
-        width="100"
-        height="100"
-      />
-      <button (click)="getEquipment(equipment.idEquipment)">View</button>
-      <button (click)="deleteEquipment(equipment.idEquipment)">Delete</button>
-    </li>
-  </ul>
-
-  <!-- Equipment Update Form -->
-  <div *ngIf="selectedEquipment">
-    <h3>Equipment Details</h3>
-    <p><strong>Name:</strong> {{ selectedEquipment.nameEquipment }}</p>
-    <p><strong>Type:</strong> {{ selectedEquipment.typeEquipment }}</p>
-    <p><strong>Description:</strong> {{ selectedEquipment.descriptionEquipment }}</p>
-
-    <form
-      (ngSubmit)="updateEquipment(selectedEquipment.idEquipment, selectedEquipment)"
-    >
-      <label for="name">Name:</label>
-      <input
-        [(ngModel)]="selectedEquipment.nameEquipment"
-        name="name"
-     
-      />
-
-      <label for="type">Type:</label>
-      <input [(ngModel)]="selectedEquipment.typeEquipment" name="type" />
-
-      <label for="description">Description:</label>
-      <input
-        [(ngModel)]="selectedEquipment.descriptionEquipment"
-        name="description"
-      />
-
-      <label for="imageUrls">Image URLs (comma-separated):</label>
-      <input type="text" [(ngModel)]="imageUrlsInput" name="imageUrls" />
-
-      <label for="images">Upload Images:</label>
-      <input type="file" (change)="onFileSelected($event)" multiple />
-
-      <button type="submit">Update</button>
-    </form>
-  </div>
-</main>
+</section>

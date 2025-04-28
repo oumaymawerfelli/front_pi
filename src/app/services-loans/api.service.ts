@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-
+import { LoanRequestResponseDto } from '../models/loan-request-response.dto';
 @Injectable({ providedIn: 'root' })
 export class ApiService {
   
@@ -17,15 +17,6 @@ export class ApiService {
     // Optionally you can decode and check token expiry here
     return !!token;
   }
-<<<<<<< Updated upstream
-  createLoanRequest(loanRequest: any, userId: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/loan-request?userId=${userId}`, loanRequest);
-  }
-  
-  
-  addEquipment(equipment: any) {
-    return this.http.post('http://localhost:8089/pi/api/equipments', equipment);
-=======
 
   clearAuthToken(): void {
     localStorage.removeItem('token'); // ✅ Also remove from storage
@@ -48,21 +39,18 @@ export class ApiService {
     if (error.status === 401) {
       this.clearAuthToken();
       return throwError(() => new Error('Session expired. Please login again.'));
-    } else if (error.status >= 400 && error.status < 600) {
-      // Other client or server errors, no logout
+    } else {
       const errorMessage = error.error?.message || 'Something went wrong. Please try again.';
       return throwError(() => new Error(errorMessage));
-    } else {
-      // Network errors or unexpected cases
-      return throwError(() => new Error('An unexpected error occurred. Please try again later.'));
     }
-  }    
+  }
+  
 
 
   // ----------- API Calls --------------
 
   getOwners(): Observable<any[]> {
-    return this.http.get<any[]>('http://localhost:8089/pi/api/loan-request/owners', {
+    return this.http.get<any[]>('http://localhost:8089/pi/api/loan-requests/owners', {
       headers: this.getHeaders()
     }).pipe(
       catchError(this.handleError.bind(this))
@@ -77,10 +65,15 @@ export class ApiService {
     );
   }
 
-  createLoanRequest(loanRequest: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/loan-request`, loanRequest, { // ✅ Clean endpoint
-      headers: this.getHeaders()
-    }).pipe(
+  createLoanRequest(loanRequest: any): Observable<LoanRequestResponseDto> {
+    return this.http.post<LoanRequestResponseDto>(
+      `${this.baseUrl}/loan-requests`, 
+      loanRequest, 
+      {
+        headers: this.getHeaders(),
+        responseType: 'json' // Explicitly expect JSON
+      }
+    ).pipe(
       catchError(this.handleError.bind(this))
     );
   }
@@ -90,7 +83,6 @@ export class ApiService {
     }).pipe(
       catchError(this.handleError.bind(this))
     );
->>>>>>> Stashed changes
   }
   
 }
