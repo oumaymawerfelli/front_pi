@@ -36,4 +36,22 @@ export class ResearchProjectService {
   deleteProject(id: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/remove-project/${id}`);
   }
+
+
+  getFilteredProjects(filters: any): Observable<ResearchProject[]> {
+    let params: any = {};
+  
+    if (filters.status) {
+      params.status = filters.status;
+    }
+    if (filters.researchFocus) {
+      params.researchFocus = filters.researchFocus;
+    }
+    if (filters.searchText) {
+      params.searchText = filters.searchText;
+    }
+  
+    return this.http.get<ResearchProject[]>(`${this.baseUrl}/retrieve-all-projects`, { params });
+  }
+  
 }

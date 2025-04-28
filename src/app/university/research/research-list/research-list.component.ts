@@ -76,7 +76,28 @@ export class ResearchListComponent implements OnInit {
   
   
 
-
+  researchFocusList = [
+    { name: 'Soil Fertility Management' },
+    { name: 'Crop Rotation and Diversification' },
+    { name: 'Water Conservation Techniques' },
+    { name: 'Organic Farming Practices' },
+    { name: 'Agroforestry' },
+    { name: 'Precision Agriculture' },
+    { name: 'Integrated Pest Management' },
+    { name: 'Soil Erosion Control' },
+    { name: 'Hydroponics or Aquaponics' },
+    { name: 'Sustainable Livestock Grazing' },
+    { name: 'Agrochemical Use and Environmental Impact' },
+    { name: 'Biochar for Soil Improvement' },
+    { name: 'Plant Disease Management' },
+    { name: 'Composting and Waste Recycling' },
+    { name: 'Renewable Energy Integration' },
+    { name: 'Agri-ecosystem Restoration' },
+    { name: 'Improved Irrigation Systems' },
+    { name: 'Bee Pollination and Crop Productivity' },
+    { name: 'Forest Farming' },
+    { name: 'Medicinal Plant Cultivation' }
+  ];
   ////images
   getImageByFocus(researchFocus: string): string {
     // Define the images with explicit type assertion for keys
@@ -208,7 +229,30 @@ export class ResearchListComponent implements OnInit {
   
   
   
-  
+filters = {
+  title: '',
+  description: '',
+  estimatedDuration: '',
+  researchFocus: '',
+  status: '',
+  soilType: '',
+  waterRequirement: '',
+  climateConditions: '',
+  fundingSource: '',
+  searchText: '' // You might use this for a general text search across multiple fields
+};
+
+filterProjects(): void {
+  this.researchProjectService.getFilteredProjects(this.filters).subscribe(
+    (data) => {
+      this.researchProjects = data;
+    },
+    (error) => {
+      console.error('Error filtering projects:', error);
+    }
+  );
+}
+
 
 
   

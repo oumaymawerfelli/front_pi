@@ -122,6 +122,61 @@
   </div>
 </section><!-- /About 3 Section -->
 
+<div class="card p-3 mb-4 shadow-sm" style="max-width: 1000px; margin: 0 auto;">
+  <form (ngSubmit)="filterProjects()">
+    <div class="row g-3">
+
+      <!-- Status Filter -->
+      <div class="col-md-3">
+        <label for="status" class="form-label">Status</label>
+        <select [(ngModel)]="filters.status" name="status" id="status" class="form-select">
+          <option value="">-- Select Status --</option>
+          <option value="Ongoing">Ongoing</option>
+          <option value="Completed">Completed</option>
+          <option value="Pending">Pending</option>
+        </select>
+      </div>
+
+      <!-- Research Focus Filter -->
+      <div class="col-md-3">
+        <label for="researchFocus" class="form-label">Research Focus</label>
+        <select [(ngModel)]="filters.researchFocus" name="researchFocus" id="researchFocus" class="form-select">
+          <option value="">-- Select Focus --</option>
+          <option *ngFor="let focus of researchFocusList" [value]="focus.name">{{ focus.name }}</option>
+        </select>
+      </div>
+
+      <!-- Funding Source Filter (Numeric) -->
+      <div class="col-md-3">
+        <label for="fundingSource" class="form-label">Funding Source (Amount)</label>
+        <input
+          type="number"
+          [(ngModel)]="filters.fundingSource"
+          name="fundingSource"
+          id="fundingSource"
+          class="form-control"
+          min="0"
+          step="100"
+          placeholder="Enter a positive amount"
+        />
+      </div>
+
+      <!-- Search Text -->
+      <div class="col-md-3">
+        <label for="searchText" class="form-label">Keyword</label>
+        <input type="text" [(ngModel)]="filters.searchText" name="searchText" id="searchText" class="form-control" placeholder="Enter a keyword">
+      </div>
+
+      <!-- Filter Button -->
+      <div class="col-md-12 text-end mt-2">
+        <button type="submit" id="filterButton" class="btn custom-filter-btn55">Apply Filters</button>
+      </div>
+
+    </div>
+  </form>
+</div>
+
+
 
 
   <section id="blog-posts-2" class="blog-posts-2 section">
@@ -205,6 +260,8 @@
 
    
   </section>
+
+
 </main>
 
 

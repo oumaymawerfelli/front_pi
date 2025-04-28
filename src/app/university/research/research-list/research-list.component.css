@@ -80,3 +80,25 @@ button.readmore {
   color: #388e3c;
   transform: scale(1.2);
 }
+
+
+/* Custom Green Button Style */
+#filterButton.custom-filter-btn {
+  background-color: #28a745 !important;  /* Green background */
+  color: white !important;  /* White text color */
+  border: none;  /* Remove the border */
+  border-radius: 5px;  /* Rounded corners */
+  padding: 10px 20px;  /* Padding around the text */
+  font-size: 16px;  /* Adjust font size */
+  transition: background-color 0.3s ease, transform 0.2s ease;  /* Smooth hover effect */
+}
+
+#filterButton.custom-filter-btn:hover {
+  background-color: #218838 ;
+  transform: scale(1.05); 
+}
+
+#filterButton.custom-filter-btn:focus {
+  outline: none;  
+  box-shadow: none;  
+}
