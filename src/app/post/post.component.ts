@@ -2,8 +2,10 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Post } from 'src/app/core/models/posts';
-import { Commentaire } from 'src/app/core/models/commentaire';
+
+import { Post } from '../core/models/posts';
+
+import { Commentaire } from '../core/models/commentaire';
 import { CommentService } from '../core/services/comment.service';
 import { PostService } from '../core/services/post.service';
 import { ALL_CATEGORIES, PostCategory } from '../core/models/PostCategory';
@@ -29,8 +31,7 @@ export class PostComponent implements OnInit {
   searchQuery: string = '';
   isSearching: boolean = false;
 
-
-
+  pinnedPosts: Post[] = [];
   categories = ALL_CATEGORIES;
   selectedCategory: string = 'All';
 
@@ -49,17 +50,16 @@ ALL_CATEGORIES: any;
       img: [null],
     });
   }
-
-
-
-
 ngOnInit(): void {
   this.postForm = this.fb.group({
     content: ['', [Validators.required, Validators.maxLength(5000)]],
     img: [null],
     category: [PostCategory.OTHER, Validators.required] // Add this line
+
   });
   this.getAllPosts();
+      // Call this in ngOnInit()
+  this.loadPinnedPosts();
 }
 loadPosts(): void {
   this.postService.getPostsByCategory(this.selectedCategory).subscribe({
@@ -237,9 +237,6 @@ deletePost(id: number): void {
       .deleteComment(commentId)
       .subscribe(() => this.loadComments(post));
   }
-
-
-
 filterPosts(category: string): void {
   this.currentFilter = category;
 
@@ -256,8 +253,6 @@ onCategoryChange(category: string): void {
   this.selectedCategory = category;
   this.loadPosts();
 }
-
-
 
 searchPosts(): void {
   if (!this.searchQuery.trim()) {
@@ -282,6 +277,45 @@ clearSearch(): void {
   this.searchQuery = '';
   this.isSearching = false;
   this.getAllPosts();
+}
+// In your component
+togglePinPost(post: Post): void {
+  if (post.pinned) {
+    this.postService.unpinPost(post.id!).subscribe({
+      next: (updatedPost) => {
+        this.updatePostInLists(updatedPost);
+      }
+    });
+  } else {
+    this.postService.pinPost(post.id!).subscribe({
+      next: (updatedPost) => {
+        this.updatePostInLists(updatedPost);
+      }
+    });
+  }
+}
+private updatePostInLists(updatedPost: Post): void {
+  // Update in allPosts
+  const allIndex = this.allPosts.findIndex(p => p.id === updatedPost.id);
+  if (allIndex !== -1) {
+    this.allPosts[allIndex] = updatedPost;
+  }
+  
+  // Update in filteredPosts
+  const filteredIndex = this.filteredPosts.findIndex(p => p.id === updatedPost.id);
+  if (filteredIndex !== -1) {
+    this.filteredPosts[filteredIndex] = updatedPost;
+  }
+  // Update pinned posts list
+  this.loadPinnedPosts();
+}
+loadPinnedPosts(): void {
+  this.postService.getPinnedPosts().subscribe(posts => {
+    this.pinnedPosts = posts;
+  });
+}
+get nonPinnedPosts(): Post[] {
+  return this.filteredPosts.filter(post => !post.pinned);
 }
 
 }

@@ -9,5 +9,7 @@ export interface Post {
   comments?: Commentaire[];
   img:string;
   category: PostCategory; 
+  pinned?: boolean;  // Add this
+
 
 }

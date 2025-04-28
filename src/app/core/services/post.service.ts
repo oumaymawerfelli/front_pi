@@ -45,4 +45,19 @@ export class PostService {
   searchPosts(query: string): Observable<Post[]> {
     return this.http.get<Post[]>(`${this.baseUrl}/search?query=${encodeURIComponent(query)}`);
   }
+
+
+    
+    // post.service.ts
+  pinPost(id: number): Observable<Post> {
+    return this.http.post<Post>(`${this.baseUrl}/pin/${id}`, {});
+  }
+
+  unpinPost(id: number): Observable<Post> {
+    return this.http.post<Post>(`${this.baseUrl}/unpin/${id}`, {});
+  }
+
+  getPinnedPosts(): Observable<Post[]> {
+    return this.http.get<Post[]>(`${this.baseUrl}/pinned`);
+  }
 }
