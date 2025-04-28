@@ -37,14 +37,23 @@ throw new Error('Method not implemented.');
   constructor(private http: HttpClient, private router: Router, private snackbar: MatSnackBar) {}
  
 
-  login(request: LoginRequest): Observable<JwtResponse> {
-    return this.http.post<JwtResponse>(`${this.apiUrl}/login`, request, { withCredentials: true }).pipe(
-      tap(response => {
-        localStorage.setItem('token', response.token);
-      }),
+  login(request: LoginRequest): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/login`, request, { withCredentials: true }).pipe(
       catchError(err => throwError(() => err))
     );
-    }
+  }
+  
+
+verifyOtp(email: string, otp: string): Observable<JwtResponse> {
+  const url = `${this.apiUrl}/verify-otp`;
+  return this.http.post<JwtResponse>(url, { email, otp }).pipe(
+    tap(response => {
+      localStorage.setItem('token', response.token);  // Store JWT token after OTP verification
+    }),
+    catchError(err => throwError(() => err))
+  );
+}
+
 
       
     
@@ -118,6 +127,13 @@ throw new Error('Method not implemented.');
       return null;
     }
   }
+  
+  loginWithLinkedin(): void {
+    localStorage.clear();
+    window.location.href = 'http://localhost:8089/pi/oauth2/authorization/linkedin';
+  }
+  
+  
   
   isAdmin(): boolean {
     return this.getUserRole() === 'ROLE_ADMIN';
