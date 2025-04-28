@@ -66,4 +66,12 @@ export class OrderService {
     console.error('Erreur dans OrderService:', error);
     return throwError(() => new Error(error.message || 'Erreur serveur'));
   }
+  getUserOrders(): Observable<Order[]> {
+    return this.http.get<Order[]>(`${this.apiUrl}/user-orders`, { headers: this.getHeaders() })
+      .pipe(
+        tap(data => console.log('Commandes utilisateur reçues:', data)),
+        catchError(this.handleError)
+      );
+  }
+  
 }

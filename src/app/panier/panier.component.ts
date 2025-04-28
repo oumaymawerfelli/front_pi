@@ -60,7 +60,9 @@ export class PanierComponent implements OnInit {
   allerVersOrders(): void {
     this.router.navigate(['/home/orders']);
   }
-  
+  retournerVersMarketplace(): void {
+    this.router.navigate(['/home/market']);
+  }
 
   loadPanierLines(): void {
     if (this.panierId) {

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { OrderService } from 'src/app/core/services/orders.service';
 import { Order } from 'src/app/core/models/Order';
 import { LignePanier } from 'src/app/core/models/LignePanier';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-orders',
   templateUrl: './orders.component.html',
@@ -12,7 +12,7 @@ export class OrdersComponent implements OnInit {
   orders: Order[] = [];
   isLoading = false;
   errorMessage: string | null = null;
-  
+
   editedOrder: Order = {
     id: 0,
     customer: { name: '' },
@@ -23,8 +23,9 @@ export class OrdersComponent implements OnInit {
   };
 
   editOrderId: number | null = null;
+  
 
-  constructor(private orderService: OrderService) {}
+  constructor(private orderService: OrderService,private router: Router) {}
 
   ngOnInit(): void {
     this.loadOrders();
@@ -32,19 +33,20 @@ export class OrdersComponent implements OnInit {
 
   loadOrders(): void {
     this.isLoading = true;
-    this.orderService.getAllOrders().subscribe({
+    this.orderService.getUserOrders().subscribe({
       next: (data) => {
         this.isLoading = false;
         this.orders = data;
-        console.log('Commandes chargées:', data);
+        console.log('Commandes de l\'utilisateur chargées:', data);
       },
       error: (error) => {
         this.isLoading = false;
-        this.errorMessage = 'Erreur lors du chargement des commandes';
+        this.errorMessage = 'Erreur lors du chargement des commandes utilisateur';
         console.error('Erreur lors du chargement:', error);
       }
     });
   }
+  
 
   deleteOrder(id: number): void {
     if (confirm('Voulez-vous vraiment supprimer cette commande ?')) {
@@ -59,15 +61,11 @@ export class OrdersComponent implements OnInit {
     }
   }
 
-  editOrder(order: any): void {
-    console.log('Commande à éditer:', order);
-
+  editOrder(order: Order): void {
     this.editedOrder = {
       ...order,
-      lignePanier: order.lignesPanier ? [...order.lignesPanier] : []
+      lignePanier: order.lignePanier ? [...order.lignePanier] : []
     };
-
-    console.log('Commande éditée:', this.editedOrder);
     this.editOrderId = order.id ?? null;
   }
 
@@ -82,13 +80,10 @@ export class OrdersComponent implements OnInit {
         error: (error) => {
           console.error('Erreur de mise à jour', error);
           this.errorMessage = 'Erreur lors de l\'enregistrement de la commande';
-          console.log('Détails de l\'erreur:', error); // Ajoute cette ligne pour mieux comprendre l'erreur
         }
       });
     }
   }
-  
-  
 
   deleteProductFromOrder(productId: number): void {
     if (this.editedOrder.lignePanier) {
@@ -110,10 +105,15 @@ export class OrdersComponent implements OnInit {
   }
 
   getTotalPrice(order: Order): number {
-    return (order.lignePanier ?? []).reduce((total: number, ligne: LignePanier) => {
-      const price = ligne.produit.productPrice ?? 0;
-      const quantity = ligne.quantite ?? 0;
-      return total + (price * quantity);
-    }, 0);
+    return order.lignePanier?.reduce((sum, ligne) => sum + (ligne.prixTotal || 0), 0) || 0;
   }
+  
+  
+  
+  
+  
+  retournerAuPanier() {
+    this.router.navigate(['/home/panier']);
+  }
+
 }
