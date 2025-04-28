@@ -1,0 +1,23 @@
+<div *ngIf="histories.length > 0; else noData">
+    <h3>Historique de l’investissement</h3>
+    <ul class="history-list">
+      <li *ngFor="let history of histories">
+        <div class="history-item">
+          <div class="history-action">
+            <strong>{{ history.action }}</strong>
+          </div>
+          <div class="history-date">
+            <span>{{ history.formatActionDate() }}</span>
+          </div>
+          <div class="history-performer">
+            <em>par {{ history.performedBy }}</em>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+  
+  <ng-template #noData>
+    <p class="no-data">Aucun historique disponible pour cet investissement.</p>
+  </ng-template>
+  

@@ -1,0 +1,46 @@
+<div class="investment-list-container">
+
+    <!-- Champ de recherche -->
+    <div class="search-container">
+      <h3>Liste des investissements</h3>
+      <input 
+        type="text" 
+        [(ngModel)]="searchTerm" 
+        placeholder="Rechercher par nom..." 
+        (input)="filterInvestments()"
+      />
+    </div>
+  
+    <!-- Tableau des investissements -->
+    <table class="investment-table">
+      <thead>
+        <tr>
+          <th>Nom de l'investisseur</th>
+          <th>Type</th>
+          <th>Montant</th>
+          <th>ROI (%)</th>
+          <th>Stratégie</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let investment of filteredInvestments">
+          <td>{{ investment.userName || 'Inconnu' }}</td>
+          <td>{{ investment.type }}</td>
+          <td>{{ investment.investmentAmount | currency }}</td>
+          <td>{{ investment.expectedROI }}%</td>
+          <td>{{ investment.strategy }}</td>
+          <td>
+            <a [routerLink]="['/investments', investment.id, 'history']">Voir Historique</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <!-- Message si aucune donnée n'est disponible -->
+    <div *ngIf="filteredInvestments.length === 0">
+      <p>Aucun investissement trouvé.</p>
+    </div>
+    
+  </div>
+  

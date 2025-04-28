@@ -1,0 +1,103 @@
+<a [routerLink]="['/investments', investment.id, 'history']">SEE history</a>
+
+<div *ngIf="!selectedProjectId">
+    <h2>Choisissez un projet</h2>
+    <ul>
+      <li *ngFor="let project of projects">
+        <button (click)="selectProject(project.id)">{{ project.name }}</button>
+      </li>
+    </ul>
+  </div>
+  
+  <!-- Si un projet est sélectionné, afficher le formulaire d'investissement -->
+  <div *ngIf="selectedProjectId">
+    <h2>Formulaire d'Investissement</h2>
+    <p>SELECT PROJECT</p>
+  
+    <form (ngSubmit)="submitInvestment()" #investmentForm="ngForm">
+      
+      <!-- Montant de l'investissement -->
+      <div class="form-section">
+        <label>Montant de l'investissement :
+          <input
+            type="number"
+            [(ngModel)]="investment.investmentAmount"
+            name="investmentAmount"
+            required
+            min="0"
+            #investmentAmount="ngModel"
+          />
+        </label>
+        <div *ngIf="investmentAmount.invalid && investmentAmount.touched" class="error-message">
+          Veuillez entrer un montant d'investissement valide.
+        </div>
+      </div>
+  
+      <!-- Type d'investissement -->
+      <div class="form-section">
+        <label>Type :
+          <select [(ngModel)]="investment.type" name="type" required>
+            <option value="" disabled selected>Sélectionner le type</option>
+            <option value="EQUIPMENT">Equipement</option>
+            <option value="SEEDS">SEEDS</option>
+            <option value="IRRIGATION">IRRIGATION</option>
+            <option value="TECHNOLOGY">TECHNOLOGY</option>
+            <option value="SUSTAINABILITY">SUSTAINABILITY</option>
+            <option value="OTHER"> OTHER  </option>
+          </select>
+        </label>
+      </div>
+  
+      <!-- ROI attendu -->
+      <div class="form-section">
+        <label>ROI attendu (%) :
+          <input
+            type="number"
+            [(ngModel)]="investment.expectedROI"
+            name="expectedROI"
+            required
+            min="0"
+            max="100"
+            #expectedROI="ngModel"
+          />
+        </label>
+        <div *ngIf="expectedROI.invalid && expectedROI.touched" class="error-message">
+          Veuillez entrer un ROI valide (0-100).
+        </div>
+      </div>
+  
+      <!-- Stratégie d'investissement -->
+      <div class="form-section">
+        <label>Stratégie :
+          <select [(ngModel)]="investment.strategy" name="strategy" required>
+            <option value="" disabled selected>Sélectionner la stratégie</option>
+            <option value="LONG_TERM">LONG_TERM</option>
+            <option value="SHORT_TERM">SHORT_TERM</option>
+            <option value="HIGH_RISK">HIGH_RISK</option>
+            <option value="LOW_RISK">LOW_RISK</option>
+            <option value="DIVERSIFIED">DIVERSIFIED</option>
+            <option value="FIXED_RETURN">FIXED_RETURN</option>
+            <option value="GROWTH">GROWTH</option>
+            <option value="INCOME">INCOME</option>
+          </select>
+        </label>
+      </div>
+  
+      <!-- Message de statut de soumission -->
+      <div *ngIf="submissionStatus">
+        <p class="success-message">{{ submissionStatus }}</p>
+      </div>
+  
+      <!-- Indicateur de chargement -->
+      <div *ngIf="isSubmitting" class="loader">
+        <p>Envoi de votre investissement...</p>
+      </div>
+  
+      <!-- Bouton de soumission -->
+      <button type="submit" [disabled]="investmentForm.invalid">Soumettre l'investissement</button>
+    </form>
+  </div>
+  
+
+
+  
