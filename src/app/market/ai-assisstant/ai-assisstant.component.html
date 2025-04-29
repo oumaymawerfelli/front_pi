@@ -1,0 +1,66 @@
+<!-- AI Assistant Chat Component -->
+<div class="ai-assistant-container">
+    <!-- Floating Toggle Button (always visible) -->
+    <button class="chat-toggle-button" (click)="toggleChat()">
+      <span *ngIf="isChatOpen">Close Chat</span>
+      <span *ngIf="!isChatOpen">Chat with Assistant</span>
+      <span class="chat-icon">{{ isChatOpen ? '×' : '💬' }}</span>
+    </button>
+  
+    <!-- Chat Window -->
+    <div class="chat-window" [class.open]="isChatOpen" [class.closed]="!isChatOpen">
+      <!-- Chat Header -->
+      <div class="chat-header">
+        <h3>
+          <span class="greening-icon">🌱</span>
+          Green Assistant
+        </h3>
+        <button class="close-button" (click)="toggleChat()" aria-label="Close chat">
+          &times;
+        </button>
+      </div>
+  
+      <!-- Messages Container -->
+      <div #messagesContainer class="messages-container">
+        <!-- Welcome Message -->
+        <div class="message bot-message welcome-message" *ngIf="chatMessages.length === 0">
+          <div class="message-content">
+            Hello! I'm your Green AI Assistant. Ask me about sustainable agriculture, 
+            eco-friendly products, or environmental practices.
+          </div>
+          <div class="message-time">{{ getCurrentTime() }}</div>
+        </div>
+  
+        <!-- Chat Messages -->
+        <div *ngFor="let message of chatMessages" 
+             class="message" 
+             [class.user-message]="message.isUser" 
+             [class.bot-message]="!message.isUser">
+          <div class="message-content">
+            {{ message.text }}
+          </div>
+          <div class="message-time">{{ message.timestamp }}</div>
+        </div>
+  
+        <!-- Loading Indicator -->
+        <div class="loading-indicator" *ngIf="isProcessing">
+          <div class="dot-flashing"></div>
+        </div>
+      </div>
+  
+      <!-- Input Area -->
+      <div class="input-area">
+        <input type="text" 
+               [(ngModel)]="prompt" 
+               placeholder="Ask about agriculture or eco-products..." 
+               (keyup.enter)="generate()"
+               [disabled]="isProcessing">
+        <button class="send-button" 
+                (click)="generate()" 
+                [disabled]="isProcessing || !prompt.trim()">
+          <span *ngIf="!isProcessing">Send</span>
+          <span *ngIf="isProcessing">Sending...</span>
+        </button>
+      </div>
+    </div>
+  </div>

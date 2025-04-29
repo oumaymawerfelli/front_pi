@@ -50,6 +50,7 @@ import { RecaptchaModule } from 'ng-recaptcha'; // Import RecaptchaModule
 import { NgChartsModule } from 'ng2-charts';
 import { AdminAnalyticsComponent } from './users/admin-analytics/admin-analytics.component';
 import { EditProdComponent } from './market/farm-menu/edit-prod/edit-prod.component';
+import { AiAssisstantComponent } from './market/ai-assisstant/ai-assisstant.component';
 
 
 
@@ -86,6 +87,8 @@ import { EditProdComponent } from './market/farm-menu/edit-prod/edit-prod.compon
     FarmMenuComponent,
     AddProdComponent,
     EditProdComponent,
+    AiAssisstantComponent,
+   
   ],
   imports: [
     BrowserModule,

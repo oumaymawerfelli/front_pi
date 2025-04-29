@@ -1,77 +1,81 @@
+/* Edit Product Form */
+.edit-product-container {
+  padding: 2rem;
+}
+
+.edit-product-title {
+  color: #2e7d32;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
 .edit-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    background-color: #e8f5e9; /* Light green background */
-    padding: 2rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 128, 0, 0.2);
-  }
-  
-  .form-group {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .form-group label {
-    font-weight: bold;
-    margin-bottom: 0.3rem;
-    color: #2e7d32; /* Darker green for labels */
-  }
-  
-  .form-group input,
-  .form-group textarea {
-    padding: 0.7rem;
-    border: 1px solid #81c784; /* Light green borders */
-    border-radius: 8px;
-    background-color: #f1f8e9; /* Very soft green background inside inputs */
-    font-size: 1rem;
-  }
-  
-  .form-group input:focus,
-  .form-group textarea:focus {
-    outline: none;
-    border-color: #43a047; /* Medium green focus */
-    background-color: #ffffff;
-  }
-  
-  .button-group {
-    display: flex;
-    justify-content: flex-end;
-    gap: 1rem;
-    margin-top: 1.5rem;
-  }
-  
-  .button-group button {
-    padding: 0.6rem 1.8rem;
-    border: none;
-    border-radius: 8px;
-    background-color: #66bb6a; /* Main green for save */
-    color: white;
-    font-weight: bold;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .button-group button[type="button"] {
-    background-color: #a5d6a7; /* Lighter green for cancel */
-    color: #2e7d32;
-  }
-  
-  .button-group button:hover {
-    background-color: #43a047; /* Darker green on hover */
-  }
-  
-  .button-group button[type="button"]:hover {
-    background-color: #81c784;
-  }
-  
-  /* Title */
-  h2 {
-    text-align: center;
-    margin-bottom: 1.5rem;
-    color: #1b5e20; /* Very dark green for title */
-    font-size: 1.8rem;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 0.5rem;
+  color: #2e7d32;
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea {
+  padding: 0.75rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #4caf50;
+  box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+}
+
+.form-group textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.button-group {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.button-group button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.button-group button[type="submit"] {
+  background-color: #4caf50;
+  color: white;
+}
+
+.button-group button[type="button"] {
+  background-color: #f8f9fa;
+  color: #495057;
+}
+
+.button-group button:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}

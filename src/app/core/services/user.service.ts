@@ -78,7 +78,6 @@ export class UserService {
     return this.http.get<User>(`${this.apiUrl}/get-user/${userId}`, { headers });
   }
   
-  
 
   updateUser(user: User): Observable<User> {
     return this.http.put<User>(`${this.apiUrl}/update-user/${user.idUser}`, user, {
@@ -152,6 +151,24 @@ getPendingUsers(): Observable<any[]> {
   }
   
   
+
+
+  //retourne juste le user id 
+  getLoggedInUserId(): number | null {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      return null;
+    }
+  
+    try {
+      const decodedToken: any = jwtDecode(token);
+      const userId = decodedToken?.userId || decodedToken?.idUser;
+      return userId || null;
+    } catch (error) {
+      console.error('Failed to decode token', error);
+      return null;
+    }
+  }
 
   
 }

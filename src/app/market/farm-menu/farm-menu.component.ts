@@ -20,48 +20,36 @@ export class FarmMenuComponent implements OnInit {
   constructor(private productService: ProductService, private userService: UserService) {}
 
   ngOnInit() {
-    // Fetch the logged-in user using the getLoggedInUser() method
-    this.userService.getLoggedInUser().subscribe(
-      (user) => {
-        // Safely assign userId if it's not undefined
-        if (user.idUser !== undefined) {
-          this.userId = user.idUser;
-        } else {
-          console.error('User idUser is undefined');
-        }
+    // Step 1: Get the logged-in user's ID only
+    const userId = this.userService.getLoggedInUserId();  // Use the simple method we discussed
 
-        // Set user information
-        this.userEmail = user.email;
-        this.userName = user.name;
+    if (userId !== null) {
+      this.userId = userId;
 
-        // Now fetch the products for this user
-        this.loadProductsForUser(user);
-      },
-      (error) => {
-        console.error('Error fetching logged-in user:', error);
-      }
-    );
+      // // Step 2: Fetch detailed user info if needed
+      // this.userService.getLoggedInUser().subscribe(user => {
+      //   this.userName = user.name;
+      //   this.userEmail = user.email;
+      // });
+
+      // Step 3: Directly load products
+      this.loadProductsForUser(this.userId);
+    } else {
+      console.error('No logged-in user found.');
+    }
   }
 
-  // Method to load products for the current user
-  loadProductsForUser(user: any) {
-    this.productService.getProductsByUserId(this.userId).subscribe(allProducts => {
-      // Set placeholder image if needed
-      allProducts.forEach(product => {
+  loadProductsForUser(userId: number) {
+    this.productService.getProductsByUserId(userId).subscribe(products => {
+      products.forEach(product => {
         const img = product.productImage?.trim().toLowerCase();
         if (!img || img === 'string') {
           product.productImage = 'assets/market-assets/images/placeholder.PNG';
         }
       });
-
-      // Directly assign the products to myProducts
-      this.myProducts = allProducts;
+      this.myProducts = products;
     });
   }
-  // editProduct(product: Product) {
-  //   console.log('Product received:', product);
-  //   // Now you can use the product object as needed
-  // }
 
   editProduct(product: Product) {
     console.log('Editing product:', product);

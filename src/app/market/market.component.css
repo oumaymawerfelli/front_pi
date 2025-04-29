@@ -1,0 +1,10 @@
+
+  .chat-container {
+    position: fixed;
+    bottom: 24px; /* close to the button */
+    right: 120px; /* right-24 (so it's next to button) */
+    width: 384px; /* w-96 */
+    z-index: 50;
+    transition: all 0.3s ease-in-out;
+  }
+  

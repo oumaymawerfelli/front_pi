@@ -17,7 +17,9 @@ export interface Product {
   productPrice: number;  
   DiscountPrice: number;  
   productStock: number; 
-  farmer: { idUser: number, name: string, email: string };     
+  farmerId: number;
+   farmerName: string; 
+   farmerEmail: string;      
   productImage: string; 
 
       
@@ -50,7 +52,7 @@ export class ProductService {
   }
 
   addProduct(product: Product): Observable<Product> {
-    const { farmer, ...productDetails } = product; // Exclude farmer info, it's handled by the backend
+    const { farmerName,farmerEmail,farmerId, ...productDetails } = product; // Exclude farmer info, it's handled by the backend
     const headers= this.getHeaders()
     return this.http.post<Product>(`${this.baseUrl}/add-product`, productDetails, {headers
     });

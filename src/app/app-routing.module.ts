@@ -57,6 +57,7 @@ const routes: Routes = [
 { path: 'marketplace', component: MarketplaceComponent },
 { path: 'market', component: MarketComponent },
 
+
 { path: 'oauth2-redirect', component: OAuth2RedirectComponent },
 ];
 

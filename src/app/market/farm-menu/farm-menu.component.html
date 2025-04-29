@@ -1,29 +1,34 @@
-<div class="page-container">
-  <p>Manage your products</p>
-  <div class="product-list">
-    <div *ngFor="let product of myProducts" class="product-item">
-      <app-product [product]="product"></app-product>
-      <div class="buttons">
-        <button (click)="editProduct(product)">Edit</button>
-        <button (click)="deleteProduct(product.productId)">Delete</button>
+<div class="farm-management-container">
+  <h1 class="page-title">Manage Your Products</h1>
+  
+  <div class="page-layout">
+    <!-- Product List Section -->
+    <div class="product-list-container">
+      <div class="product-list">
+        <div *ngFor="let product of myProducts" class="product-item">
+          <app-product [product]="product"></app-product>
+          <div class="buttons">
+            <button (click)="editProduct(product)">Edit</button>
+            <button (click)="deleteProduct(product.productId)">Delete</button>
+          </div>
+        </div>
       </div>
     </div>
+
+    <!-- Add Form Section -->
+    <div class="add-form-container">
+      <app-add-prod></app-add-prod>
+    </div>
   </div>
-  
-  
-  <div class="add-form">
-     <app-add-prod></app-add-prod> 
+
+  <!-- Edit Modal -->
+  <div *ngIf="isEditing && selectedProduct" class="modal-overlay">
+    <div class="modal-content">
+      <app-edit-prod 
+        [productToEdit]="selectedProduct" 
+        (closeEdit)="onCloseEdit()" 
+        (productUpdated)="onProductUpdated($event)">
+      </app-edit-prod>
+    </div>
   </div>
 </div>
-
-<div *ngIf="isEditing && selectedProduct" class="modal-overlay">
-  <div class="modal-content">
-    <app-edit-prod 
-      [productToEdit]="selectedProduct" 
-      (closeEdit)="onCloseEdit()" 
-      (productUpdated)="onProductUpdated($event)">
-    </app-edit-prod>
-  </div>
-</div>
-
-
