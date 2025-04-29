@@ -14,8 +14,7 @@ export interface Product {
   productName: string;       
   productDescription: string; 
   productCategory: string; 
-  productPrice: number;  
-  DiscountPrice: number;  
+  productPrice: number;    
   productStock: number; 
   farmerId: number;
    farmerName: string; 

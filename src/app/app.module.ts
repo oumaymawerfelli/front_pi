@@ -29,7 +29,6 @@ import { UsersModule } from './users/users.module';
 import { AuthService } from './core/services/auth.service';
 import { AdminGuard } from './guards/admin.guard';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { MarketplaceComponent } from './marketplace/marketplace.component';
 import { PanierComponent } from './panier/panier.component';
 import { FrontComponent } from './component/front/front.component';
 import { BackComponent } from './component/back/back.component';
@@ -51,6 +50,9 @@ import { NgChartsModule } from 'ng2-charts';
 import { AdminAnalyticsComponent } from './users/admin-analytics/admin-analytics.component';
 import { EditProdComponent } from './market/farm-menu/edit-prod/edit-prod.component';
 import { AiAssisstantComponent } from './market/ai-assisstant/ai-assisstant.component';
+import { MarketplaceComponent } from './marketplace/marketplace.component';
+import { OrdersComponent } from './orders/orders.component';
+import { ChatbotComponent } from './chatbot/chatbot.component';
 
 
 
@@ -68,7 +70,6 @@ import { AiAssisstantComponent } from './market/ai-assisstant/ai-assisstant.comp
     AddLandComponent,
     TermsAcceptanceComponent,
     PendingUsersComponent, // only components that aren't in UsersModule
-    MarketplaceComponent,
     PanierComponent,
     FrontComponent,
     BackComponent,
@@ -78,7 +79,6 @@ import { AiAssisstantComponent } from './market/ai-assisstant/ai-assisstant.comp
     LoanApplicationComponent,
     LoanInfoComponent,
     ContactComponent,
-    MarketplaceComponent,
     MarketComponent,
     ProductListComponent,
     ProductComponent,
@@ -88,6 +88,9 @@ import { AiAssisstantComponent } from './market/ai-assisstant/ai-assisstant.comp
     AddProdComponent,
     EditProdComponent,
     AiAssisstantComponent,
+    MarketplaceComponent,
+    OrdersComponent,
+    ChatbotComponent,
    
   ],
   imports: [

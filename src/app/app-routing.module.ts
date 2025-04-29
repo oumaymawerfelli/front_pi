@@ -16,11 +16,14 @@ import { LandingComponent } from './landing/landing.component';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { NgModule } from '@angular/core';
-import { MarketplaceComponent } from './marketplace/marketplace.component';
+
 import { MarketComponent } from './market/market.component';
 import { AuthGuard } from './guards/auth.guard';
 import { AdminAnalyticsComponent } from './users/admin-analytics/admin-analytics.component';
-
+import { MarketplaceComponent } from './marketplace/marketplace.component';
+import { PanierComponent } from './panier/panier.component';
+import { ChatbotComponent } from './chatbot/chatbot.component';
+import { OrdersComponent } from './orders/orders.component';
 
 const routes: Routes = [
        // Default route
@@ -30,6 +33,7 @@ const routes: Routes = [
     {path: 'login', component: LoginComponent},
     {path: 'forgot-password', component: ForgotPasswordComponent},
     {path: 'reset-password/:token', component: ResetPasswordComponent},
+    
   ]
 } ,// /landing route
 
@@ -49,12 +53,20 @@ const routes: Routes = [
  
   children:[
     { path: 'profile', component: ProfileComponent , canActivate:[AuthGuard],},
-   
+    {
+      path: 'panier', component: PanierComponent},
+      { path: 'orders', component: OrdersComponent },
+    
+    
+      { path: 'marketplace', component: MarketplaceComponent 
+      },
+      { path: 'chat', component: ChatbotComponent }, 
+      
   ]
 },
-{path: '', redirectTo: '/landing', pathMatch: 'full'},
+ {path: '', redirectTo: '/landing', pathMatch: 'full'},
 
-{ path: 'marketplace', component: MarketplaceComponent },
+
 { path: 'market', component: MarketComponent },
 
 

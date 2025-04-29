@@ -1,0 +1,10 @@
+import { Product } from "../services/product.service";
+import { Panier } from "./Panier";
+export class LignePanier {
+    id?: number;
+    produit!: Product;
+    panier?: any;  // L'objet Panier est également requis
+    quantite!: number;
+    prixTotal!: number;
+  }
+  

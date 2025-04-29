@@ -1,15 +1,5 @@
-<div class="product">
-    <div class="wishlist-sale-container">
-      <div class="add-to-wishlist">
-        <i class="fi-br-heart" aria-hidden="true"></i>
-      </div>
-  
-      <!-- On Sale Tag - only shows when discount is available -->
-      <div class="ekart-on-sale-tag" *ngIf="product.DiscountPrice">{{ (100 - (product.DiscountPrice / product.productPrice) * 100).toFixed(0) }}% OFF</div>
-    
-      
-  </div>
-    <!-- Product Image -->
+<div>
+      <!-- Product Image -->
     <div class="product-image">
       <img [src]="product.productImage" class="product-image">
     </div>
