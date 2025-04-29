@@ -1,46 +1,99 @@
-<div class="investment-list-container">
-
-    <!-- Champ de recherche -->
+  <div class="investment-list-container">
     <div class="search-container">
       <h3>Liste des investissements</h3>
-      <input 
-        type="text" 
-        [(ngModel)]="searchTerm" 
-        placeholder="Rechercher par nom..." 
-        (input)="filterInvestments()"
+      <input
+        type="text"
+        [(ngModel)]="searchTerm"
+        placeholder="Rechercher par ID..."
       />
-    </div>
-  
-    <!-- Tableau des investissements -->
-    <table class="investment-table">
-      <thead>
-        <tr>
-          <th>Nom de l'investisseur</th>
-          <th>Type</th>
-          <th>Montant</th>
-          <th>ROI (%)</th>
-          <th>Stratégie</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let investment of filteredInvestments">
-          <td>{{ investment.userName || 'Inconnu' }}</td>
-          <td>{{ investment.type }}</td>
-          <td>{{ investment.investmentAmount | currency }}</td>
-          <td>{{ investment.expectedROI }}%</td>
-          <td>{{ investment.strategy }}</td>
-          <td>
-            <a [routerLink]="['/investments', investment.id, 'history']">Voir Historique</a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  
-    <!-- Message si aucune donnée n'est disponible -->
-    <div *ngIf="filteredInvestments.length === 0">
-      <p>Aucun investissement trouvé.</p>
+      <button (click)="searchById()">Rechercher</button>
     </div>
     
+    <div class="table-container">
+      <table class="investment-table">
+        <thead>
+          <tr>
+            <th>ID de l'investisseur</th>
+            <th>Type</th>
+            <th>Montant</th>
+            <th>ROI (%)</th>
+            <th>Stratégie</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let investment of filteredInvestments">
+            <td>{{ investment.id }}</td>
+            <td>{{ investment.type }}</td>
+            <td>{{ investment.investmentAmount | currency }}</td>
+            <td>{{ investment.expectedROI }}%</td>
+            <td>{{ investment.strategy }}</td>
+            <td>
+              <button (click)="selectInvestmentForUpdate(investment)">Modifier</button>
+              <button (click)="deleteInvestment(investment.id)">Supprimer</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- Formulaire pour mettre à jour un investissement -->
+      <div *ngIf="selectedInvestment" class="investment-update-form-container">
+        <h3>Modifier l'investissement</h3>
+        <form (ngSubmit)="updateInvestment()" class="investment-form">
+          <div class="form-group">
+            <label for="investmentAmount">Montant de l'investissement</label>
+            <input
+              type="number"
+              [(ngModel)]="selectedInvestment.investmentAmount"
+              name="investmentAmount"
+              required
+              class="form-control"
+              placeholder="Entrez le montant"
+            />
+          </div>
+      
+          <div class="form-group">
+            <label for="type">Type d'investissement</label>
+            <input
+              type="text"
+              [(ngModel)]="selectedInvestment.type"
+              name="type"
+              required
+              class="form-control"
+              placeholder="Type d'investissement"
+            />
+          </div>
+      
+          <div class="form-group">
+            <label for="expectedROI">ROI attendu (%)</label>
+            <input
+              type="number"
+              [(ngModel)]="selectedInvestment.expectedROI"
+              name="expectedROI"
+              required
+              class="form-control"
+              placeholder="ROI attendu en pourcentage"
+            />
+          </div>
+      
+          <div class="form-group">
+            <label for="strategy">Stratégie</label>
+            <input
+              type="text"
+              [(ngModel)]="selectedInvestment.strategy"
+              name="strategy"
+              required
+              class="form-control"
+              placeholder="Décrivez la stratégie"
+            />
+          </div>
+      
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Mettre à jour l'investissement</button>
+            
+          </div>
+        </form>
+      </div>
+      
+
+   
   </div>
-  

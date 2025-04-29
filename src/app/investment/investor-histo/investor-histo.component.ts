@@ -1,14 +1,14 @@
-import { Component, Input, OnInit  } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { InvestmentHistoryService } from 'src/app/services/investment-history.service';
 import { InvestmentHistory } from 'src/app/models/investment-history';
-import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-investor-histo',
   templateUrl: './investor-histo.component.html',
   styleUrls: ['./investor-histo.component.css']
 })
-export class InvestorHistoComponent {
+export class InvestorHistoComponent implements OnInit { // <-- Ajoute implements OnInit
   @Input() investmentId!: number;
   histories: InvestmentHistory[] = [];
 
@@ -17,7 +17,7 @@ export class InvestorHistoComponent {
     private historyService: InvestmentHistoryService
   ) {}
 
-  ngOnInit(): void {
+  ngOnInit(): void { // <-- Il faut implémenter OnInit
     this.route.paramMap.subscribe(params => {
       const idParam = params.get('id'); 
       if (idParam) {
@@ -30,8 +30,7 @@ export class InvestorHistoComponent {
   loadHistory(): void {
     this.historyService.getHistoryByInvestmentId(this.investmentId).subscribe(data => {
       this.histories = data;
-
     });
   }
-
+  
 }

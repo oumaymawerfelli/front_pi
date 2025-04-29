@@ -1,90 +1,76 @@
 import { Component } from '@angular/core';
-import { Investment, Project, User } from 'src/app/models/investor';
+import { Investment } from 'src/app/models/investor';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
-import { FormBuilder } from '@angular/forms';
 import { InvestmentService } from 'src/app/services/investment.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
+  
   selector: 'app-investor',
   templateUrl: './investor.component.html',
   styleUrls: ['./investor.component.css']
 })
 export class InvestorComponent {
-  searchTerm: string = '';
-
   investment: Investment = {
     id: 0,
     type: '',
     investmentAmount: 0,
     expectedROI: 0,
     strategy: '',
-    investmentDate: new Date().toISOString(),
-    userId: 1,
-    userName: ''
+    investmentDate: new Date().toISOString().substring(0, 10), // format 'YYYY-MM-DD'
+    performance: 0,
+    userId: 0, // tu vas remplir userId via formulaire ou fixe
+    userName: '' // pas obligatoire d'envoyer userName
   };
 
-  allInvestments: Investment[] = []; // Liste complète
-  investments: Investment[] = [];    // Liste affichée (filtrée)
-
-  users: User[] = [
-    { id: 1, name: 'chadi' },
-    { id: 2, name: 'firas' },
-    { id: 3, name: 'louai' }
-  ];
-
-  projects: Project[] = [
-    { id: 1, name: 'Project A', description: 'Description of Project A' },
-    { id: 2, name: 'Project B', description: 'Description of Project B' },
-    { id: 3, name: 'Project C', description: 'Description of Project C' },
-  ];
-
-  selectedProjectId: number | null = null;
   submissionStatus: string | null = null;
   isSubmitting: boolean = false;
 
   constructor(
-    private http: HttpClient,
+    private authService: AuthService,
     private router: Router,
-    private formBuilder: FormBuilder,
     private investmentService: InvestmentService
   ) {}
 
-  selectProject(projectId: number): void {
-    this.selectedProjectId = projectId;
-  }
-
-  submitInvestment(): void {
-    if (this.selectedProjectId) {
-      if (this.investment.investmentAmount <= 0) {
-        alert('Investment amount must be a positive number.');
-        return;
-      }
-
-      this.isSubmitting = true;
-
-      const user = this.users.find(u => u.id === this.investment.userId);
-      this.investment.userName = user ? user.name : 'Unknown';
-
-      this.investmentService.addInvestment(this.investment).subscribe({
-        next: (savedInvestment) => {
-          this.allInvestments.push(savedInvestment);
-          this.filterInvestments();
-          this.submissionStatus = 'Investment successfully submitted!';
-          this.isSubmitting = false;
-        },
-        error: (err) => {
-          console.error('Error submitting investment:', err);
-          this.submissionStatus = 'Error submitting investment.';
-          this.isSubmitting = false;
-        }
-      });
+  ngOnInit() {
+    if (!this.authService.isAuthenticated()) {
+      this.router.navigate(['/home/login']);
     }
   }
 
-  filterInvestments(): void {
-    this.investments = this.allInvestments.filter(investment =>
-      investment.userName?.toLowerCase().includes(this.searchTerm.toLowerCase())
-    );
+  submitInvestment(): void {
+    if (this.investment.investmentAmount <= 0) {
+      alert('Le montant doit être supérieur à 0.');
+      return;
+    }
+  
+    this.isSubmitting = true;
+  
+    this.investmentService.addInvestment(this.investment).subscribe({
+      next: (savedInvestment) => {
+        console.log('Investment ajouté:', savedInvestment);
+  
+        // Utiliser ta fonction updateInvestmentPerformance
+        this.investmentService.updateInvestmentPerformance(savedInvestment.id).subscribe({
+          next: (updatedInvestment) => {
+            console.log('Performance mise à jour:', updatedInvestment);
+            this.investment = updatedInvestment; // Optionnel : pour rafraîchir l'objet affiché
+            this.submissionStatus = 'Investissement soumis et performance mise à jour avec succès !';
+            this.isSubmitting = false;
+          },
+          error: (err) => {
+            console.error('Erreur lors de la mise à jour de la performance:', err);
+            this.submissionStatus = 'Investissement soumis, mais erreur lors de la mise à jour de la performance.';
+            this.isSubmitting = false;
+          }
+        });
+      },
+      error: (err) => {
+        console.error('Erreur lors de la soumission:', err);
+        this.submissionStatus = 'Erreur lors de la soumission.';
+        this.isSubmitting = false;
+      }
+    });
   }
+  
 }

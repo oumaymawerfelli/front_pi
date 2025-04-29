@@ -1,18 +1,13 @@
 export class InvestmentHistory {
   constructor(
     public id: number,
-    public investmentId: number,
     public action: string,
-    public actionDate: string,
-    public performedBy: string
+    public description: string,
+    public performedBy: string,
+    public actionDate: Date
   ) {}
 
   formatActionDate(): string {
-    const date = new Date(this.actionDate);
-    return date.toLocaleDateString('fr-FR', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    }); // Exemple : "21 avril 2025"
+    return this.actionDate.toLocaleString();
   }
 }

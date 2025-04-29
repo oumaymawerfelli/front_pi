@@ -7,10 +7,11 @@ import { InvestmentHistory } from 'src/app/models/investment-history';
   providedIn: 'root'
 })
 export class InvestmentHistoryService {
-  private baseUrl = 'http://localhost:8089/pi/api/investment-history';
+  private apiUrl = 'http://localhost:8089/pi/api/investment-history';
 
   constructor(private http: HttpClient) { }
 
   getHistoryByInvestmentId(investmentId: number): Observable<InvestmentHistory[]> {
-    return this.http.get<InvestmentHistory[]>(`${this.baseUrl}/${investmentId}`);
-  }}
+    return this.http.get<InvestmentHistory[]>(`${this.apiUrl}/${investmentId}`);
+  }
+}

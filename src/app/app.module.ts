@@ -1,31 +1,18 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-<<<<<<< HEAD
-import { FormsModule } from '@angular/forms'; 
-
-=======
->>>>>>> origin/nada
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
-
-
 import { AppComponent } from './app.component';
 import { LandingComponent } from './landing/landing.component';
 import { HomeComponent } from './home/home.component';
-<<<<<<< HEAD
+
+
 import { InvestorComponent } from './investment/investor/investor.component';
 import { InvestorListComponent } from './investment/investor-list/investor-list.component';
 import { InvestorHistoComponent } from './investment/investor-histo/investor-histo.component';
-=======
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { LoginComponent } from './users/login/login.component';
-import { RegisterComponent } from './users/register/register.component';
-import { ResetPasswordComponent } from './users/reset-password/reset-password.component';
-import { ForgotPasswordComponent } from './users/forgot-password/forgot-password.component';
-import { ListUsersComponent } from './users/list-users/list-users.component';
-import { FormComponent } from './users/form/form.component';
-import { OAuth2RedirectComponent } from './users/oauth2-redirect/oauth2-redirect.component';
-import { ProfileComponent } from './users/profile/profile.component';
+
 import { PendingUsersComponent } from './pending-users/pending-users.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UsersModule } from './users/users.module';
@@ -45,7 +32,8 @@ import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { RecaptchaModule } from 'ng-recaptcha'; // Import RecaptchaModule
 import { NgChartsModule } from 'ng2-charts';
 import { AdminAnalyticsComponent } from './users/admin-analytics/admin-analytics.component';
->>>>>>> origin/nada
+
+
 
 
 
@@ -54,11 +42,11 @@ import { AdminAnalyticsComponent } from './users/admin-analytics/admin-analytics
     AppComponent,
     LandingComponent,
     HomeComponent,
-<<<<<<< HEAD
+
     InvestorComponent,
     InvestorListComponent,
-    InvestorHistoComponent
-=======
+    InvestorHistoComponent,
+
     PendingUsersComponent, // only components that aren't in UsersModule
     MarketplaceComponent,
     PanierComponent,
@@ -71,17 +59,18 @@ import { AdminAnalyticsComponent } from './users/admin-analytics/admin-analytics
     LoanInfoComponent,
     ContactComponent,
    
->>>>>>> origin/nada
+   
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-<<<<<<< HEAD
+
     FormsModule,
     HttpClientModule,
    
     
-=======
+
     UsersModule,
     FormsModule,
     ReactiveFormsModule,
@@ -93,7 +82,7 @@ import { AdminAnalyticsComponent } from './users/admin-analytics/admin-analytics
     ReactiveFormsModule,
     RecaptchaModule,
     NgChartsModule
->>>>>>> origin/nada
+
   ],
   providers: [AuthService, AdminGuard],
 
