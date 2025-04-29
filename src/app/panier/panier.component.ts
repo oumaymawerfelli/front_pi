@@ -79,7 +79,7 @@ export class PanierComponent implements OnInit {
         },
         error: (err) => {
           this.isLoading = false;
-          console.error('Erreur lors du chargement des lignes du panier :', err);
+          console.error('Erreur lors du chargement des lignes du panier :', err);  
           this.errorMessage = 'Erreur lors du chargement des lignes du panier';
         }
       });

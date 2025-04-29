@@ -4,6 +4,7 @@ import { ProductService } from 'src/app/core/services/Product.service';
 import { LignePanierService } from 'src/app/core/services/LingePanier.service ';
 import { LignePanier } from 'src/app/core/models/LignePanier'; 
 import { Router } from '@angular/router';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { PanierService } from 'src/app/core/services/Panier.service'; // Importer le service Panier
 
 @Component({
@@ -12,7 +13,7 @@ import { PanierService } from 'src/app/core/services/Panier.service'; // Importe
   styleUrls: ['./marketplace.component.css']
 })
 export class MarketplaceComponent implements OnInit {
-  chatbotVisible = false;
+
   produits: Product[] = [];
   quantities: { [key: number]: number } = {};  // Dictionnaire pour stocker les quantités de chaque produit
   panierId: number | null = null;  // ID du panier de l'utilisateur connecté
@@ -21,7 +22,8 @@ export class MarketplaceComponent implements OnInit {
     private productService: ProductService,
     private lignePanierService: LignePanierService,
     private panierService: PanierService,  // Injection du service Panier
-    private router: Router
+    private router: Router,
+    private http: HttpClient
   ) {}
 
   ngOnInit() {
@@ -86,4 +88,36 @@ export class MarketplaceComponent implements OnInit {
   goToPanier() {
     this.router.navigate(['/home/panier']);
   }
+  chatbotVisible = false;
+userMessage = '';
+botResponse = '';
+
+sendMessage() {
+  if (!this.userMessage.trim()) {
+    return;
+  }
+
+  const headers = new HttpHeaders({
+    'Authorization': `Bearer a5922fb1cd51f52492164299208f1ec6258ce81e38b567dda0e490e95246a261`,
+    'Content-Type': 'application/json'
+  });
+
+  const body = {
+    model: "meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo",
+    messages: [
+      { role: "user", content: this.userMessage }
+    ],
+    temperature: 0.7,
+    max_tokens: 200
+  };
+
+  this.http.post('https://api.together.xyz/v1/chat/completions', body, { headers })
+    .subscribe((response: any) => {
+      this.botResponse = response.choices[0].message.content.trim();
+      this.userMessage = ''; // vider la zone de texte après envoi
+    }, (error) => {
+      console.error('Erreur API', error);
+      this.botResponse = 'Erreur de communication avec le chatbot.';
+    });
+}
 }

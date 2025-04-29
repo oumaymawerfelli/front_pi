@@ -15,6 +15,7 @@ import { ResetPasswordComponent } from './users/reset-password/reset-password.co
 import { MarketplaceComponent } from './marketplace/marketplace.component';
 import { PanierComponent } from './panier/panier.component';
 import { OrdersComponent } from './orders/orders.component';
+import { ChatbotComponent } from './chatbot/chatbot.component';
 const routes: Routes = [
        // Default route
   { path: 'landing', component: LandingComponent ,
@@ -50,7 +51,9 @@ const routes: Routes = [
 
 
   { path: 'market', component: MarketplaceComponent 
-  }
+  },
+  { path: 'chat', component: ChatbotComponent }, 
+  
   ]
 },
 

@@ -30,7 +30,10 @@ import { LoanInfoComponent } from './loans/loan-info/loan-info.component';
 import { LoanManagementComponent } from './loans/loan-management/loan-management.component';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { RecaptchaModule } from 'ng-recaptcha';
-import { OrdersComponent } from './orders/orders.component'; // Import RecaptchaModule
+import { OrdersComponent } from './orders/orders.component';
+  // Import RecaptchaModule
+import { CommonModule } from '@angular/common';
+import { ChatbotComponent } from './chatbot/chatbot.component';
 
 
 
@@ -50,7 +53,9 @@ import { OrdersComponent } from './orders/orders.component'; // Import Recaptcha
     LoanApplicationComponent,
     LoanInfoComponent,
     ContactComponent,
-    OrdersComponent
+    OrdersComponent,
+    ChatbotComponent,
+  
   ],
   imports: [
     BrowserModule,
@@ -64,7 +69,9 @@ import { OrdersComponent } from './orders/orders.component'; // Import Recaptcha
     UsersModule,
     FormsModule,
     ReactiveFormsModule,
-    RecaptchaModule
+    RecaptchaModule,
+    CommonModule,
+    FormsModule
   ],
   providers: [AuthService, AdminGuard],
 

@@ -1,31 +1,56 @@
 <div class="product-list">
-    <div *ngFor="let produit of produits" class="product-item">
-      <div class="product-image">
-        <img [src]="produit.productImage" alt="{{ produit.productName }}">
-      </div>
-  
-      <div class="product-details">
-        <h3>{{ produit.productName }}</h3>
-        <p><strong>Prix :</strong> {{ produit.productPrice }} TND</p>
-  
-        <!-- Champ de saisie pour la quantité -->
-        <input type="number" [(ngModel)]="quantities[produit.productId]" min="1" placeholder="Quantité" class="quantity-input">
-  
-        <!-- Bouton d'ajout au panier -->
-        <button class="btn" (click)="addToCart(produit)">
-          Ajouter au panier
-        </button>
+  <div *ngFor="let produit of produits" class="product-item">
+    <div class="product-image">
+      <img [src]="produit.productImage" alt="{{ produit.productName }}" />
+    </div>
+
+    <div class="product-details">
+      <h3>{{ produit.productName }}</h3>
+      <p><strong>Prix :</strong> {{ produit.productPrice }} TND</p>
+      <h3>{{ produit.productDescription }}</h3>
+      <input 
+        type="number" 
+        [(ngModel)]="quantities[produit.productId]" 
+        min="1" 
+        placeholder="Quantité" 
+        class="quantity-input" 
+      />
+
+      <button class="btn add-to-cart" (click)="addToCart(produit)">
+        <i class="fas fa-shopping-cart"></i> Ajouter au panier
+      </button>
+    </div>
+  </div>
+
+  <button class="btn-consulter-panier" (click)="goToPanier()">
+    🛒 Consulter Panier
+  </button>
+
+  <button class="chatbot-button" (click)="chatbotVisible = !chatbotVisible">
+    💬Chat
+  </button>
+
+  <!-- Fenêtre de chat -->
+  <div class="chatbot-window" *ngIf="chatbotVisible">
+    <div class="chatbot-header">
+      <h3>Assistant Virtuel</h3>
+      <button class="close-chat" (click)="chatbotVisible = false">✖</button>
+    </div>
+
+    <div class="chatbot-messages">
+      <div *ngIf="botResponse" class="bot-message">
+        <p>{{ botResponse }}</p>
       </div>
     </div>
-  
-    <!-- Bouton pour consulter le panier -->
-    <button class="btn-consulter-panier" (click)="goToPanier()">
-      🛒 Consulter Panier
-    </button>
-    <button class="chatbot-button" (click)="chatbotVisible = !chatbotVisible">
-      💬 Chat avec nous
-    </button>
-   
-    
+
+    <div class="chatbot-footer">
+      <input 
+        type="text" 
+        [(ngModel)]="userMessage" 
+        placeholder="Votre message..." 
+        (keyup.enter)="sendMessage()" 
+      />
+      <button (click)="sendMessage()">Envoyer</button>
+    </div>
   </div>
-  
+</div>

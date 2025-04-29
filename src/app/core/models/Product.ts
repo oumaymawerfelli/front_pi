@@ -6,5 +6,8 @@ export class Product {
     productStock!: number;    // Remplace 'quantite' par 'productStock'
     lignesPanier?: any[];     // Si tu veux utiliser 'lignesPanier', garde cette propriété
     productImage?: string;
+    productDescription?: string; // Ajout d'une description de produit
+    productCategory?: string;  // Ajout d'une catégorie de produit 
+    
   }
   
