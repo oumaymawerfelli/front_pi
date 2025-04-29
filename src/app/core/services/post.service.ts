@@ -13,7 +13,7 @@ export class PostService {
   constructor(private http: HttpClient) {}
   getAllPosts(): Observable<Post[]> {
     return this.http.get<Post[]>(`${this.baseUrl}/all`);
-  }
+  } 
 
   getPost(id: number): Observable<Post> {
     return this.http.get<Post>(`${this.baseUrl}/${id}`);

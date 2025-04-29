@@ -55,7 +55,7 @@ const routes: Routes = [
     children: [
       { path: 'profile', component: ProfileComponent },
       { path: 'post', component: PostComponent },
-      { path: 'statPost', component: StatPostComponent }, //  a ajouter dans  backoffice module routing
+   //   { path: 'statPost', component: StatPostComponent }, //  a ajouter dans  backoffice module routing
 
 
     ],
