@@ -53,6 +53,124 @@ export class ListUsersComponent implements OnInit {
     });
   }
 
+  
+
+ 
+
+  editUser(user: User): void {
+    this.selectedUser = {...user};
+    this.showForm = true;
+  }
+ 
+
+  handleFormSubmit(user: User): void {
+    if (user.idUser) {
+      this.userService.updateUser(user).subscribe(
+        (updatedUser) => {
+          const index = this.users.findIndex(u => u.idUser === updatedUser.idUser);
+          if (index !== -1) {
+            this.users[index] = updatedUser;
+          }
+  
+          this.groupUsersByRole();    // 💥 RE-GROUP first!
+          this.refreshFilteredUsers(); // 💥 THEN refresh the filtered users
+  
+          this.showForm = false;
+          this.approvedUsersCount = this.users.filter(u => u.enabled).length;
+        },
+        (error) => {
+          console.error('Error updating user', error);
+        }
+      );
+    } else {
+      this.userService.addUser(user).subscribe(
+        (newUser) => {
+          this.users.push(newUser);
+          this.refreshFilteredUsers();
+          this.showForm = false;
+          this.approvedUsersCount = this.users.filter(u => u.enabled).length;
+          this.groupUsersByRole(); // re-group if needed
+        },
+        (error) => {
+          console.error('Error adding user', error);
+        }
+      );
+    }
+  }
+  private refreshFilteredUsers(): void {
+    if (this.currentView === 'pending') {
+      this.pendingUsers = this.users.filter(user => !user.enabled);
+      this.filteredUsers = this.pendingUsers;
+    } else if (this.currentView === 'role') {
+      this.filteredUsers = this.groupedUsers[this.currentRole] || [];
+    } else {
+      this.filteredUsers = [...this.users];
+    }
+  }
+    
+
+  addNewUser(): void {
+    this.selectedUser = null;
+    this.showForm = true;
+  }
+
+  cancelForm(): void {
+    this.showForm = false;
+    this.selectedUser = null;
+  }
+
+  approveUser(id?: number): void {
+    if (id === undefined) {
+      console.error('Cannot approve user without ID');
+      return;
+    }
+  
+    this.userService.approveUser(id).subscribe(
+      () => {
+        const user = this.users.find(u => u.idUser === id);
+        if (user) {
+          user.enabled = true;
+        }
+  
+        this.approvedUsersCount = this.users.filter(u => u.enabled).length;
+        this.pendingUsers = this.users.filter(u => !u.enabled);
+        this.pendingUsersCount = this.pendingUsers.length;
+        this.groupUsersByRole();   // Optional but recommended
+        this.refreshFilteredUsers(); 
+      },
+      (error) => {
+        console.error('Error approving user', error);
+      }
+    );
+  }
+  
+
+  testNavigation() {
+    this.router.navigate(['/admin/pending-users'])
+      .then(success => {
+        if (!success) {
+          console.warn('Navigation failed - check your routes and guards');
+        }
+      })
+      .catch(err => {
+        console.error('Navigation error:', err);
+      });
+  }
+
+  getUserProfileImage(user: User): string {
+    return user.profilePictureBase64 || user.profilePicture || 'https://via.placeholder.com/80';
+  }
+
+  onSearch(event: Event): void {
+    const term = (event.target as HTMLInputElement).value.toLowerCase();
+    this.searchTerm = term;
+    this.filteredUsers = this.users.filter(user => 
+      user.name.toLowerCase().includes(term) || 
+      user.email.toLowerCase().includes(term) ||
+      user.role.toLowerCase().includes(term)
+    );
+  }
+
   viewByRole(role: string): void {
     this.currentView = 'role';
     this.currentRole = role;
@@ -73,20 +191,6 @@ export class ListUsersComponent implements OnInit {
     return role.toLowerCase().replace('role_', '');
   }
 
-  onSearch(event: Event): void {
-    const term = (event.target as HTMLInputElement).value.toLowerCase();
-    this.searchTerm = term;
-    this.filteredUsers = this.users.filter(user => 
-      user.name.toLowerCase().includes(term) || 
-      user.email.toLowerCase().includes(term) ||
-      user.role.toLowerCase().includes(term)
-    );
-  }
-
-  editUser(user: User): void {
-    this.selectedUser = {...user};
-    this.showForm = true;
-  }
   getRoles(): string[] {
     return Object.keys(this.groupedUsers);
   }
@@ -120,84 +224,6 @@ export class ListUsersComponent implements OnInit {
         }
       );
     }
-  }
-
-  handleFormSubmit(user: User): void {
-    if (user.idUser) {
-      this.userService.updateUser(user).subscribe(
-        (updatedUser) => {
-          const index = this.users.findIndex(u => u.idUser === updatedUser.idUser);
-          if (index !== -1) {
-            this.users[index] = updatedUser;
-            this.filteredUsers = [...this.users];
-          }
-          this.showForm = false;
-          this.approvedUsersCount = this.users.filter(u => u.enabled).length;
-        },
-        (error) => {
-          console.error('Error updating user', error);
-        }
-      );
-    } else {
-      this.userService.addUser(user).subscribe(
-        (newUser) => {
-          this.users.push(newUser);
-          this.filteredUsers = [...this.users];
-          this.showForm = false;
-          this.approvedUsersCount = this.users.filter(u => u.enabled).length;
-        },
-        (error) => {
-          console.error('Error adding user', error);
-        }
-      );
-    }
-  }
-
-  addNewUser(): void {
-    this.selectedUser = null;
-    this.showForm = true;
-  }
-
-  cancelForm(): void {
-    this.showForm = false;
-    this.selectedUser = null;
-  }
-
-  approveUser(id?: number): void {
-    if (id === undefined) {
-      console.error('Cannot approve user without ID');
-      return;
-    }
-
-    this.userService.approveUser(id).subscribe(
-      () => {
-        const user = this.users.find(u => u.idUser === id);
-        if (user) {
-          user.enabled = true;
-          this.filteredUsers = [...this.users];
-          this.approvedUsersCount = this.users.filter(u => u.enabled).length;
-        }
-      },
-      (error) => {
-        console.error('Error approving user', error);
-      }
-    );
-  }
-
-  testNavigation() {
-    this.router.navigate(['/admin/pending-users'])
-      .then(success => {
-        if (!success) {
-          console.warn('Navigation failed - check your routes and guards');
-        }
-      })
-      .catch(err => {
-        console.error('Navigation error:', err);
-      });
-  }
-
-  getUserProfileImage(user: User): string {
-    return user.profilePictureBase64 || user.profilePicture || 'https://via.placeholder.com/80';
   }
   
 }

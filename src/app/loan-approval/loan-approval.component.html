@@ -1,0 +1,13 @@
+<div style="text-align: center; margin-top: 50px;">
+    <h2>Loan Approval Request</h2>
+  
+    <div *ngIf="!actionDone">
+      <button (click)="approve()">✅ Approve</button>
+      <button (click)="reject()">❌ Reject</button>
+    </div>
+  
+    <div *ngIf="message">
+      <p>{{ message }}</p>
+    </div>
+  </div>
+  

@@ -4,269 +4,198 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>loan application</title>
+  <title>Loan Application</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
-
- 
- 
-  
 </head>
 
+<body>
 
+  <!-- Loan Application Management Section -->
+  <section id="loanapplicationmanagement" class="equipment-management section">
+    <div class="container">
+      <div class="row gy-4">
 
+        <!-- Loan Application Section -->
+        <section id="loan-application" class="loan-application section">
 
+          <div class="mb-5">
+            <!-- Google Map Embed -->
+            <iframe 
+              style="width: 100%; height: 400px;" 
+              src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d13917.819393481026!2d9.7982342!3d36.8667472!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x13c3c9919a5ab089%3A0xf8b6cf1e77242071!2zQXJpYW5h!5e0!3m2!1sen!2stn!4v1680708532870" 
+              frameborder="0" 
+              allowfullscreen="">
+            </iframe>
+          </div>        
 
+          <div class="container" data-aos="fade">
+            <div class="row gy-5 gx-lg-5">
+              <div class="col-lg-4">
+                <div class="info">
+                  <h3>Loan Application Details</h3>
+                  <p>Please fill out all required fields carefully and review your information before submission.</p>
 
+                  <!-- Office Information -->
+                  <div class="info-item d-flex">
+                    <i class="bi bi-geo-alt flex-shrink-0"></i>
+                    <div>
+                      <h4>Processing Center:</h4>
+                      <p>Ariana, Tunisia</p>
+                    </div>
+                  </div>
 
+                  <!-- Support Email -->
+                  <div class="info-item d-flex">
+                    <i class="bi bi-envelope flex-shrink-0"></i>
+                    <div>
+                      <h4>Support Email:</h4>
+                      <p>loansupportexample.com</p>
+                    </div>
+                  </div>
 
+                  <!-- Helpline -->
+                  <div class="info-item d-flex">
+                    <i class="bi bi-phone flex-shrink-0"></i>
+                    <div>
+                      <h4>Helpline:</h4>
+                      <p>+216 12 345 678</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
+              <div class="col-lg-8">
+                <form [formGroup]="applicationForm" (ngSubmit)="submitApplication()" class="loan-form">
+                  <!-- Hidden fields -->
+                  <input type="hidden" formControlName="equipmentId">
+                  <input type="hidden" formControlName="landId">
+                  <input type="hidden" formControlName="statusReq">
+                  <input type="hidden" formControlName="ownerId" />
 
+                  <div class="row">
+                    <!-- Borrower Name -->
+                    <div class="col-md-6 form-group">
+                      <label for="borrowerName">Borrower Name</label>
+                      <input type="text" id="borrowerName" formControlName="borrowerName" class="form-control">
+                      <div *ngIf="applicationForm.get('borrowerName')?.invalid && applicationForm.get('borrowerName')?.touched" class="error-message">
+                        Required field
+                      </div>
+                    </div>
 
+                    <!-- Borrower Email -->
+                    <div class="col-md-6 form-group">
+                      <label for="borrowerContact">Email</label>
+                      <input type="email" id="borrowerContact" formControlName="borrowerContact" class="form-control">
+                      <div *ngIf="applicationForm.get('borrowerContact')?.invalid && applicationForm.get('borrowerContact')?.touched" class="error-message">
+                        <span *ngIf="applicationForm.get('borrowerContact')?.hasError('required')">Required field</span>
+                        <span *ngIf="applicationForm.get('borrowerContact')?.hasError('email')">Invalid email format</span>
+                      </div>
+                    </div>
+                  </div>
 
+                  <!-- Owner Selection -->
+                  <div class="form-group">
+                    <label for="ownerId">Choose Owner</label>
+                    <select id="ownerId" formControlName="ownerId" class="form-control">
+                      <option *ngFor="let owner of owners" [value]="owner.id">{{ owner.name }}</option>
+                    </select>
+                  </div>
 
+                  <!-- Loan Purpose -->
+                  <div class="form-group">
+                    <label for="loanPurpose">Loan Purpose</label>
+                    <select id="loanPurpose" formControlName="loanPurpose" class="form-control">
+                      <option value="">Select a purpose</option>
+                      <option value="equipment">Agricultural Equipment</option>
+                      <option value="land">Land Investment</option>
+                      <option value="seeds">Seeds & Fertilizers</option>
+                    </select>
+                    <div *ngIf="applicationForm.get('loanPurpose')?.invalid && applicationForm.get('loanPurpose')?.touched" class="error-message">
+                      Required field
+                    </div>
+                  </div>
 
-<!-- Loan Application Section -->
-<section id="loan-application" class="loan-application section">
+                  <!-- Loan Details Row -->
+                  <div class="row">
+                    <div class="col-md-6 form-group">
+                      <label for="loanDuration">Loan Duration (months)</label>
+                      <input type="number" id="loanDuration" formControlName="loanDuration" [max]="maxLoanDuration" [min]="1" class="form-control">
+                      <div *ngIf="applicationForm.get('loanDuration')?.invalid && applicationForm.get('loanDuration')?.touched" class="error-message">
+                        <span *ngIf="applicationForm.get('loanDuration')?.hasError('required')">Required field</span>
+                        <span *ngIf="applicationForm.get('loanDuration')?.hasError('min')">Minimum 1 month</span>
+                        <span *ngIf="applicationForm.get('loanDuration')?.hasError('max')">Maximum {{maxLoanDuration}} months</span>
+                      </div>
+                    </div>
 
-  <div class="mb-5">
-    <!-- Google Map Embed -->
-    <iframe 
-      style="width: 100%; height: 400px;" 
-      src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d13917.819393481026!2d9.7982342!3d36.8667472!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x13c3c9919a5ab089%3A0xf8b6cf1e77242071!2zQXJpYW5h!5e0!3m2!1sen!2stn!4v1680708532870" 
-      frameborder="0" 
-      allowfullscreen="">
-    </iframe>
-  </div>        
+                    <div class="col-md-6 form-group">
+                      <label for="startDate">Preferred Start Date</label>
+                      <input type="date" id="startDate" formControlName="startDate" class="form-control">
+                      <div *ngIf="applicationForm.get('startDate')?.invalid && applicationForm.get('startDate')?.touched" class="error-message">
+                        Valid start date required
+                      </div>
+                    </div>
+                  </div>
 
-  <div class="container" data-aos="fade">
-    <div class="row gy-5 gx-lg-5">
-      <div class="col-lg-4">
-        <div class="info">
-          <h3>Loan Application Details</h3>
-          <p>Please fill out all required fields carefully and review your information before submission.</p>
+                  <!-- Special Requests -->
+                  <div class="form-group">
+                    <label for="specialRequest">Special Requests</label>
+                    <textarea id="specialRequest" formControlName="specialRequest" class="form-control" rows="4" placeholder="Any additional requirements or comments..."></textarea>
+                  </div>
 
-          <!-- Office Information -->
-          <div class="info-item d-flex">
-            <i class="bi bi-geo-alt flex-shrink-0"></i>
-            <div>
-              <h4>Processing Center:</h4>
-              <p>Ariana, Tunisia</p>
+                  <!-- Signature Section -->
+                  <div class="signature-section">
+                    <h2 class="text-center mb-3">Sign Below</h2>
+                    <div class="canvas-container">
+                      <canvas #canvas width="600" height="200" class="signature-canvas"></canvas>
+                    </div>
+
+                    <!-- Signature Buttons -->
+                    <div class="signature-buttons mt-3">
+                      <button type="button" class="btn btn-warning" (click)="clearSignature()">Clear</button>
+                      <button type="button" class="btn btn-info" (click)="undoSignature()">Undo</button>
+                      <button type="button" class="btn btn-success" (click)="downloadSignature()">Download</button>
+                    </div>
+
+                    <!-- Error Message for Signature -->
+                    <div *ngIf="applicationForm.get('signature')?.invalid && applicationForm.get('signature')?.touched" class="error-message">
+                      Signature is required.
+                    </div>
+                  </div>
+
+                  <!-- Terms Acceptance Section -->
+                  <div class="form-actions mt-4">
+                    <div>
+                      <input type="checkbox" formControlName="termsAccepted" id="termsAccepted" />
+                      <label for="termsAccepted">
+                        I agree to the 
+                        <a (click)="navigateToTerms()" class="terms-link">
+                          Terms and Security
+                        </a>
+                      </label>
+                    </div>
+                  </div>
+
+                  <!-- Submit and Cancel Actions -->
+                  <div class="form-actions mt-4">
+                    <button type="submit" class="btn btn-primary">
+                      Submit Application
+                    </button>
+                    <button type="button" class="btn btn-secondary cancel-button" (click)="cancelApplication()">
+                      Cancel
+                    </button>
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
 
-          <!-- Support Email -->
-          <div class="info-item d-flex">
-            <i class="bi bi-envelope flex-shrink-0"></i>
-            <div>
-              <h4>Support Email:</h4>
-              <p>loansupportexample.com</p>
-            </div>
-          </div>
+        </section> <!-- End Loan Application Section -->
 
-          <!-- Helpline -->
-          <div class="info-item d-flex">
-            <i class="bi bi-phone flex-shrink-0"></i>
-            <div>
-              <h4>Helpline:</h4>
-              <p>+216 12 345 678</p>
-            </div>
-          </div>
-        </div>
       </div>
+    </div>
+  </section> <!-- End Loan Application Management Section -->
 
+</body>
 
-
-
-
-
-
-
-
-
-
-
-      
-
-      <div class="col-lg-8">
-        <form [formGroup]="applicationForm" (ngSubmit)="submitApplication()" class="loan-form">
-          <!-- Hidden fields -->
-          <input type="hidden" formControlName="equipmentId">
-          <input type="hidden" formControlName="landId">
-          
-          <input type="hidden" formControlName="statusReq">
-          <input type="hidden" formControlName="ownerId" />
-
-          <div class="row">
-            <!-- Borrower Name -->
-            <div class="col-md-6 form-group">
-              <label for="borrowerName">Borrower Name</label>
-              <input type="text" id="borrowerName" formControlName="borrowerName" class="form-control">
-              <div *ngIf="applicationForm.get('borrowerName')?.invalid && applicationForm.get('borrowerName')?.touched" 
-                   class="error-message">
-                Required field
-              </div>
-            </div>
-
-  
-      
-            <!-- Borrower Email -->
-            <div class="col-md-6 form-group">
-              <label for="borrowerContact">Email</label>
-              <input type="email" id="borrowerContact" formControlName="borrowerContact" class="form-control">
-              <div *ngIf="applicationForm.get('borrowerContact')?.invalid && applicationForm.get('borrowerContact')?.touched" 
-                   class="error-message">
-                <span *ngIf="applicationForm.get('borrowerContact')?.hasError('required')">Required field</span>
-                <span *ngIf="applicationForm.get('borrowerContact')?.hasError('email')">Invalid email format</span>
-              </div>
-            </div>
-          </div>
-          <!-- Owner Selection -->
-          <div class="form-group">
-            <label for="ownerId">Choose Owner</label>
-            <select id="ownerId" formControlName="ownerId" class="form-control">
-              <option *ngFor="let owner of owners" [value]="owner.id">{{ owner.name }}</option>
-            </select>
-          </div>
-          
-      
-          <!-- Loan Purpose -->
-          <div class="form-group">
-            <label for="loanPurpose">Loan Purpose</label>
-            <select id="loanPurpose" formControlName="loanPurpose" class="form-control">
-              <option value="">Select a purpose</option>
-              <option value="equipment">Agricultural Equipment</option>
-              <option value="land">Land Investment</option>
-              <option value="seeds">Seeds & Fertilizers</option>
-            </select>
-            <div *ngIf="applicationForm.get('loanPurpose')?.invalid && applicationForm.get('loanPurpose')?.touched" 
-                 class="error-message">
-              Required field
-            </div>
-          </div>
-      
-          <!-- Loan Details Row -->
-          <div class="row">
-            <div class="col-md-6 form-group">
-              <label for="loanDuration">Loan Duration (months)</label>
-              <input type="number" id="loanDuration" formControlName="loanDuration" 
-                     [max]="maxLoanDuration" [min]="1" class="form-control">
-              <div *ngIf="applicationForm.get('loanDuration')?.invalid && applicationForm.get('loanDuration')?.touched" 
-                   class="error-message">
-                <span *ngIf="applicationForm.get('loanDuration')?.hasError('required')">Required field</span>
-                <span *ngIf="applicationForm.get('loanDuration')?.hasError('min')">Minimum 1 month</span>
-                <span *ngIf="applicationForm.get('loanDuration')?.hasError('max')">Maximum {{maxLoanDuration}} months</span>
-              </div>
-            </div>
-      
-            <div class="col-md-6 form-group">
-              <label for="startDate">Preferred Start Date</label>
-              <input type="date" id="startDate" formControlName="startDate" class="form-control">
-              <div *ngIf="applicationForm.get('startDate')?.invalid && applicationForm.get('startDate')?.touched" 
-                   class="error-message">
-                Valid start date required
-              </div>
-            </div>
-          </div>
-      
-          <!-- Special Requests -->
-          <div class="form-group">
-            <label for="specialRequest">Special Requests</label>
-            <textarea id="specialRequest" formControlName="specialRequest" 
-                      class="form-control" rows="4" 
-                      placeholder="Any additional requirements or comments..."></textarea>
-          </div>
-      
-        
-      
-          <!-- Signature Section -->
-          <div class="signature-section">
-            <h2 class="text-center mb-3">Sign Below</h2>
-            <div class="canvas-container">
-              <canvas #canvas width="600" height="200" class="signature-canvas"></canvas>
-            </div>
-      
-            <!-- Signature Buttons -->
-            <div class="signature-buttons mt-3">
-              <button type="button" class="btn btn-warning" (click)="clearSignature()">Clear</button>
-              <button type="button" class="btn btn-info" (click)="undoSignature()">Undo</button>
-              <button type="button" class="btn btn-success" (click)="downloadSignature()">Download</button>
-            </div>
-      
-            <!-- Error Message for Signature -->
-            <div *ngIf="applicationForm.get('signature')?.invalid && applicationForm.get('signature')?.touched" class="error-message">
-              Signature is required.
-            </div>
-          </div>
-
-            <!-- Terms Acceptance Section -->
-            <div class="form-actions mt-4">
-              <div>
-                <input type="checkbox" formControlName="termsAccepted" id="termsAccepted" />
-                <label for="termsAccepted">
-                  I agree to the 
-                  <a (click)="navigateToTerms()" class="terms-link">
-                    Terms and Security
-                  </a>
-                </label>
-              </div>
-            </div>
-      
-          <!-- Submit and Cancel Actions -->
-          <div class="form-actions mt-4">
-            <button type="submit" class="btn btn-primary" >
-              Submit Application
-            </button>
-            <button type="button" class="btn btn-secondary cancel-button" (click)="cancelApplication()">
-              Cancel
-            </button>
-          </div>
-        </form>
-      </div>
-      
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+</html>

@@ -102,3 +102,8 @@ button.readmore {
   outline: none;  
   box-shadow: none;  
 }
+.assign-icon-btn {
+  color: green;
+  cursor: pointer;
+  margin-left: 10px;
+}

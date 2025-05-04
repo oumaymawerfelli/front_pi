@@ -254,6 +254,28 @@ filterProjects(): void {
 }
 
 
+openAssignStudentsDialog(projectId: number) {
+  // This could open a modal dialog to select students
+  // For now, let's simulate with a simple prompt for student IDs
+
+  const studentIdsString = prompt('Enter comma-separated student IDs to assign:');
+  if (studentIdsString) {
+    const studentIds = studentIdsString.split(',').map(id => Number(id.trim()));
+    this.researchProjectService.assignStudentsToProject(projectId, studentIds)
+      .subscribe({
+        next: (response) => {
+          alert('Students successfully assigned!');
+          // Optionally refresh projects or update UI
+        },
+        error: (error) => {
+          console.error('Error assigning students', error);
+          alert('Failed to assign students.');
+        }
+      });
+  }
+}
+
+
 
   
 }

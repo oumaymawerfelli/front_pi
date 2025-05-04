@@ -88,7 +88,20 @@
           <i class="fas fa-check"></i> Approve
         </button>
       </div>
+      
     </div>
+    
   </div>
+
+  <!-- Form Display Section -->
+<div *ngIf="showForm" class="form-container">
+  <app-form 
+    [userToEdit]="selectedUser" 
+    (userSubmitted)="handleFormSubmit($event)">
+  </app-form>
+  
+  <button class="cancel-btn" (click)="cancelForm()">Cancel</button>
+</div>
+
 
  

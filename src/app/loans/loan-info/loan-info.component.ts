@@ -66,6 +66,15 @@ export class LoanInfoComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    setTimeout(() => {
+      const el = document.getElementById('loaninfomanagement');
+
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100); // Small delay to wait until view is rendered
+  
+
     this.loadEquipmentItems();
   }
 
@@ -96,7 +105,7 @@ export class LoanInfoComponent implements OnInit {
   }
 
   redirectToLoanApplication(equipment: Equipment): void {
-    this.router.navigate(['/loan-application'], {
+    this.router.navigate(['home/loan-application'], {
       state: { selectedItem: equipment, borrower: this.borrower }
     });
   }

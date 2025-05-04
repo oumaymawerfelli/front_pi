@@ -36,6 +36,9 @@ import { AddLandComponent } from './loans/add-land/add-land.component';
 import { TermsAcceptanceComponent } from './loans/terms-acceptance/terms-acceptance.component';
 import { InstitutionModule } from './university/institution/institution.module';
 import { ResearchModule } from './university/research/research.module';
+import { RecommendationsComponent } from './recommendations/recommendations.component';
+import { LandComponent } from './loans/lands/lands.component';
+import { LoanApprovalComponent } from './loan-approval/loan-approval.component';
 
 
 
@@ -46,7 +49,7 @@ import { ResearchModule } from './university/research/research.module';
     LandingComponent,
     HomeComponent,
     UnauthorizedComponent,
-  
+  LandComponent,
     BackComponent,
     ContactComponent,
     LoanApplicationComponent,
@@ -57,6 +60,9 @@ import { ResearchModule } from './university/research/research.module';
     AddEquipmentComponent,
     AddLandComponent,
     TermsAcceptanceComponent,
+    RecommendationsComponent,
+    LoanApprovalComponent,
+
  
 
   ],

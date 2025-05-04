@@ -1,0 +1,36 @@
+<section id="landManagementSection" class="land-management section">
+    <div class="container">
+      <div class="row gy-4">
+        <!-- Search Bar -->
+        <div class="col-12">
+          <div class="d-flex mb-4">
+            <input type="number" [(ngModel)]="searchId" placeholder="Enter Land ID" class="form-control me-2" />
+            <button class="btn btn-primary me-2" (click)="getLand(searchId)">Search</button>
+            <button class="btn btn-secondary" (click)="resetSearch()">Reset</button>
+          </div>
+          <div *ngIf="searchError" class="alert alert-danger">⚠️ Land not found.</div>
+        </div>
+  
+        <!-- Land Cards -->
+        <div class="col-lg-4" *ngFor="let land of landList">
+          <div class="card shadow-sm p-3">
+            <img *ngIf="land.images?.length; else noImage" [src]="land.images[0]" class="card-img-top" style="height: 230px; object-fit: cover;" />
+            <ng-template #noImage>
+              <img src="https://via.placeholder.com/600x400?text=No+Image" class="card-img-top" style="height: 230px;" />
+            </ng-template>
+            <div class="card-body">
+              <h5 class="card-title">Location: {{ land.location }}</h5>
+              <p class="card-text">
+                Size: {{ land.size }} ha <br>
+                Soil Type: {{ land.soilType }} <br>
+                Water Req: {{ land.waterRequirement }} L
+              </p>
+              <button class="btn btn-outline-danger btn-sm" (click)="deleteLand(land.idLand)">Delete</button>
+            </div>
+          </div>
+        </div>
+  
+      </div>
+    </div>
+  </section>
+  

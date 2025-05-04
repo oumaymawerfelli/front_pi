@@ -53,5 +53,11 @@ export class ResearchProjectService {
   
     return this.http.get<ResearchProject[]>(`${this.baseUrl}/retrieve-all-projects`, { params });
   }
+
+// Assign students to a project
+assignStudentsToProject(projectId: number, studentIds: number[]): Observable<any> {
+  const url = `${this.baseUrl}/${projectId}/assign-students`; // Use baseUrl here
+  return this.http.post(url, studentIds);
+}
   
 }

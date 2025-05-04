@@ -50,6 +50,17 @@ export class LoanApplicationComponent implements OnInit, AfterViewInit {
   }
   
   ngOnInit(): void {
+    setTimeout(() => {
+      const el = document.getElementById('loanapplicationmanagement');
+
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100); // Small delay to wait until view is rendered
+  
+   
+    
+  
     this.apiService.getOwners().subscribe({
       next: (data: any[]) => {
         this.owners = data;

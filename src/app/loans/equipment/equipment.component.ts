@@ -40,7 +40,7 @@ selectedEquipmentId: number | null = null;
    
       private equipmentService: EquipmentService,
       private router: Router,
-      private http: HttpClient // ✅ inject it here!
+      private http: HttpClient 
    
   ) {}
 
@@ -50,7 +50,7 @@ selectedEquipmentId: number | null = null;
       if (el) {
         el.scrollIntoView({ behavior: 'smooth' });
       }
-    }, 100); // Small delay to wait until view is rendered
+    }, 100); 
   
     this.getAllEquipment();
     

@@ -23,10 +23,10 @@ import { LoanInfoComponent } from './loans/loan-info/loan-info.component';
 import { LoanManagementComponent } from './loans/loan-management/loan-management.component';
 import { EquipmentComponent } from './loans/equipment/equipment.component';
 import { AddEquipmentComponent } from './loans/add-equipment/add-equipment.component';
-
+import { LandComponent } from './loans/lands/lands.component';
 import { AddLandComponent } from './loans/add-land/add-land.component';
 // Guards
-
+import { LoanApprovalComponent } from './loan-approval/loan-approval.component';
 import { AdminGuard } from './guards/admin.guard';
 import { AuthGuard } from './guards/auth.guard';
 
@@ -61,7 +61,7 @@ const routes: Routes = [
       { path: 'university/institution', loadChildren: () => import('./university/institution/institution.module').then(m => m.InstitutionModule) },
       { path: 'university/research-project', loadChildren: () => import('./university/research/research.module').then(m => m.ResearchModule) },
   
-      
+      { path: 'loan-approval', component: LoanApprovalComponent,  },
 
     
   
@@ -71,7 +71,8 @@ const routes: Routes = [
   
       // ✅ Land routes
      
-      { path: 'add-land', component: AddLandComponent }
+      { path: 'add-land', component: AddLandComponent },
+      { path: 'land', component: LandComponent, canActivate:[AuthGuard],},
       
     ]
   },

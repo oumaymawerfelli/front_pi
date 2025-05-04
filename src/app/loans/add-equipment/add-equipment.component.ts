@@ -18,8 +18,8 @@ export class AddEquipmentComponent {
     this.equipmentForm = this.fb.group({
       nameEquipment: ['', Validators.required],
       descriptionEquipment: ['', Validators.required],
-      availabilityEquipment: [true], // default to true
-      images: [''] // comma-separated image URLs
+      availabilityEquipment: [true], 
+      images: [''] 
     });
   }
 

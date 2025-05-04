@@ -1,0 +1,15 @@
+<div *ngIf="recommendations.length > 0; else noData">
+    <h2>Recommended Loan Requests</h2>
+    <ul>
+      <li *ngFor="let rec of recommendations">
+        Loan Purpose: {{ rec.loanPurpose }}<br>
+        Duration: {{ rec.loanDuration }} months<br>
+        Borrower: {{ rec.borrowerName || 'Unknown' }}
+      </li>
+    </ul>
+  </div>
+  
+  <ng-template #noData>
+    <p>No recommendations found.</p>
+  </ng-template>
+  
