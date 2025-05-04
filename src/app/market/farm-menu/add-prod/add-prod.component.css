@@ -1,0 +1,177 @@
+/* add-prod.component.css */
+.container {
+    width: 600px;
+    margin: 2rem auto;
+    padding: 2.5rem;
+    background: #f8fbf3;
+    border-radius: 18px;
+    box-shadow: 0 8px 32px rgba(100, 120, 70, 0.1);
+    border: 1px solid #e0e8d5;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 8px;
+    background: linear-gradient(90deg, #a8d18d, #6a994e, #a8d18d);
+  }
+  
+  h2 {
+    color: #386641;
+    text-align: center;
+    margin-bottom: 2rem;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 2.2rem;
+    letter-spacing: -0.5px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+  }
+  
+  .product-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.8rem;
+  }
+  
+  .form-group {
+    position: relative;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 8px;
+    color: #4a7c59;
+    font-weight: 600;
+    font-family: 'Nunito', sans-serif;
+    font-size: 1rem;
+  }
+  
+  input, textarea, select {
+    width: 100%;
+    padding: 14px 18px;
+    border: 2px solid #cfe1b9;
+    border-radius: 12px;
+    background: #fff;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    font-family: 'Nunito', sans-serif;
+    color: #2d3a25;
+  }
+  
+  input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: #6a994e;
+    box-shadow: 0 0 0 3px rgba(106, 153, 78, 0.2);
+    background: #f9fff3;
+  }
+  
+  textarea {
+    min-height: 120px;
+    resize: vertical;
+  }
+  
+  select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%236a994e'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 18px center;
+    background-size: 18px;
+  }
+  
+  button[type="submit"] {
+    background: #6a994e;
+    color: white;
+    border: none;
+    padding: 16px 24px;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Nunito', sans-serif;
+    letter-spacing: 0.5px;
+    margin-top: 1rem;
+    text-transform: uppercase;
+    box-shadow: 0 4px 6px rgba(106, 153, 78, 0.1);
+  }
+  
+  button[type="submit"]:hover {
+    background: #58803d;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(106, 153, 78, 0.2);
+  }
+  
+  button[type="submit"]:active {
+    transform: translateY(0);
+  }
+  
+  button[type="submit"]:disabled {
+    background: #cfe1b9;
+    transform: none;
+    box-shadow: none;
+    cursor: not-allowed;
+  }
+  
+  .alert-success {
+    padding: 16px 20px;
+    margin-bottom: 25px;
+    border-radius: 12px;
+    color: #1a4d2c;
+    background-color: #d8f3dc;
+    border: 2px solid #b7e4c7;
+    font-family: 'Nunito', sans-serif;
+    text-align: center;
+    animation: fadeIn 0.5s;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .alert-success::after {
+    content: "🌿";
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.4rem;
+  }
+  
+  .error {
+    color: #d62828;
+    font-size: 0.85rem;
+    margin-top: 8px;
+    font-family: 'Nunito', sans-serif;
+    padding-left: 5px;
+  }
+  
+  /* Nature-inspired decorations */
+  .form-group::after {
+    content: "🌱";
+    position: absolute;
+    right: -28px;
+    top: 40px;
+    font-size: 1.3rem;
+    opacity: 0.7;
+  }
+  
+  /* Animations */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .container {
+      padding: 1.5rem;
+      margin: 1rem;
+    }
+    
+    .form-group::after {
+      display: none;
+    }
+  }

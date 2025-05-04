@@ -1,0 +1,115 @@
+<div class="container">
+  <h2>Add Product</h2>
+
+  <!-- Button to toggle form -->
+  <div class="text-center mb-4">
+    <button class="btn btn-success" (click)="toggleForm()">
+      {{ showForm ? 'Hide Add Product Form' : 'Add New Product' }}
+    </button>
+  </div>
+
+  <!-- Success Message -->
+  <div *ngIf="submissionSuccess" class="alert alert-success">
+    Product added successfully!
+  </div>
+
+  <!-- Form only shows when showForm is true -->
+  <form *ngIf="showForm" [formGroup]="productForm" (ngSubmit)="onSubmit()" class="product-form">
+
+    <div class="form-group">
+      <label for="productName">Product Name</label>
+      <input 
+        type="text" 
+        id="productName" 
+        formControlName="productName" 
+        class="form-control" 
+        placeholder="Enter product name" 
+        required
+      />
+      <div *ngIf="productForm.get('productName')?.invalid && productForm.get('productName')?.touched" class="error">
+        Product name is required.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="productDescription">Product Description</label>
+      <textarea 
+        id="productDescription" 
+        formControlName="productDescription" 
+        class="form-control" 
+        placeholder="Enter product description" 
+        required
+      ></textarea>
+      <div *ngIf="productForm.get('productDescription')?.invalid && productForm.get('productDescription')?.touched" class="error">
+        Product description is required.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="productCategory">Category</label>
+      <select 
+        id="productCategory" 
+        formControlName="productCategory" 
+        class="form-control" 
+        required
+      >
+        <option value="" disabled selected>Select category</option>
+        <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+      </select>
+      <div *ngIf="productForm.get('productCategory')?.invalid && productForm.get('productCategory')?.touched" class="error">
+        Category is required.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="productPrice">Price</label>
+      <input 
+        type="number" 
+        id="productPrice" 
+        formControlName="productPrice" 
+        class="form-control" 
+        placeholder="Enter product price" 
+        min="0"
+        required
+      />
+      <div *ngIf="productForm.get('productPrice')?.invalid && productForm.get('productPrice')?.touched" class="error">
+        Price is required and should be greater than 0.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="productStock">Stock Quantity</label>
+      <input 
+        type="number" 
+        id="productStock" 
+        formControlName="productStock" 
+        class="form-control" 
+        placeholder="Enter product stock quantity" 
+        min="0"
+        required
+      />
+      <div *ngIf="productForm.get('productStock')?.invalid && productForm.get('productStock')?.touched" class="error">
+        Stock quantity is required and should be greater than 0.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="productImage">Image URL (Optional)</label>
+      <input 
+        type="text" 
+        id="productImage" 
+        formControlName="productImage" 
+        class="form-control" 
+        placeholder="Enter image URL"
+      />
+    </div>
+
+    <button 
+      type="submit" 
+      [disabled]="productForm.invalid || isLoading" 
+      class="btn btn-primary"
+    >
+      {{ isLoading ? 'Adding...' : 'Add Product' }}
+    </button>
+  </form>
+</div>

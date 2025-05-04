@@ -18,6 +18,14 @@ import { OAuth2RedirectComponent } from './users/oauth2-redirect/oauth2-redirect
 import { AdminAnalyticsComponent } from './users/admin-analytics/admin-analytics.component';
 // Loan components
 
+
+
+
+import { MarketComponent } from './market/market.component';
+
+
+
+
 import { LoanApplicationComponent } from './loans/loan-application/loan-application.component';
 import { LoanInfoComponent } from './loans/loan-info/loan-info.component';
 import { LoanManagementComponent } from './loans/loan-management/loan-management.component';
@@ -62,6 +70,9 @@ const routes: Routes = [
       { path: 'university/research-project', loadChildren: () => import('./university/research/research.module').then(m => m.ResearchModule) },
   
       { path: 'loan-approval', component: LoanApprovalComponent,  },
+      
+     { path: 'market', component: MarketComponent },
+
 
     
   

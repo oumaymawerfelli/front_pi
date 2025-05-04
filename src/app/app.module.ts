@@ -5,6 +5,20 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
+
+
+
+import { MarketComponent } from './market/market.component';
+import { ProductListComponent } from './market/product-list/product-list.component';
+import { ProductComponent } from './market/product-list/product/product.component';
+import { FilterComponent } from './market/product-list/filter/filter.component';
+import { SearchComponent } from './market/product-list/search/search.component';
+import { FarmMenuComponent } from './market/farm-menu/farm-menu.component';
+import { AddProdComponent } from './market/farm-menu/add-prod/add-prod.component';
+import { EditProdComponent } from './market/farm-menu/edit-prod/edit-prod.component';
+import { AiAssisstantComponent } from './market/ai-assisstant/ai-assisstant.component';
+
+
 // Modules
 import { AppRoutingModule } from './app-routing.module';
 import { UsersModule } from './users/users.module';
@@ -55,6 +69,15 @@ import { LoanApprovalComponent } from './loan-approval/loan-approval.component';
     LoanApplicationComponent,
     LoanInfoComponent,
     LoanManagementComponent,
+    FarmMenuComponent,
+    ProductListComponent,
+    ProductComponent,
+    FilterComponent,
+    SearchComponent,
+    AddProdComponent,
+    EditProdComponent,
+    AiAssisstantComponent,
+    MarketComponent,
 
     EquipmentComponent,
     AddEquipmentComponent,

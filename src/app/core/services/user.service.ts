@@ -24,7 +24,22 @@ export class UserService {
       'Content-Type': 'application/json'
     });
   }
+//retourne juste le user id 
+getLoggedInUserId(): number | null {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    return null;
+  }
 
+  try {
+    const decodedToken: any = jwtDecode(token);
+    const userId = decodedToken?.userId || decodedToken?.idUser;
+    return userId || null;
+  } catch (error) {
+    console.error('Failed to decode token', error);
+    return null;
+  }
+}
   
   getUsers(): Observable<User[]> {
     return this.http.get<User[]>(`${this.apiUrl}/get-all-users`, { headers: this.getHeaders() });
