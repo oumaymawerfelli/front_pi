@@ -1,0 +1,112 @@
+.investment-list-container {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  font-family: 'Poppins', sans-serif;
+}
+
+.search-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.search-container h3 {
+  font-size: 24px;
+  color: #2c3e50;
+  margin: 0 0 10px 0;
+  flex: 1 1 100%;
+  text-align: center;
+}
+
+.search-container input[type="text"] {
+  flex: 1 1 auto;
+  padding: 10px 15px;
+  border-radius: 8px;
+  border: 1px solid #ccd0d5;
+  font-size: 16px;
+  margin-right: 10px;
+  min-width: 250px;
+}
+
+.search-container button {
+  padding: 10px 20px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.search-container button:hover {
+  background-color: #2980b9;
+}
+
+.table-container {
+  overflow-x: auto; /* Pour la responsivité */
+}
+
+.investment-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.investment-table th,
+.investment-table td {
+  padding: 15px;
+  text-align: center;
+  border-bottom: 1px solid #e1e5ee;
+}
+
+.investment-table th {
+  background-color: #f1f5f9;
+  color: #34495e;
+  font-size: 16px;
+  text-transform: uppercase;
+}
+
+.investment-table tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+.investment-table a {
+  color: #3498db;
+  text-decoration: none;
+  font-weight: 600;
+  margin-right: 10px;
+}
+
+.investment-table a:hover {
+  text-decoration: underline;
+}
+
+.investment-table button {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.investment-table button:hover {
+  background-color: #2bc03a;
+}
+body {
+  background-color: #1535b5;
+  background-image: url('https://www.transparenttextures.com/patterns/cubes.png');
+  background-repeat: repeat;
+  min-height: 100vh;
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+}
+

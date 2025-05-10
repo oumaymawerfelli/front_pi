@@ -4,9 +4,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-
-
-
+import { CommonModule } from '@angular/common';
+import { MarketplaceComponent } from './marketplace/marketplace.component';
+import { PanierComponent } from './panier/panier.component';
+//investment 
+import { InvestorComponent } from './investment/investor/investor.component';
+import { InvestorListComponent } from './investment/investor-list/investor-list.component';
+import { InvestorHistoComponent } from './investment/investor-histo/investor-histo.component';
+import { OrdersComponent } from './orders/orders.component';
 
 import { MarketComponent } from './market/market.component';
 import { ProductListComponent } from './market/product-list/product-list.component';
@@ -77,14 +82,19 @@ import { LoanApprovalComponent } from './loan-approval/loan-approval.component';
     AddProdComponent,
     EditProdComponent,
     AiAssisstantComponent,
-    MarketComponent,
-
+    PanierComponent,
+    InvestorComponent,
+    InvestorListComponent,
+    InvestorHistoComponent,
+    OrdersComponent,
+MarketplaceComponent,
     EquipmentComponent,
     AddEquipmentComponent,
     AddLandComponent,
     TermsAcceptanceComponent,
     RecommendationsComponent,
     LoanApprovalComponent,
+    MarketComponent,
 
  
 
@@ -93,6 +103,7 @@ import { LoanApprovalComponent } from './loan-approval/loan-approval.component';
     BrowserModule,
     AppRoutingModule,
     UsersModule,
+  CommonModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,

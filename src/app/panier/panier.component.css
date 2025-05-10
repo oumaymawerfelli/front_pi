@@ -1,0 +1,70 @@
+.container {
+    background-color: #fdfdf9;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  }
+  
+  h2 {
+    color: #4CAF50;
+    font-weight: bold;
+  }
+  
+  .table {
+    background-color: #ffffff;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  
+  .table thead {
+    background-color: #a5d6a7;
+    color: #2e7d32;
+  }
+  
+  .table-hover tbody tr:hover {
+    background-color: #f1f8e9;
+  }
+  
+  button.btn-outline-secondary {
+    color: #4CAF50;
+    border-color: #4CAF50;
+  }
+  
+  button.btn-outline-secondary:hover {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  button.btn-danger {
+    background-color: #e53935;
+    border-color: #e53935;
+  }
+  
+  button.btn-danger:hover {
+    background-color: #c62828;
+  }
+  
+  select#paymentMethod {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    border-radius: 8px;
+    border: 1px solid #c8e6c9;
+    background-color: #f1f8e9;
+  }
+  
+  button {
+    margin-top: 1rem;
+    padding: 0.5rem 1.5rem;
+    border-radius: 8px;
+    border: none;
+    background-color: #66bb6a;
+    color: white;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #43a047;
+  }
+  

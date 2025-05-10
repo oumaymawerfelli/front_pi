@@ -33,6 +33,7 @@ getRole() {
 throw new Error('Method not implemented.');
 }
   private apiUrl = 'http://localhost:8089/pi/auth';
+  private readonly tokenKey = 'token';
 
   constructor(private http: HttpClient, private router: Router, private snackbar: MatSnackBar) {}
  
@@ -168,8 +169,31 @@ verifyOtp(email: string, otp: string): Observable<JwtResponse> {
     window.location.href = 'http://localhost:8089/pi/oauth2/authorization/github';
   }
   
+  public getToken(): string | null {
+    return localStorage.getItem(this.tokenKey);
+  }
+
+  private handleAuthError(err: any): void {
+    if (err.error?.message === 'Your account is not approved yet.') {
+      this.snackbar.open('Account pending approval by admin.', 'Close', { duration: 3000 });
+    } else {
+      this.snackbar.open('Login failed. Check credentials.', 'Close', { duration: 3000 });
+    }
+  }
   
-  
-  
+  getUserInfo(): { role: string | null, userId: number | null } {
+    const token = this.getToken();
+    if (!token) return { role: null, userId: null };
+
+    try {
+      const decodedToken = JSON.parse(atob(token.split('.')[1]));
+      const role = decodedToken.role || null;
+      const userId = decodedToken.sub || null; // ID de l'utilisateur supposé être dans le "sub" du token
+      return { role, userId };
+    } catch (error) {
+      console.error('Erreur lors du décodage du token', error);
+      return { role: null, userId: null };
+    }
+  }
   
 }

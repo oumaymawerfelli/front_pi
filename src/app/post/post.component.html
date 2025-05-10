@@ -1,0 +1,297 @@
+
+
+<div class="forum-container">
+  <!-- Sidebar -->
+  <div class="forum-sidebar">
+    <div class="sidebar-block">
+      <h3 style="color: #059669;">📌 Categories</h3>
+      <div class="category-list">
+        <button 
+          (click)="filterPosts('All')" 
+          [class.active]="currentFilter === 'All'" >
+          All Categories
+        </button>
+        <button 
+          *ngFor="let cat of categories" 
+          (click)="filterPosts(cat)"
+          [class.active]="currentFilter === cat">
+          {{ cat }}
+        </button>
+      </div>
+    </div>
+
+    <!-- Pinned Posts Section -->
+    <div class="sidebar-block" *ngIf="pinnedPosts.length > 0">
+      <h3>📌 Pinned Posts</h3>
+      <div class="trending-posts">
+        <div *ngFor="let post of pinnedPosts" class="trending-post">
+          <a (click)="scrollToPost(post.id!)" class="post-preview">
+            {{ post.content.length > 60 ? (post.content | slice:0:60) + '...' : post.content }}
+          </a>
+          <div class="post-meta">
+            <span>{{ post.dateCreated | date:'shortDate' }}</span>
+            <span>💬 {{ post.comments?.length || 0 }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="forum-content">
+    <h2>📝 Posts Forum</h2>
+
+    <div class="search-container">
+      <input type="text" 
+             [(ngModel)]="searchQuery" 
+             placeholder="Search posts..." 
+             (keyup.enter)="searchPosts()">
+      <button (click)="searchPosts()" [disabled]="!searchQuery.trim()">
+        🔍 Search
+      </button>
+      <button *ngIf="isSearching" (click)="clearSearch()" class="clear-btn">
+        ❌ Clear
+      </button>
+    </div>
+
+    <form [formGroup]="postForm" (ngSubmit)="submitPost()" class="form-post"
+      enctype="multipart/form-data">
+      <textarea #postTextarea
+        formControlName="content"
+        placeholder="Express yourself here..."
+        rows="4"
+        maxlength="5000"></textarea>
+
+      <div class="form-group">
+        <label style="color: #059669;">Category:</label>
+        <select formControlName="category" class="form-control">
+          <option *ngFor="let cat of categories" [value]="cat">
+            {{ cat }}
+          </option>
+        </select>
+      </div>
+
+      <div class="file-upload-section">
+        <label for="fileInput" class="file-upload-label">
+          <span class="file-upload-button">📁 Choose File</span>
+          <span class="file-name" *ngIf="selectedFile">{{ selectedFile.name }}</span>
+          <span class="no-file" *ngIf="!selectedFile && !isEditing">No file chosen</span>
+          <span class="no-file"
+            *ngIf="!selectedFile && isEditing && !postForm.value.img">No file chosen</span>
+          <span class="current-file"
+            *ngIf="!selectedFile && isEditing && postForm.value.img">
+            Current file: {{ postForm.value.img }}
+          </span>
+        </label>
+        <input id="fileInput"
+          type="file"
+          (change)="onFileChange($event)"
+          accept="image/*"
+          style="display: none;" />
+      </div>
+
+      <div *ngIf="previewUrl" class="preview-container">
+        <img [src]="previewUrl"
+          alt="Selected image preview"
+          style="max-width: 200px; border-radius: 8px; margin-top: 8px;" />
+        <button type="button"
+          class="btn btn-sm btn-danger mt-2"
+          (click)="removeImagePreview()">
+          Remove Image
+        </button>
+      </div>
+
+      <div *ngIf="isEditing && !previewUrl && postForm.value.img"
+        class="current-image-container">
+        <p>Current image:</p>
+        <img [src]="'assets/img/posts/' + postForm.value.img"
+          alt="Current post image"
+          style="max-width: 200px; border-radius: 8px; margin-top: 8px;" />
+      </div>
+
+      <div class="form-buttons">
+        <button type="submit">
+          {{ isEditing ? '✏️ Update post' : '➕ Publish post' }}
+        </button>
+        <button *ngIf="isEditing"
+          type="button"
+          class="cancel-btn"
+          (click)="resetForm()">
+          ❌ Cancel
+        </button>
+      </div>
+    </form>
+
+    <hr />
+
+    <div *ngIf="pinnedPosts.length > 0 && !isSearching" class="pinned-posts-section">
+      <h3>📌 Pinned Posts</h3>
+      <div *ngFor="let post of pinnedPosts" class="post-card pinned" [id]="'post-' + post.id">
+        <div class="post-header">
+          <span class="category-badge">{{ post.category || 'Other' }}</span>
+          <small class="post-date">🕒 {{ post.dateCreated | date: 'medium' }}</small>
+          <small class="post-author">👤 {{ post.createdBy?.name }}</small> <!-- Afficher le nom de l'utilisateur -->
+
+        </div>
+
+        <div class="post-content">
+          <p>🗨️ {{ post.content }}</p>
+        </div>
+
+        <img *ngIf="post.img"
+          [src]="'assets/img/posts/' + post.img"
+          alt="Post image"
+          style="max-width:100%; height:auto;" />
+
+        <div class="post-actions">
+          <button (click)="editPost(post)">✏️ Edit</button>
+          <button (click)="deletePost(post.id!)">🗑️ Delete</button>
+          <button (click)="togglePinPost(post)" class="pin-btn">
+            {{ post.pinned ? '📌 Unpin' : '📌 Pin' }}
+          </button>
+        </div>
+
+        <div class="comments-section">
+          <h4>💬 Comments ({{ post.comments?.length || 0 }})</h4>
+
+          <div *ngFor="let comment of post.comments" class="comment-box">
+            <p>{{ comment.text }}</p>
+            <small>{{ comment.dateCreated | date: 'short' }}</small>
+            <div class="comment-actions">
+              <span>👍 {{ comment.likeCount || 0 }}</span>
+              <button (click)="likeComment(comment.id!, post)">Like</button>
+              <span>👎 {{ comment.dislikeCount || 0 }}</span>
+              <button (click)="dislikeComment(comment.id!, post)">Dislike</button>
+              <button (click)="deleteComment(comment.id!, post)">🗑️</button>
+            </div>
+          </div>
+
+          <div class="add-comment">
+            <textarea [(ngModel)]="commentTexts[post.id!]"
+              placeholder="Add a comment..."
+              rows="2"
+              [disabled]="commentLoading[post.id!]"></textarea>
+            <button (click)="submitComment(post.id!)"
+              [disabled]="commentLoading[post.id!]">
+              <span *ngIf="!commentLoading[post.id!]">📩 Send</span>
+              <span *ngIf="commentLoading[post.id!]">⏳ Sending...</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="!isSearching">
+      <div *ngFor="let post of nonPinnedPosts" class="post-card" [id]="'post-' + post.id">
+        <div class="post-header">
+          <span class="category-badge">{{ post.category || 'Other' }}</span>
+          <small class="post-date">🕒 {{ post.dateCreated | date: 'medium' }}</small>
+        </div>
+
+        <div class="post-content">
+          <p>🗨️ {{ post.content }}</p>
+        </div>
+
+        <img *ngIf="post.img"
+          [src]="'assets/img/posts/' + post.img"
+          alt="Post image"
+          style="max-width:100%; height:auto;" />
+
+        <div class="post-actions">
+          <button (click)="editPost(post)">✏️ Edit</button>
+          <button (click)="deletePost(post.id!)">🗑️ Delete</button>
+          <button (click)="togglePinPost(post)" class="pin-btn">
+            {{ post.pinned ? '📌 Unpin' : '📌 Pin' }}
+          </button>
+        </div>
+
+        <div class="comments-section">
+          <h4>💬 Comments ({{ post.comments?.length || 0 }})</h4>
+
+          <div *ngFor="let comment of post.comments" class="comment-box">
+            <p>{{ comment.text }}</p>
+            <small>{{ comment.dateCreated | date: 'short' }}</small>
+            <div class="comment-actions">
+              <span>👍 {{ comment.likeCount || 0 }}</span>
+              <button (click)="likeComment(comment.id!, post)">Like</button>
+              <span>👎 {{ comment.dislikeCount || 0 }}</span>
+              <button (click)="dislikeComment(comment.id!, post)">Dislike</button>
+              <button (click)="deleteComment(comment.id!, post)">🗑️</button>
+            </div>
+          </div>
+
+          <div class="add-comment">
+            <textarea [(ngModel)]="commentTexts[post.id!]"
+              placeholder="Add a comment..."
+              rows="2"
+              [disabled]="commentLoading[post.id!]"></textarea>
+            <button (click)="submitComment(post.id!)"
+              [disabled]="commentLoading[post.id!]">
+              <span *ngIf="!commentLoading[post.id!]">📩 Send</span>
+              <span *ngIf="commentLoading[post.id!]">⏳ Sending...</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="isSearching">
+      <h3>Search Results for "{{ searchQuery }}"</h3>
+      <div *ngFor="let post of nonPinnedPosts" class="post-card">
+        <div class="post-header">
+          <span class="category-badge">{{ post.category || 'Other' }}</span>
+          <small class="post-date">🕒 {{ post.dateCreated | date: 'medium' }}</small>
+        </div>
+
+        <div class="post-content">
+          <p>🗨️ {{ post.content }}</p>
+        </div>
+
+        <img *ngIf="post.img"
+          [src]="'assets/img/posts/' + post.img"
+          alt="Post image"
+          style="max-width:100%; height:auto;" />
+
+        <div class="post-actions">
+          <button (click)="editPost(post)">✏️ Edit</button>
+          <button (click)="deletePost(post.id!)">🗑️ Delete</button>
+          <button (click)="togglePinPost(post)" class="pin-btn">
+            {{ post.pinned ? '📌 Unpin' : '📌 Pin' }}
+          </button>
+        </div>
+
+        <div class="comments-section">
+          <h4>💬 Comments ({{ post.comments?.length || 0 }})</h4>
+
+          <div *ngFor="let comment of post.comments" class="comment-box">
+            <p>{{ comment.text }}</p>
+            <small>{{ comment.dateCreated | date: 'short' }}</small>
+            <div class="comment-actions">
+              <span>👍 {{ comment.likeCount || 0 }}</span>
+              <button (click)="likeComment(comment.id!, post)">Like</button>
+              <span>👎 {{ comment.dislikeCount || 0 }}</span>
+              <button (click)="dislikeComment(comment.id!, post)">Dislike</button>
+              <button (click)="deleteComment(comment.id!, post)">🗑️</button>
+            </div>
+          </div>
+
+          <div class="add-comment">
+            <textarea [(ngModel)]="commentTexts[post.id!]"
+              placeholder="Add a comment..."
+              rows="2"
+              [disabled]="commentLoading[post.id!]"></textarea>
+            <button (click)="submitComment(post.id!)"
+              [disabled]="commentLoading[post.id!]">
+              <span *ngIf="!commentLoading[post.id!]">📩 Send</span>
+              <span *ngIf="commentLoading[post.id!]">⏳ Sending...</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <div *ngIf="filteredPosts.length === 0" class="no-results">
+        No posts found matching your search.
+      </div>
+    </div>
+  </div>
+</div>

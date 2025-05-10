@@ -1,5 +1,9 @@
-import { NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+//investment
+import { InvestorComponent } from './investment/investor/investor.component';
+import { InvestorListComponent } from './investment/investor-list/investor-list.component';
+import { InvestorHistoComponent } from './investment/investor-histo/investor-histo.component';
 
 // Core components
 import { LandingComponent } from './landing/landing.component';
@@ -19,8 +23,8 @@ import { AdminAnalyticsComponent } from './users/admin-analytics/admin-analytics
 // Loan components
 
 
-
-
+import { PanierComponent } from './panier/panier.component';
+import { OrdersComponent } from './orders/orders.component';
 import { MarketComponent } from './market/market.component';
 
 
@@ -37,6 +41,7 @@ import { AddLandComponent } from './loans/add-land/add-land.component';
 import { LoanApprovalComponent } from './loan-approval/loan-approval.component';
 import { AdminGuard } from './guards/admin.guard';
 import { AuthGuard } from './guards/auth.guard';
+import { MarketplaceComponent } from './marketplace/marketplace.component';
 
 const routes: Routes = [
   
@@ -72,6 +77,11 @@ const routes: Routes = [
       { path: 'loan-approval', component: LoanApprovalComponent,  },
       
      { path: 'market', component: MarketComponent },
+     { path: 'marketf', component:MarketplaceComponent },
+     { path: 'Panier',component:PanierComponent}, 
+     { path: 'Order',component:OrdersComponent}, 
+     { path: 'investment', component: InvestorComponent },
+     { path: 'listinv', component: InvestorListComponent },
 
 
     

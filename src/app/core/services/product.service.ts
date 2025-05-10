@@ -31,6 +31,10 @@ export interface Product {
   providedIn: 'root',
 })
 export class ProductService {
+  getAll(): Observable<Product[]> {
+    // Ensure this method returns an observable
+    return this.http.get<Product[]>('your-api-endpoint/products');
+  }
   private baseUrl = 'http://localhost:8089/pi/products';
 
   constructor(private http: HttpClient) {
@@ -49,6 +53,10 @@ export class ProductService {
   getAllProducts(): Observable<Product[]> {
     return this.http.get<Product[]>(`${this.baseUrl}/get-all-products`);  // Appending the specific endpoint
   }
+  getAllProducts2(): Observable<Product[]> {
+    return this.http.get<Product[]>(`${this.baseUrl}/get-all-products2`);  // Appending the specific endpoint
+  }
+
 
   addProduct(product: Product): Observable<Product> {
     const { farmerName,farmerEmail,farmerId, ...productDetails } = product; // Exclude farmer info, it's handled by the backend

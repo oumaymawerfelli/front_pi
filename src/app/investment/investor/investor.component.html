@@ -1,0 +1,92 @@
+<h2>Formulaire d'Investissement</h2>
+
+<form (ngSubmit)="submitInvestment()" #investmentForm="ngForm">
+
+  <div class="form-section">
+    <label>Montant de l'investissement :
+      <input
+        type="number"
+        [(ngModel)]="investment.investmentAmount"
+        name="investmentAmount"
+        required
+        min="0"
+        #investmentAmount="ngModel"
+      />
+    </label>
+    <div *ngIf="investmentAmount.invalid && investmentAmount.touched" class="error-message">
+      Veuillez entrer un montant valide.
+    </div>
+  </div>
+
+  <div class="form-section">
+    <label>Type :
+      <select [(ngModel)]="investment.type" name="type" required>
+        <option value="" disabled selected>Sélectionner le type</option>
+        <option value="EQUIPMENT">Equipement</option>
+        <option value="SEEDS">Graines</option>
+        <option value="IRRIGATION">Irrigation</option>
+        <option value="TECHNOLOGY">Technologie</option>
+        <option value="SUSTAINABILITY">Durabilité</option>
+        <option value="OTHER">Autre</option>
+      </select>
+    </label>
+  </div>
+
+  <div class="form-section">
+    <label>ROI attendu (%) :
+      <input
+        type="number"
+        [(ngModel)]="investment.expectedROI"
+        name="expectedROI"
+        required
+        min="0"
+        max="100"
+        #expectedROI="ngModel"
+      />
+    </label>
+    <div *ngIf="expectedROI.invalid && expectedROI.touched" class="error-message">
+      Veuillez entrer un ROI valide (0-100).
+    </div>
+  </div>
+
+  <div class="form-section">
+    <label>Stratégie :
+      <select [(ngModel)]="investment.strategy" name="strategy" required>
+        <option value="" disabled selected>Sélectionner la stratégie</option>
+        <option value="LONG_TERM">Long Terme</option>
+        <option value="SHORT_TERM">Court Terme</option>
+        <option value="HIGH_RISK">Haut Risque</option>
+        <option value="LOW_RISK">Faible Risque</option>
+        <option value="DIVERSIFIED">Diversifié</option>
+        <option value="FIXED_RETURN">Rendement Fixe</option>
+        <option value="GROWTH">Croissance</option>
+        <option value="INCOME">Revenu</option>
+      </select>
+    </label>
+  </div>
+  <div class="form-section">
+    <label>Date d'investissement :
+      <input
+        type="date"
+        [(ngModel)]="investment.investmentDate"
+        name="investmentDate"
+        required
+      />
+    </label>
+  </div>
+  
+
+  <div *ngIf="submissionStatus" class="success-message">
+    {{ submissionStatus }}
+  </div>
+
+  <div *ngIf="isSubmitting" class="loader">
+    <p>Envoi de votre investissement...</p>
+  </div>
+  <div *ngIf="investment.performance && investment.performance > 0" class="performance-section">
+    <strong>Performance calculée :</strong> {{ investment.performance | number:'1.2-2' }} Dinars
+  </div>
+  
+
+  <button type="submit" [disabled]="investmentForm.invalid">Soumettre l'investissement</button>
+</form>

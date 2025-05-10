@@ -1,0 +1,23 @@
+<div class="chatbot-container">
+    <h2>Chatbot Together AI</h2>
+  
+    <div class="chat-window">
+      <div class="user-message" *ngIf="userMessage">
+        <strong>Vous:</strong> {{ userMessage }}
+      </div>
+  
+      <div class="bot-message" *ngIf="botResponse">
+        <strong>Bot:</strong> {{ botResponse }}
+      </div>
+    </div>
+  
+    <div class="input-area">
+      <input
+        type="text"
+        [(ngModel)]="userMessage"
+        placeholder="Écris ton message..."
+      />
+      <button (click)="sendMessage()">Envoyer</button>
+    </div>
+  </div>
+  
