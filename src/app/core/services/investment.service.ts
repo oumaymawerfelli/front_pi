@@ -5,13 +5,14 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Investment } from 'src/app/core/models/investor';
 import { AuthService } from  'src/app/core/services/auth.service';
+import { environment } from 'src/environnement/env';
 
 @Injectable({
   providedIn: 'root'
 })
 export class InvestmentService {
 
-  private apiUrl = 'http://localhost:8089/pi/investments'; // adapte l'URL si besoin
+  private apiUrl = environment.apiUrl+'/pi/investments'; // adapte l'URL si besoin
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 

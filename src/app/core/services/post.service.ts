@@ -3,12 +3,13 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Post } from '../models/posts';
 import { PostCategory } from '../models/PostCategory';
+import { environment } from 'src/environnement/env';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PostService {
-  private baseUrl = 'http://localhost:8089/pi/posts';
+  private baseUrl = environment.apiUrl+'/pi/posts';
 
   constructor(private http: HttpClient) {}
   getAllPosts(): Observable<Post[]> {

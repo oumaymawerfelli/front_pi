@@ -3,15 +3,16 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { LignePanier } from '../models/LignePanier';
-import { environment } from 'src/assets/envirnment/environment';
+
 import { AuthService } from './auth.service'; // Assurez-vous que AuthService est importé pour gérer l'authentification
+import { environment } from 'src/environnement/env';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LignePanierService {
-  private apiUrl = `${environment.apiUrl}/Panier`;
-  private ligneUrl = `${environment.apiUrl}/lignes-panier`;
+  private apiUrl = `${environment.apiUrl}/pi/Panier`;
+  private ligneUrl = `${environment.apiUrl}/pi/lignes-panier`;
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 

@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'; 
 import { Institution } from 'src/app/core/models/institution.model';
 import { Observable } from 'rxjs'; 
+import { environment } from 'src/environnement/env';
 
 @Injectable({
   providedIn: 'root',
 })
 export class InstitutionService {
-  private baseUrl = 'http://localhost:8089/pi/institution';
+  private baseUrl =environment.apiUrl+'/pi/institution';
 
   constructor(private http: HttpClient) {}
 

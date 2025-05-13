@@ -3,12 +3,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { Order } from '../models/Order'; // Ton modèle d'Order
+import { environment } from 'src/environnement/env';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrderService {
-  private apiUrl = 'http://localhost:8089/pi/order'; // Attention adapte bien si ton URL change
+  private apiUrl = environment.apiUrl+'/pi/order'; // Attention adapte bien si ton URL change
 
   constructor(private http: HttpClient) {}
 

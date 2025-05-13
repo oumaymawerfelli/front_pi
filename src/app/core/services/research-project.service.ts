@@ -4,12 +4,13 @@ import { HttpClient } from '@angular/common/http';
 import { ResearchProject } from 'src/app/core/models/research-project';
 
 import { Observable } from 'rxjs';
+import { environment } from 'src/environnement/env';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ResearchProjectService {
-  private baseUrl = 'http://localhost:8089/pi/research-project';
+  private baseUrl = environment.apiUrl+'/pi/research-project';
 
   constructor(private http: HttpClient) {}
 

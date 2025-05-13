@@ -6,6 +6,7 @@ import { User } from '../models/user.model';
 import { UserProfile } from '../models/userProfile.model'; 
 import { LoginAttempt } from '../models/LoginAttempt.model';
 import { jwtDecode } from 'jwt-decode';
+import { environment } from 'src/environnement/env';
 
 
 
@@ -14,7 +15,7 @@ import { jwtDecode } from 'jwt-decode';
 })
 export class UserService {
 
-  private apiUrl = 'http://localhost:8089/pi/users'; 
+  private apiUrl = environment.apiUrl+'/pi/users'; 
 
   constructor(private http: HttpClient) { }
   private getHeaders() {

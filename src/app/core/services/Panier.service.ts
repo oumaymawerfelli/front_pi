@@ -4,14 +4,15 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { LignePanier } from '../models/LignePanier';
 import { Order } from '../models/Order';
-import { environment } from 'src/assets/envirnment/environment';
+import { environment } from 'src/environnement/env';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class PanierService {
-  private baseUrl = 'http://localhost:8089/pi/Panier';
- private apiUrl = `${environment.apiUrl}/order`;
+  private baseUrl = environment.apiUrl+'/pi/Panier';
+ private apiUrl = `${environment.apiUrl}/pi/order`;
   constructor(private http: HttpClient) {}
 
   // Méthode privée pour récupérer les headers avec le token

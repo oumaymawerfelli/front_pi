@@ -4,6 +4,7 @@ import { catchError, Observable, of, tap, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { User } from '../models/user.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { environment } from 'src/environnement/env';
 
 export interface LoginRequest {
   email: string;
@@ -32,7 +33,7 @@ export class AuthService {
 getRole() {
 throw new Error('Method not implemented.');
 }
-  private apiUrl = 'http://localhost:8089/pi/auth';
+  private apiUrl = environment.apiUrl+'/pi/auth';
   private readonly tokenKey = 'token';
 
   constructor(private http: HttpClient, private router: Router, private snackbar: MatSnackBar) {}
@@ -62,6 +63,8 @@ verifyOtp(email: string, otp: string): Observable<JwtResponse> {
   
   
   register(request: RegisterRequest): Observable<any> {
+    console.log(environment.production)
+    console.log(this.apiUrl)
     return this.http.post(`${this.apiUrl}/register`, request, {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
       withCredentials: true

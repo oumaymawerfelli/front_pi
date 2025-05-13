@@ -8,14 +8,13 @@
     <input id="email" type="email" [(ngModel)]="email" name="email" required email />
 
     <label for="password">Password:</label>
-    <input id="password" type="password" [(ngModel)]="password" name="password" required 
-      pattern="^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{8,}$" />
+    <input id="password" type="password" [(ngModel)]="password" name="password" required />
     <small *ngIf="registerForm.controls['password']?.invalid && registerForm.controls['password']?.touched">
       Password must be at least 8 characters long, contain an uppercase letter, a number, and a special character.
     </small>
 
     <label for="confirmPassword">Confirm Password:</label>
-    <input id="confirmPassword" type="password" [(ngModel)]="confirmPassword" name="confirmPassword" required [pattern]="password" />
+    <input id="confirmPassword" type="password" [(ngModel)]="confirmPassword" name="confirmPassword" required />
     <small *ngIf="password !== confirmPassword && confirmPassword">
       Passwords do not match.
     </small>

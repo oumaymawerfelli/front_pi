@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { UserService } from 'src/app/core/services/user.service';
+import { environment } from 'src/environnement/env';
 
 // export interface Farmer {
 //   idUser: number;
@@ -35,7 +36,7 @@ export class ProductService {
     // Ensure this method returns an observable
     return this.http.get<Product[]>('your-api-endpoint/products');
   }
-  private baseUrl = 'http://localhost:8089/pi/products';
+  private baseUrl = environment.apiUrl+'/pi/products';
 
   constructor(private http: HttpClient) {
 

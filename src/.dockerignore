@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.git/
+.angular/
+.vscode/
+.idea/
+*.log
+*.tmp
+*.bak
+*.swp
+Dockerfile
+docker-compose.yml
